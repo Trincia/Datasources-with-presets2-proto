@@ -9,11 +9,11 @@ import {
   SidebarCollapseIcon,
   SidebarExpandIcon,
   SparkleIcon,
-  AppIcon,
 } from "@/components/icons"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { DatabricksLogo } from "./DatabricksLogo"
+import { AppSwitcher } from "./AppSwitcher"
 
 interface TopBarProps {
   sidebarOpen?: boolean
@@ -80,9 +80,7 @@ export function TopBar({
           <DbIcon icon={SparkleIcon} color="ai" size={16} />
         </Button>
 
-        <Button variant="ghost" size="icon-sm" aria-label="App launcher">
-          <AppIcon className="h-4 w-4 text-muted-foreground" />
-        </Button>
+        <AppSwitcher />
 
         {/* User avatar */}
         <button

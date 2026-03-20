@@ -1,4 +1,5 @@
 export { AppShell } from "./AppShell"
+export { AppSwitcher } from "./AppSwitcher"
 export { TopBar } from "./TopBar"
 export { Sidebar } from "./Sidebar"
 export { NewButton } from "./NewButton"

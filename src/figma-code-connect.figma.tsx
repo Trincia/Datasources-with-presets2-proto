@@ -83,6 +83,7 @@ import { ListItem } from "@/components/ui/list-item"
 // ─── Shell Components ────────────────────────────────────────────────────────
 import { AppShell } from "@/components/shell/AppShell"
 import { AppSwitcher } from "@/components/shell/AppSwitcher"
+import { FilterBar } from "@/components/shell/FilterBar"
 import { NewButton } from "@/components/shell/NewButton"
 import { PageHeader } from "@/components/shell/PageHeader"
 import { Sidebar } from "@/components/shell/Sidebar"
@@ -90,6 +91,13 @@ import { TopBar } from "@/components/shell/TopBar"
 
 // ─── Additional UI ────────────────────────────────────────────────────────────
 import { Progress } from "@/components/ui/progress"
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+} from "@/components/ui/pagination"
 
 
 // ─── Alert ── node 28-2 ─────────────────────────────────────────────────────
@@ -715,6 +723,61 @@ figma.connect(
       }),
     },
     example: ({ value }) => <Progress value={value} />,
+  }
+)
+
+// ─── FilterBar ── node 980-35 ────────────────────────────────────────────────
+figma.connect(
+  FilterBar,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=980-35",
+  {
+    props: {},
+    example: () => (
+      <FilterBar
+        searchPlaceholder="Filter by name or ID..."
+        segments={[
+          {
+            value: "all",
+            onValueChange: () => {},
+            items: [
+              { value: "all", label: "All" },
+              { value: "jobs", label: "Jobs" },
+              { value: "pipelines", label: "Pipelines" },
+            ],
+          },
+        ]}
+        selects={[
+          {
+            value: "",
+            onValueChange: () => {},
+            placeholder: "Tags",
+            options: [{ value: "applied", label: "applied" }],
+          },
+        ]}
+        createLabel="Create"
+      />
+    ),
+  }
+)
+
+// ─── Pagination ── node 983-24 ───────────────────────────────────────────────
+figma.connect(
+  Pagination,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=983-24",
+  {
+    props: {},
+    example: () => (
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    ),
   }
 )
 

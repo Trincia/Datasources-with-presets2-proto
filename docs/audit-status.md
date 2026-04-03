@@ -106,25 +106,77 @@ Each row covers: size · radius · color/tokens · typography · hover · focus 
 |---|---|---|
 | Button | ✅ | |
 | Input | ✅ | |
-| Badge | ✅ | New `charcoal`/`default_tag` variants need republish |
+| Badge | ✅ | Secondary badge colors (coral/brown/indigo/lemon/lime/pink/purple/teal/turquoise) need 18 Figma variables created + bound |
 | Tabs | ✅ | |
 | Table | ✅ | |
+| Alert | ✅ | |
+| Avatar | ✅ | |
+| Breadcrumb | ✅ | |
+| Card | ✅ | |
+| Checkbox | ✅ | |
+| Dialog | ✅ | |
+| DropdownMenu | ✅ | |
+| Label | ✅ | |
+| RadioGroup | ✅ | |
+| Select | ✅ | |
+| Sheet | ✅ | |
+| Switch | ✅ | |
+| Tooltip | ✅ | |
 | Icons (445) | ✅ | |
 | FilterBar | ✅ | |
 | Pagination | ✅ | |
-| Spinner | ❌ | New component — needs mapping |
-| Empty | ❌ | New component — needs mapping |
-| SegmentedControl | ❌ | New component — needs mapping |
-| ListItem | ❌ | New component — needs mapping |
-| TopBar | ❌ | Shell — needs mapping |
-| Sidebar | ❌ | Shell — needs mapping |
+| SegmentedControl | ✅ | node 802-14 |
+| ListItem | ✅ | node 803-10 |
+| AppSwitcher | ✅ | node 761-8 |
+| Progress | ✅ | node 390-11 |
+| AppShell | ✅ | node 798-124 |
+| NewButton | ✅ | node 798-121 |
+| TopBar | ✅ | node 209-36 |
+| Sidebar | ✅ | node 214-89 |
+| PageHeader | ✅ | node 446-6 — now includes `starred` boolean prop mapping |
+| Spinner | ✅ | node 1200-171 — added 2026-04-03 |
+| Empty | ✅ | node 1201-25 — added 2026-04-03 |
+| NotebookCell | ✅ | node 1203-43 — added 2026-04-03 |
+| Tree | ✅ | node 1204-33 — added 2026-04-03 |
+| SidePanel | ✅ | node 1205-11 — added 2026-04-03 |
+| EditorTabBar | ✅ | node 1211-25 — added 2026-04-03 |
+
+### Still needs publish
+Run `FIGMA_ACCESS_TOKEN=<token> npm run figma:publish` to push all mappings live.
+
+---
+
+## Figma File Gaps (not yet resolved)
+
+| Item | Priority | Detail |
+|---|---|---|
+| 9 secondary Badge color variables | 🔴 High | coral/brown/indigo/lemon/lime/pink/purple/teal/turquoise — 18 vars (bg+text) need creating in Figma variable collection and binding to badge fills |
+| Alert info variant variables | 🟡 Med | `--border-info` (blue-200) and `--background-info` (blue-100) missing from Figma variable collection |
+| Button `icon-xs` variant | 🟡 Med | 24×24 ghost icon-only button exists in code (used throughout shell), no Figma component variant |
+| TopBar search text style | 🟡 Med | body/md (16px) — should be body/base (13px) |
+| PageHeader title text style | 🟡 Med | Hardcoded 22px — should bind to heading/h3 or heading/h4 text style |
+
+---
+
+## Shell Components
+
+| Component | Status | Notes |
+|---|---|---|
+| Sidebar | ⚠️ | Width 200px ✅. Active item ✅. Now uses Tree component internally. Not verified: scroll, collapse animation. |
+| TopBar | ⚠️ | Height 48px ✅. Logo ✅. Search font size wrong in Figma (see gaps above). |
+| PageHeader | ⚠️ | Layout ✅. Starred prop now in Figma + Code Connect ✅. Exact spacing not verified. |
+| AppShell | ⚠️ | Open/closed ✅. Main card ✅. Responsive breakpoints not verified. |
+| Tree | ✅ | variant=nav/default ✅. Chevron alignment ✅. Figma + Code Connect ✅. |
+| SidePanel | ✅ | 280px, header/search/tree structure ✅. Figma + Code Connect ✅. |
+| EditorTabBar | ✅ | Top indicator (DuBois) ✅. Button nesting fixed ✅. Figma + Code Connect ✅. |
 
 ---
 
 ## Next Priority Queue
 
-1. **Textarea / Checkbox / Switch** — finish primitive audit (source: `design-system/Input/`, `design-system/Checkbox/`, `design-system/Switch/`)
-2. **Dropdown Menu** — heavily used, not yet verified
-3. **TopBar + Sidebar** — product-level shell audit against universe shell source
-4. **Figma Code Connect republish** — after Badge variant additions + new components (Spinner, Empty, SegmentedControl, ListItem)
-5. **Sheet / Dialog overlay** — overlay opacity/color not verified
+1. **Create 18 Figma badge color variables** — bind to the 9 secondary badge variants (highest impact for design accuracy)
+2. **Textarea / Checkbox / Switch** — finish primitive audit
+3. **Dropdown Menu** — heavily used, not yet verified
+4. **Button `icon-xs` Figma variant** — add to Button component set
+5. **Alert info variables** — add `--border-info` + `--background-info` to globals.css and Figma
+6. **Run figma:publish** — push all new Code Connect mappings live

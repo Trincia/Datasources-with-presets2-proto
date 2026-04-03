@@ -113,7 +113,7 @@ ${iconName}.displayName = "${iconName}";
 // Regenerate index.ts
 const allIcons = fs
   .readdirSync(OUT_DIR)
-  .filter((f) => f.endsWith(".tsx"))
+  .filter((f) => f.endsWith(".tsx") && !f.endsWith(".figma.tsx"))
   .map((f) => f.replace(".tsx", ""))
   .sort();
 

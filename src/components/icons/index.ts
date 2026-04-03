@@ -455,4 +455,3 @@ export { ZoomInIcon } from "./ZoomInIcon";
 export { ZoomMarqueeSelection } from "./ZoomMarqueeSelection";
 export { ZoomOutIcon } from "./ZoomOutIcon";
 export { ZoomToFitIcon } from "./ZoomToFitIcon";
-export { icons.figma } from "./icons.figma";

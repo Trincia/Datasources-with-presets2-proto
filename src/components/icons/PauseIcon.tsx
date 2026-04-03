@@ -24,7 +24,12 @@ export const PauseIcon = forwardRef<SVGSVGElement, PauseIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" fillRule="evenodd" d="M10 12V4h1.5v8zm-5.5 0V4H6v8z" clipRule="evenodd" />
+      <path
+              fill="currentColor"
+              fillRule="evenodd"
+              d="M10 12V4h1.5v8zm-5.5 0V4H6v8z"
+              clipRule="evenodd"
+            />
     </svg>
   )
 );

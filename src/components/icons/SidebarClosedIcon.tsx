@@ -26,8 +26,12 @@ export const SidebarClosedIcon = forwardRef<SVGSVGElement, SidebarClosedIconProp
     >
       <path
               fill="currentColor"
+              d="M3.75 4.25A.75.75 0 0 1 4.5 5v6A.75.75 0 0 1 3 11V5a.75.75 0 0 1 .75-.75"
+            />
+            <path
+              fill="currentColor"
               fillRule="evenodd"
-              d="M14 2a2 2 0 0 1 2 2v8l-.01.204a2 2 0 0 1-1.786 1.785L14 14H2l-.204-.01A2 2 0 0 1 .01 12.203L0 12V4a2 2 0 0 1 2-2zM2 3.5a.5.5 0 0 0-.5.5v8a.5.5 0 0 0 .5.5h3.25v-9zm4.75 9H14a.5.5 0 0 0 .5-.5V4a.5.5 0 0 0-.5-.5H6.75z"
+              d="M13 1a3 3 0 0 1 3 3v8l-.004.154A3 3 0 0 1 13 15H3l-.154-.004a3 3 0 0 1-2.842-2.842L0 12V4a3 3 0 0 1 3-3zM3 2.5A1.5 1.5 0 0 0 1.5 4v8A1.5 1.5 0 0 0 3 13.5h10a1.5 1.5 0 0 0 1.5-1.5V4A1.5 1.5 0 0 0 13 2.5z"
               clipRule="evenodd"
             />
     </svg>

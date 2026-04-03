@@ -24,7 +24,10 @@ export const PlusCircleSmallIcon = forwardRef<SVGSVGElement, PlusCircleSmallIcon
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M8.5 7h2.25v1.5H8.5v2.25H7V8.5H4.75V7H7V4.75h1.5z" />
+      <path
+              fill="currentColor"
+              d="M8.5 7h2.25v1.5H8.5v2.25H7V8.5H4.75V7H7V4.75h1.5z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

@@ -24,7 +24,12 @@ export const ResizeIcon = forwardRef<SVGSVGElement, ResizeIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" fillRule="evenodd" d="M15 6.75H1v-1.5h14zm0 4.75H1V10h14z" clipRule="evenodd" />
+      <path
+              fill="currentColor"
+              fillRule="evenodd"
+              d="M15 6.75H1v-1.5h14zm0 4.75H1V10h14z"
+              clipRule="evenodd"
+            />
     </svg>
   )
 );

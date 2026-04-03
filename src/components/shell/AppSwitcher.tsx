@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils"
 
 function LakehouseIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M16 4.48047L28 13.1205H4L16 4.48047Z" fill="#FABFBA"/>
       <path d="M4.46094 22.2402H15.5009C15.5009 25.1563 13.137 27.5202 10.2209 27.5202H9.74094C6.82488 27.5202 4.46094 25.1563 4.46094 22.2402Z" fill="#FF5F46"/>
       <path d="M4.46094 15.6289H15.5009C15.5009 18.545 13.137 20.9089 10.2209 20.9089H9.74094C6.82488 20.9089 4.46094 18.545 4.46094 15.6289Z" fill="#FABFBA"/>
@@ -21,7 +21,7 @@ function LakehouseIcon() {
 
 function DatabricksOneIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#dbone-clip)">
         <path d="M11.0088 9.85254L7.98926 11.4941V21.3672L11.0088 23.0078V27.3604L4 23.3311V9.53027L11.0088 5.5V9.85254ZM28 9.53027V23.3311L21.0088 27.3506V22.998L24.0107 21.3672V11.4941L21.0088 9.8623V5.50977L28 9.53027Z" fill="#FFDB96"/>
         <path d="M21.5326 13.3763V19.4845L16.0466 22.5386L10.5605 19.4845V13.3763L16.0466 10.3223L21.5326 13.3763ZM12.1119 14.2453V18.6155L16.0466 20.806L19.9812 18.6155V14.2453L16.0466 12.0548L12.1119 14.2453Z" fill="#FFAB00"/>
@@ -37,7 +37,7 @@ function DatabricksOneIcon() {
 
 function LakebaseIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#lakebase-clip)">
         <path d="M28 19.1221C26.2178 19.7214 24.1777 20.0635 22 20.0635C19.8223 20.0635 17.7799 19.7214 16 19.1221H28ZM28 19.1211H16C14.22 18.4966 12.1777 18.1397 10 18.1396C7.82228 18.1396 5.78219 18.4966 4 19.1211V12.7422H28V19.1211Z" fill="#9ED6C4"/>
         <path d="M10.0283 20.4863C12.1958 20.4863 14.2284 20.8112 16 21.3799C17.7716 21.9485 19.8042 22.2734 21.9717 22.2734C23.8683 22.2734 25.66 22.0242 27.2666 21.5811L27.9434 21.3799H28V27.999H4V21.3799H4.05664C5.83043 20.8112 7.86087 20.4863 10.0283 20.4863Z" fill="#00A972"/>
@@ -54,7 +54,7 @@ function LakebaseIcon() {
 
 function DatabricksAppsIcon() {
   return (
-    <svg width="40" height="40" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <g clipPath="url(#apps-clip)">
         <rect x="4" y="4" width="11" height="11" fill="#FABFBA"/>
         <path d="M9.5 17L15 28H4L9.5 17Z" fill="#FF5F46"/>
@@ -127,8 +127,9 @@ export function AppSwitcher() {
       </Button>
 
       {open && (
+        // Figma: w-297px, rounded-12px, p-6px, Level 1 shadow, border border-border
         <div
-          className="absolute right-0 top-full z-50 mt-1 w-[320px] rounded-md border border-border bg-background p-1.5 shadow-[var(--shadow-db-lg)]"
+          className="absolute right-0 top-full z-50 mt-1 w-[297px] rounded-md border border-border bg-background p-[6px] shadow-[var(--shadow-db-lg)]"
           role="menu"
         >
           {APPS.map((app) => {
@@ -139,21 +140,22 @@ export function AppSwitcher() {
                 role="menuitem"
                 onClick={() => { setActiveApp(app.id); setOpen(false) }}
                 className={cn(
-                  "flex w-full items-center gap-3 rounded px-3 py-2.5 text-left transition-colors",
-                  isActive ? "bg-primary/10" : "hover:bg-muted"
+                  // Figma: h-50px, px-8px, py-8px, gap-8px, rounded-8px
+                  "flex h-[50px] w-full items-center gap-2 rounded-md px-2 py-2 text-left transition-colors",
+                  isActive ? "bg-[var(--action-default-bg-hover)]" : "hover:bg-[var(--action-default-bg-hover)]"
                 )}
               >
-                <div className="shrink-0">
+                {/* Figma: AppIcon 32×32 container, p-4px, rounded-4px */}
+                <div className="flex size-8 shrink-0 items-center justify-center rounded p-1">
                   <app.Icon />
                 </div>
-                <div className="flex min-w-0 flex-col gap-0.5">
-                  <span className={cn(
-                    "text-sm font-semibold leading-5 truncate",
-                    isActive ? "text-primary" : "text-foreground"
-                  )}>
+                <div className="flex min-w-0 flex-col gap-1">
+                  {/* Figma: 13px semibold, textPrimary */}
+                  <span className="text-sm font-semibold leading-5 truncate text-foreground">
                     {app.name}
                   </span>
-                  <span className="truncate text-xs leading-4 text-muted-foreground">
+                  {/* Figma: 12px/16px regular, textSecondary */}
+                  <span className="truncate text-hint text-muted-foreground">
                     {app.desc}
                   </span>
                 </div>

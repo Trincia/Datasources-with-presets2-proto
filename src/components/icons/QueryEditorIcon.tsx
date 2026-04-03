@@ -24,7 +24,10 @@ export const QueryEditorIcon = forwardRef<SVGSVGElement, QueryEditorIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M12 12H8v-1.5h4zM5.53 11.53 7.56 9.5 5.53 7.47 4.47 8.53l.97.97-.97.97z" />
+      <path
+              fill="currentColor"
+              d="M12 12H8v-1.5h4zM5.53 11.53 7.56 9.5 5.53 7.47 4.47 8.53l.97.97-.97.97z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

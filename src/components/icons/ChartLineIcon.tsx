@@ -24,8 +24,14 @@ export const ChartLineIcon = forwardRef<SVGSVGElement, ChartLineIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M1 1v13.25c0 .414.336.75.75.75H15v-1.5H2.5V1z" />
-            <path fill="currentColor" d="m15.03 5.03-1.06-1.06L9.5 8.44 7 5.94 3.47 9.47l1.06 1.06L7 8.06l2.5 2.5z" />
+      <path
+              fill="currentColor"
+              d="M1 1v13.25c0 .414.336.75.75.75H15v-1.5H2.5V1z"
+            />
+            <path
+              fill="currentColor"
+              d="m15.03 5.03-1.06-1.06L9.5 8.44 7 5.94 3.47 9.47l1.06 1.06L7 8.06l2.5 2.5z"
+            />
     </svg>
   )
 );

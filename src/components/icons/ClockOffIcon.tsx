@@ -28,7 +28,10 @@ export const ClockOffIcon = forwardRef<SVGSVGElement, ClockOffIconProps>(
               fill="currentColor"
               d="M8 0a8 8 0 0 1 7.944 8.929 5.005 5.005 0 0 0-1.454-1.265A6.5 6.5 0 0 0 1.5 8a6.5 6.5 0 0 0 6.164 6.49 5 5 0 0 0 1.265 1.454A8 8 0 1 1 8 0"
             />
-            <path fill="currentColor" d="M8.75 8a.75.75 0 0 1-.22.53l-2 2-1.06-1.06 1.78-1.78V3h1.5z" />
+            <path
+              fill="currentColor"
+              d="M8.75 8a.75.75 0 0 1-.22.53l-2 2-1.06-1.06 1.78-1.78V3h1.5z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

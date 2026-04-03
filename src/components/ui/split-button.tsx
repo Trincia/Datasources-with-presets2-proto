@@ -20,9 +20,10 @@ function SplitButton({
   variant = "default",
   className,
 }: SplitButtonProps) {
+  // DuBois: divider on primary (default) button is white — sits on blue bg so white reads as subtle separator
   const dividerColor =
-    variant === "default"   ? "border-l-blue-700 dark:border-l-blue-500" :
-    variant === "destructive" ? "border-l-red-700"  : "border-l-border"
+    variant === "default"     ? "border-l-white/40"  :
+    variant === "destructive" ? "border-l-white/40"  : "border-l-border"
 
   return (
     <div className={cn("inline-flex -space-x-px", className)}>

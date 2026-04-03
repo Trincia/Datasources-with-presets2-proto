@@ -5,7 +5,7 @@ import { ChevronRightIcon } from "@/components/icons"
 import { DbIcon } from "@/components/ui/db-icon"
 import { NewButton } from "./NewButton"
 import {
-  WorkspacesIcon,
+  NotebookIcon,
   ClockIcon,
   CatalogIcon,
   WorkflowsIcon,
@@ -51,7 +51,7 @@ type NavSection = {
 const NAV_SECTIONS: NavSection[] = [
   {
     items: [
-      { id: "workspace",   label: "Workspace",   icon: WorkspacesIcon, href: "/shell" },
+      { id: "workspace",   label: "Workspace",   icon: NotebookIcon,   href: "/workspace" },
       { id: "recents",     label: "Recents",     icon: ClockIcon },
       { id: "catalog",     label: "Catalog",     icon: CatalogIcon },
       { id: "workflows",   label: "Workflows",   icon: WorkflowsIcon,  href: "/jobs" },
@@ -116,17 +116,17 @@ export function Sidebar({
     <aside
       className={cn(
         "flex h-full shrink-0 flex-col bg-secondary transition-all duration-200 overflow-hidden",
-        open ? "w-[220px]" : "w-0",
+        open ? "w-[200px]" : "w-0",
         className
       )}
     >
-      {/* New button — fixed above the scrollable nav */}
-      {open && <div className="px-2 pt-2 pb-1"><NewButton /></div>}
+      {/* New button — Figma: 8px top padding, 16px gap below before first nav item */}
+      {open && <div className="px-3 pb-4"><NewButton /></div>}
 
       {/* Nav — scrollable */}
       <nav
         className={cn(
-          "flex flex-1 flex-col gap-3 overflow-y-auto px-2 pb-2",
+          "flex flex-1 flex-col gap-3 overflow-y-auto px-3 pb-2",
           // Thin, styled scrollbar
           "[&::-webkit-scrollbar]:w-[5px]",
           "[&::-webkit-scrollbar-track]:bg-transparent",
@@ -145,7 +145,7 @@ export function Sidebar({
               {section.label && open && (
                 <button
                   onClick={() => toggleSection(section.label!)}
-                  className="group flex h-7 w-full items-center rounded px-2 text-left transition-colors hover:bg-muted-foreground/10"
+                  className="group flex h-6 w-full items-center rounded px-3 text-left transition-colors hover:bg-[var(--action-default-bg-hover)]"
                 >
                   <span className="text-xs font-normal text-muted-foreground">
                     {section.label}
@@ -196,21 +196,24 @@ function NavItemButton({
   onClick: () => void
 }) {
   const className = cn(
-    "flex h-7 w-full items-center gap-2 rounded px-2 text-left text-sm transition-colors",
+    // Figma: h-28px, px-12px, gap-8px, rounded-4px, text-13px
+    "group flex h-7 w-full items-center gap-2 rounded px-3 text-left text-sm transition-colors",
     active
       ? "bg-primary/10 text-primary font-semibold"
-      : "text-foreground hover:bg-muted-foreground/10",
+      : "text-foreground hover:bg-[var(--action-default-bg-hover)]",
     sidebarCollapsed && "justify-center px-0"
   )
 
   const content = (
     <>
-      <span className="shrink-0">
-        <DbIcon
-          icon={item.icon}
-          size={16}
-          color={active ? "primary" : item.iconColor ?? "muted"}
-        />
+      <span className={cn(
+        "shrink-0 transition-colors",
+        // Active: primary (blue). Inactive: muted by default, foreground on hover.
+        active
+          ? "text-primary"
+          : "text-muted-foreground group-hover:text-foreground"
+      )}>
+        <DbIcon icon={item.icon} size={16} color={item.iconColor === "ai" ? "ai" : "default"} />
       </span>
       {!sidebarCollapsed && <span className="truncate">{item.label}</span>}
     </>

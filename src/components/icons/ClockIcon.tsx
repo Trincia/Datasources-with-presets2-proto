@@ -24,7 +24,10 @@ export const ClockIcon = forwardRef<SVGSVGElement, ClockIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.25 4v4c0 .199.079.39.22.53l2 2 1.06-1.06-1.78-1.78V4z" />
+      <path
+              fill="currentColor"
+              d="M7.25 4v4c0 .199.079.39.22.53l2 2 1.06-1.06-1.78-1.78V4z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

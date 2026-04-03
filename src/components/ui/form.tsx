@@ -12,6 +12,7 @@ import {
   type FieldPath,
   type FieldValues,
 } from "react-hook-form"
+import { DangerIcon } from "@/components/icons"
 
 import { cn } from "@/lib/utils"
 import { Label } from "@/components/ui/label"
@@ -80,7 +81,7 @@ function FormItem({ className, ...props }: React.ComponentProps<"div">) {
     <FormItemContext.Provider value={{ id }}>
       <div
         data-slot="form-item"
-        className={cn("grid gap-2", className)}
+        className={cn("flex flex-col gap-2", className)}
         {...props}
       />
     </FormItemContext.Provider>
@@ -129,29 +130,34 @@ function FormDescription({ className, ...props }: React.ComponentProps<"p">) {
     <p
       data-slot="form-description"
       id={formDescriptionId}
-      className={cn("text-muted-foreground text-sm", className)}
+      // DuBois Hint: 12px/16px, textSecondary.
+      // -mt-1 pulls hint 4px closer to label (gap-2=8px → 4px visual), keeping control gap at 8px.
+      className={cn("text-hint text-muted-foreground -mt-1", className)}
       {...props}
     />
   )
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<"p">) {
+function FormMessage({ className, children, ...props }: React.ComponentProps<"div">) {
   const { error, formMessageId } = useFormField()
-  const body = error ? String(error?.message ?? "") : props.children
+  const body = error ? String(error?.message ?? "") : children
 
   if (!body) {
     return null
   }
 
   return (
-    <p
+    <div
       data-slot="form-message"
       id={formMessageId}
-      className={cn("text-destructive text-sm", className)}
+      role="alert"
+      // DuBois FormMessage: fontSizeSm 12px / lineHeightSm 16px, icon + text, marginTop 8px handled by gap
+      className={cn("text-hint text-destructive flex items-start gap-1", className)}
       {...props}
     >
-      {body}
-    </p>
+      <DangerIcon size={12} className="mt-[2px] shrink-0" />
+      <span>{body}</span>
+    </div>
   )
 }
 

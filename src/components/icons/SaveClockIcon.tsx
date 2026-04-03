@@ -36,7 +36,10 @@ export const SaveClockIcon = forwardRef<SVGSVGElement, SaveClockIconProps>(
               d="M1.75 1a.75.75 0 0 0-.75.75v12.5c0 .414.336.75.75.75h5.941a5.2 5.2 0 0 1-.724-1.5H2.5v-11H5v3.75c0 .414.336.75.75.75h4.5a.75.75 0 0 0 .75-.75V2.81l2.5 2.5v1.657a5.2 5.2 0 0 1 1.5.724V5a.75.75 0 0 0-.22-.53l-3.25-3.25A.75.75 0 0 0 11 1zM6.5 2.5h3v3h-3z"
               clipRule="evenodd"
             />
-            <path fill="currentColor" d="M7.527 9.25H5v1.5h1.9a5.2 5.2 0 0 1 .627-1.5" />
+            <path
+              fill="currentColor"
+              d="M7.527 9.25H5v1.5h1.9a5.2 5.2 0 0 1 .627-1.5"
+            />
     </svg>
   )
 );

@@ -98,6 +98,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination"
+import { WorkspacesIcon } from "@/components/icons"
 
 
 // ─── Alert ── node 28-2 ─────────────────────────────────────────────────────
@@ -795,8 +796,7 @@ figma.connect(
     example: ({ selected }) => (
       <ListItem
         selected={selected}
-        icon={<span />}
-        actions={<span />}
+        icon={<WorkspacesIcon size={14} />}
       >
         Item label
       </ListItem>

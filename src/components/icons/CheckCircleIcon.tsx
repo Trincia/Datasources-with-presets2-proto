@@ -24,7 +24,10 @@ export const CheckCircleIcon = forwardRef<SVGSVGElement, CheckCircleIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M11.53 6.53 7 11.06 4.47 8.53l1.06-1.06L7 8.94l3.47-3.47z" />
+      <path
+              fill="currentColor"
+              d="M11.53 6.53 7 11.06 4.47 8.53l1.06-1.06L7 8.94l3.47-3.47z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

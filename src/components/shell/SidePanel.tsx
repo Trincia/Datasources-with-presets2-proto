@@ -4,7 +4,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Tree, TreeNode } from "@/components/ui/tree"
+import { Tree, TreeNode, TreeNodeSize } from "@/components/ui/tree"
 import {
   RefreshIcon, OverflowIcon, CloseIcon, FilterIcon,
   HomeIcon, SearchIcon,
@@ -20,6 +20,7 @@ export interface SidePanelProps {
   selectedId?: string
   onSelect?: (id: string) => void
   onClose?: () => void
+  size?: TreeNodeSize
   className?: string
 }
 
@@ -31,6 +32,7 @@ export function SidePanel({
   selectedId,
   onSelect,
   onClose,
+  size = "small",
   className,
 }: SidePanelProps) {
   const [search, setSearch] = React.useState("")
@@ -99,6 +101,7 @@ export function SidePanel({
           nodes={nodes}
           selectedId={selectedId}
           onSelect={onSelect}
+          size={size}
         />
       </div>
     </div>

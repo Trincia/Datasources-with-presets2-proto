@@ -24,7 +24,10 @@ export const CircleIcon = forwardRef<SVGSVGElement, CircleIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M12.5 8a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0" />
+      <path
+              fill="currentColor"
+              d="M12.5 8a4.5 4.5 0 1 1-9 0 4.5 4.5 0 0 1 9 0"
+            />
     </svg>
   )
 );

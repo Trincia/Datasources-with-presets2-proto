@@ -24,8 +24,14 @@ export const ChevronDoubleDownIcon = forwardRef<SVGSVGElement, ChevronDoubleDown
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M10.947 7.954 8 10.891 5.056 7.954 3.997 9.016l4.004 3.993 4.005-3.993z" />
-            <path fill="currentColor" d="M10.947 3.994 8 6.931 5.056 3.994 3.997 5.056 8.001 9.05l4.005-3.993z" />
+      <path
+              fill="currentColor"
+              d="M10.947 7.954 8 10.891 5.056 7.954 3.997 9.016l4.004 3.993 4.005-3.993z"
+            />
+            <path
+              fill="currentColor"
+              d="M10.947 3.994 8 6.931 5.056 3.994 3.997 5.056 8.001 9.05l4.005-3.993z"
+            />
     </svg>
   )
 );

@@ -24,7 +24,10 @@ export const BarsDescendingVerticalIcon = forwardRef<SVGSVGElement, BarsDescendi
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7 12.75H1v-1.5h6zM15 4.75H1v-1.5h14zM1 7.25h10v1.5H1z" />
+      <path
+              fill="currentColor"
+              d="M7 12.75H1v-1.5h6zM15 4.75H1v-1.5h14zM1 7.25h10v1.5H1z"
+            />
     </svg>
   )
 );

@@ -24,7 +24,10 @@ export const LibrariesIcon = forwardRef<SVGSVGElement, LibrariesIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="m8.301 1.522 5.25 13.5 1.398-.544-5.25-13.5zM1 15V1h1.5v14zM5 15V1h1.5v14z" />
+      <path
+              fill="currentColor"
+              d="m8.301 1.522 5.25 13.5 1.398-.544-5.25-13.5zM1 15V1h1.5v14zM5 15V1h1.5v14z"
+            />
     </svg>
   )
 );

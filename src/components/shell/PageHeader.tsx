@@ -2,6 +2,8 @@
 
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import { StarIcon, StarFillIcon } from "@/components/icons"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -12,6 +14,10 @@ interface PageHeaderProps {
   title: React.ReactNode
   /** Optional 32×32 avatar/icon left of the title (e.g. an AI model icon) */
   avatar?: React.ReactNode
+  /** Whether the page is starred/favorited */
+  starred?: boolean
+  /** Called when the star button is toggled */
+  onStarToggle?: () => void
   /** Icon-sized action buttons rendered inline after the title (copy, link, etc.) */
   titleIcons?: React.ReactNode
   /** Badge/tag rendered inline after the title icons (e.g. "Preview") */
@@ -29,6 +35,8 @@ export function PageHeader({
   breadcrumbs,
   title,
   avatar,
+  starred,
+  onStarToggle,
   titleIcons,
   badge,
   description,
@@ -49,9 +57,22 @@ export function PageHeader({
               {avatar}
             </div>
           )}
-          <h2 className="shrink-0 text-xl font-semibold leading-7 text-foreground whitespace-nowrap">
+          <h2 className="shrink-0 text-[22px] font-semibold leading-7 text-foreground whitespace-nowrap">
             {title}
           </h2>
+          {onStarToggle && (
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              aria-label={starred ? "Remove from favorites" : "Add to favorites"}
+              onClick={onStarToggle}
+            >
+              {starred
+                ? <StarFillIcon size={14} className="text-[var(--color-star)] transition-colors" />
+                : <StarIcon     size={14} className="text-muted-foreground transition-colors hover:text-[var(--color-star)]" />
+              }
+            </Button>
+          )}
           {titleIcons && (
             <div className="flex items-center gap-0.5">{titleIcons}</div>
           )}
@@ -66,7 +87,7 @@ export function PageHeader({
 
       {/* Description row */}
       {description && (
-        <div className="flex items-center gap-1 text-xs text-muted-foreground">
+        <div className="flex items-center gap-1 text-hint text-muted-foreground">
           {description}
         </div>
       )}

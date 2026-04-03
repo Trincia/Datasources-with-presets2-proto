@@ -24,7 +24,10 @@ export const InfoSmallIcon = forwardRef<SVGSVGElement, InfoSmallIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.25 10.5v-3h1.5v3zM8 5a.75.75 0 1 1 0 1.5A.75.75 0 0 1 8 5" />
+      <path
+              fill="currentColor"
+              d="M7.25 10.5v-3h1.5v3zM8 5a.75.75 0 1 1 0 1.5A.75.75 0 0 1 8 5"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

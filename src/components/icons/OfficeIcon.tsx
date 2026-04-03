@@ -24,7 +24,10 @@ export const OfficeIcon = forwardRef<SVGSVGElement, OfficeIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M4 8.75h8v-1.5H4zM7 5.75H4v-1.5h3zM4 11.75h8v-1.5H4z" />
+      <path
+              fill="currentColor"
+              d="M4 8.75h8v-1.5H4zM7 5.75H4v-1.5h3zM4 11.75h8v-1.5H4z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

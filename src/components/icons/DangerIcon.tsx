@@ -24,7 +24,10 @@ export const DangerIcon = forwardRef<SVGSVGElement, DangerIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.248 10.748a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0M8.748 4.998v4h-1.5v-4z" />
+      <path
+              fill="currentColor"
+              d="M7.248 10.748a.75.75 0 1 0 1.5 0 .75.75 0 0 0-1.5 0M8.748 4.998v4h-1.5v-4z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

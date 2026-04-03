@@ -5,20 +5,20 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  // DuBois base: 4px radius, 600 weight, 40% disabled opacity, 13px font
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded text-sm font-semibold transition-all disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+  // DuBois base: 4px radius, regular weight (400), 40% disabled opacity, 13px font
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded text-sm font-normal transition-all disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[2px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
   {
     variants: {
       variant: {
         // DuBois primary — blue600, hover blue700, press blue800
         default:
           "bg-primary text-primary-foreground hover:bg-blue-700 active:bg-blue-800",
-        // DuBois outline — grey300 border for visible contrast on white bg
+        // DuBois outline — neutral300 border (cbcbcb), hover turns text+border blue
         outline:
-          "border border-grey-300 bg-background hover:bg-secondary hover:text-secondary-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        // DuBois tertiary / ghost
+          "border border-input bg-background hover:bg-[var(--action-default-bg-hover)] hover:text-blue-700 hover:border-primary dark:bg-input/30 dark:border-input dark:hover:bg-[var(--action-default-bg-hover)] dark:hover:text-blue-400 dark:hover:border-blue-400",
+        // DuBois ghost — transparent, hover turns text blue
         ghost:
-          "hover:bg-secondary hover:text-secondary-foreground dark:hover:bg-accent/50",
+          "hover:bg-[var(--action-default-bg-hover)] hover:text-blue-700 dark:hover:bg-[var(--action-default-bg-hover)] dark:hover:text-blue-400",
         // DuBois danger
         destructive:
           "bg-destructive text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",

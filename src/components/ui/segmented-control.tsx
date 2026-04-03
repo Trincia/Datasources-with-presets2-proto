@@ -62,7 +62,7 @@ function SegmentedItem({ value, children, className, disabled }: SegmentedItemPr
         "rounded-none border-border first:rounded-l last:rounded-r",
         isActive
           ? "relative z-10 border-primary bg-primary/5 text-primary font-semibold hover:bg-primary/5 hover:text-primary"
-          : "bg-background hover:bg-secondary",
+          : "bg-background hover:relative hover:z-10 hover:bg-secondary",
         className
       )}
     >

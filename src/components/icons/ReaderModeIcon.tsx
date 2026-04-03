@@ -24,7 +24,10 @@ export const ReaderModeIcon = forwardRef<SVGSVGElement, ReaderModeIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M13 4.5h-3V6h3zM13 7.25h-3v1.5h3zM13 10h-3v1.5h3z" />
+      <path
+              fill="currentColor"
+              d="M13 4.5h-3V6h3zM13 7.25h-3v1.5h3zM13 10h-3v1.5h3z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

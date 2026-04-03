@@ -5,8 +5,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DbIcon } from "@/components/ui/db-icon"
 import {
-  SidebarCollapseIcon,
-  SidebarExpandIcon,
+  SidebarOpenIcon,
+  SidebarClosedIcon,
   SparkleIcon,
   SearchIcon,
   ChevronDownIcon,
@@ -53,7 +53,7 @@ export function TopBar({
         >
           <MenuIcon size={16} className="text-muted-foreground" />
         </Button>
-        {/* Desktop: collapse/expand inline sidebar */}
+        {/* Desktop: collapse/expand — SidebarOpenIcon when open, SidebarExpandIcon when closed */}
         <Button
           variant="ghost"
           size="icon-sm"
@@ -61,18 +61,17 @@ export function TopBar({
           onClick={onToggleSidebar}
           aria-label={sidebarOpen ? "Collapse sidebar" : "Expand sidebar"}
         >
-          {sidebarOpen ? (
-            <SidebarCollapseIcon className="h-4 w-4 text-muted-foreground" />
-          ) : (
-            <SidebarExpandIcon className="h-4 w-4 text-muted-foreground" />
-          )}
+          {sidebarOpen
+            ? <SidebarOpenIcon className="h-4 w-4 text-muted-foreground" />
+            : <SidebarClosedIcon className="h-4 w-4 text-muted-foreground" />
+          }
         </Button>
         <Link href="/"><DatabricksLogo height={18} /></Link>
       </div>
 
       {/* Center: search (hidden on mobile) */}
       <div className="hidden md:flex flex-1 justify-center px-4">
-        <div className="relative flex w-full max-w-[480px] items-center">
+        <div className="relative flex w-full max-w-[500px] items-center">
           <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           <Input
             className="h-8 rounded bg-background border-border pl-9 pr-14 text-xs placeholder:text-muted-foreground"
@@ -89,10 +88,12 @@ export function TopBar({
       <div className="flex-1 md:hidden" />
 
       {/* Right: workspace selector + icon buttons + avatar */}
-      <div className="flex items-center gap-0.5">
-        <Button variant="ghost" size="sm" className="hidden md:flex gap-1 px-2">
-          <span className="text-xs">{workspace}</span>
-          <ChevronDownIcon size={12} className="text-muted-foreground" />
+      {/* Figma: gap-1 (4px) between items */}
+      <div className="flex items-center gap-1">
+        {/* Figma: h-32px, px-12px, gap-4px, text-13px regular, chevron-16px */}
+        <Button variant="ghost" size="sm" className="hidden md:flex gap-1 px-3">
+          <span className="text-sm">{workspace}</span>
+          <ChevronDownIcon size={16} className="text-muted-foreground" />
         </Button>
 
         <Button variant="ghost" size="icon-sm" aria-label="AI Assistant">
@@ -101,13 +102,15 @@ export function TopBar({
 
         <AppSwitcher />
 
-        {/* User avatar */}
-        <button
-          className="ml-1 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-primary text-xs font-semibold text-primary-foreground"
+        {/* Figma: 32px circle, bg-primary, text-white */}
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          className="ml-1 rounded-full bg-primary text-xs font-semibold text-primary-foreground hover:bg-blue-700 hover:text-primary-foreground"
           aria-label="User menu"
         >
           {userInitial}
-        </button>
+        </Button>
       </div>
     </header>
   )

@@ -26,12 +26,13 @@ function Tabs({
 }
 
 const tabsListVariants = cva(
-  "rounded-lg p-[3px] group-data-[orientation=horizontal]/tabs:h-9 data-[variant=line]:rounded-none group/tabs-list text-muted-foreground inline-flex w-fit items-center justify-center group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
+  // DuBois: 32px height, no internal padding for line variant
+  "rounded p-[3px] group-data-[orientation=horizontal]/tabs:h-8 data-[variant=line]:rounded-none data-[variant=line]:p-0 group/tabs-list text-muted-foreground inline-flex w-fit items-center justify-center group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
   {
     variants: {
       variant: {
         default: "bg-muted",
-        line: "gap-1 bg-transparent",
+        line: "gap-4 bg-transparent border-b border-input",
         contained: "rounded-none bg-secondary border-b border-border gap-[-1px] p-0 px-1",
       },
     },
@@ -65,14 +66,17 @@ function TabsTrigger({
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
       className={cn(
-        "focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:outline-ring text-foreground/60 hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded-md border border-transparent px-2 py-1 text-sm font-medium whitespace-nowrap transition-all group-data-[orientation=vertical]/tabs:w-full group-data-[orientation=vertical]/tabs:justify-start focus-visible:ring-[3px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=line]/tabs-list:data-[state=active]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
-        "group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:border-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent",
-        // DuBois: foreground color + semibold for active tab (blue indicator, not blue text)
-        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 data-[state=active]:text-foreground data-[state=active]:font-semibold",
-        // DuBois: blue indicator (not foreground), semibold active label
-  "after:bg-primary after:absolute after:opacity-0 after:transition-opacity group-data-[orientation=horizontal]/tabs:after:inset-x-0 group-data-[orientation=horizontal]/tabs:after:bottom-[-5px] group-data-[orientation=horizontal]/tabs:after:h-0.5 group-data-[orientation=vertical]/tabs:after:inset-y-0 group-data-[orientation=vertical]/tabs:after:-right-1 group-data-[orientation=vertical]/tabs:after:w-0.5 group-data-[variant=line]/tabs-list:data-[state=active]:after:opacity-100",
-        // Contained variant: active tab gets white bg + top/side borders, no bottom border
-        "group-data-[variant=contained]/tabs-list:rounded-none group-data-[variant=contained]/tabs-list:border-0 group-data-[variant=contained]/tabs-list:shadow-none group-data-[variant=contained]/tabs-list:h-full group-data-[variant=contained]/tabs-list:data-[state=active]:bg-background group-data-[variant=contained]/tabs-list:data-[state=active]:border group-data-[variant=contained]/tabs-list:data-[state=active]:border-border group-data-[variant=contained]/tabs-list:data-[state=active]:border-b-transparent",
+        // DuBois: 4px radius (rounded not rounded-md), line variant px-0 flex-none; all tabs semibold (600) per DuBois
+        "focus-visible:border-ring focus-visible:ring-ring focus-visible:outline-ring text-foreground/60 hover:text-foreground dark:text-muted-foreground dark:hover:text-foreground relative inline-flex h-[calc(100%-1px)] flex-1 items-center justify-center gap-1.5 rounded border border-transparent px-2 py-1 text-sm font-semibold whitespace-nowrap transition-all group-data-[orientation=vertical]/tabs:w-full group-data-[orientation=vertical]/tabs:justify-start focus-visible:ring-[2px] focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 group-data-[variant=default]/tabs-list:data-[state=active]:shadow-sm group-data-[variant=line]/tabs-list:data-[state=active]:shadow-none [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        // DuBois line: no padding, no radius, no bg, intrinsic width. Trigger padding: 4px top, 8px bottom (spacing.xs/sm)
+        "group-data-[variant=line]/tabs-list:px-0 group-data-[variant=line]/tabs-list:pt-1 group-data-[variant=line]/tabs-list:pb-2 group-data-[variant=line]/tabs-list:flex-none group-data-[variant=line]/tabs-list:rounded-none group-data-[variant=line]/tabs-list:border-0 group-data-[variant=line]/tabs-list:bg-transparent group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:border-transparent dark:group-data-[variant=line]/tabs-list:data-[state=active]:bg-transparent",
+        // DuBois: foreground color for active tab (blue indicator, not blue text); weight stays semibold (all tabs)
+        "data-[state=active]:bg-background dark:data-[state=active]:text-foreground dark:data-[state=active]:border-input dark:data-[state=active]:bg-input/30 data-[state=active]:text-foreground",
+        // DuBois: blue inset box-shadow indicator for line variant (matches production inset 0 -4px 0 primary)
+        // h-full so the 4px shadow sits flush against the list's border-b (no gap)
+        "group-data-[variant=line]/tabs-list:h-full group-data-[variant=line]/tabs-list:data-[state=active]:shadow-[inset_0_-4px_0_var(--primary)]",
+        // Contained variant: active tab gets white bg + top blue indicator, no focus ring
+        "group-data-[variant=contained]/tabs-list:rounded-none group-data-[variant=contained]/tabs-list:border-0 group-data-[variant=contained]/tabs-list:shadow-none group-data-[variant=contained]/tabs-list:h-full group-data-[variant=contained]/tabs-list:focus-visible:ring-0 group-data-[variant=contained]/tabs-list:focus-visible:outline-none group-data-[variant=contained]/tabs-list:focus-visible:border-transparent group-data-[variant=contained]/tabs-list:data-[state=active]:bg-background group-data-[variant=contained]/tabs-list:data-[state=active]:border-0 group-data-[variant=contained]/tabs-list:data-[state=active]:shadow-[inset_0_2px_0_var(--primary)]",
         className
       )}
       {...props}

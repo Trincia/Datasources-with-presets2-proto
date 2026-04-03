@@ -24,7 +24,10 @@ export const ZoomInIcon = forwardRef<SVGSVGElement, ZoomInIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M8.75 7.25H11v1.5H8.75V11h-1.5V8.75H5v-1.5h2.25V5h1.5z" />
+      <path
+              fill="currentColor"
+              d="M8.75 7.25H11v1.5H8.75V11h-1.5V8.75H5v-1.5h2.25V5h1.5z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

@@ -28,7 +28,10 @@ export const ArrowInIcon = forwardRef<SVGSVGElement, ArrowInIconProps>(
               fill="currentColor"
               d="M4.5 2.5h9v11h-9V11H3v3.25c0 .414.336.75.75.75h10.5a.75.75 0 0 0 .75-.75V1.75a.75.75 0 0 0-.75-.75H3.75a.75.75 0 0 0-.75.75V5h1.5z"
             />
-            <path fill="currentColor" d="M12.06 8 8.03 3.97 6.97 5.03l2.22 2.22H1v1.5h8.19l-2.22 2.22 1.06 1.06z" />
+            <path
+              fill="currentColor"
+              d="M12.06 8 8.03 3.97 6.97 5.03l2.22 2.22H1v1.5h8.19l-2.22 2.22 1.06 1.06z"
+            />
     </svg>
   )
 );

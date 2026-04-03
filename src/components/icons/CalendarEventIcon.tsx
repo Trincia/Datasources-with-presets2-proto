@@ -24,7 +24,10 @@ export const CalendarEventIcon = forwardRef<SVGSVGElement, CalendarEventIconProp
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M8.5 10.25a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0" />
+      <path
+              fill="currentColor"
+              d="M8.5 10.25a1.75 1.75 0 1 1 3.5 0 1.75 1.75 0 0 1-3.5 0"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

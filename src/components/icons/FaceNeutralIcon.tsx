@@ -24,7 +24,12 @@ export const FaceNeutralIcon = forwardRef<SVGSVGElement, FaceNeutralIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <g fill="currentColor" fillRule="evenodd" clipPath="url(#FaceNeutralIcon_svg__a)" clipRule="evenodd">
+      <g
+              fill="currentColor"
+              fillRule="evenodd"
+              clipPath="url(#FaceNeutralIcon_svg__a)"
+              clipRule="evenodd"
+            >
               <path d="M8 2.084a5.917 5.917 0 1 0 0 11.833A5.917 5.917 0 0 0 8 2.084M.583 8a7.417 7.417 0 1 1 14.834 0A7.417 7.417 0 0 1 .583 8" />
               <path d="M4.583 10a.75.75 0 0 1 .75-.75h5.334a.75.75 0 1 1 0 1.5H5.333a.75.75 0 0 1-.75-.75M5.25 6A.75.75 0 0 1 6 5.25h.007a.75.75 0 0 1 0 1.5H6A.75.75 0 0 1 5.25 6M9.25 6a.75.75 0 0 1 .75-.75h.007a.75.75 0 1 1 0 1.5H10A.75.75 0 0 1 9.25 6" />
             </g>

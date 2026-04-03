@@ -24,7 +24,10 @@ export const WarningIcon = forwardRef<SVGSVGElement, WarningIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.25 10V6.5h1.5V10zM8 12.5A.75.75 0 1 0 8 11a.75.75 0 0 0 0 1.5" />
+      <path
+              fill="currentColor"
+              d="M7.25 10V6.5h1.5V10zM8 12.5A.75.75 0 1 0 8 11a.75.75 0 0 0 0 1.5"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

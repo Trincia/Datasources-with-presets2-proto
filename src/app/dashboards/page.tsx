@@ -1,463 +1,238 @@
 "use client"
 
 import * as React from "react"
-import { AppShell } from "@/components/shell"
+import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { AppShell, PageHeader } from "@/components/shell"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { ListItem } from "@/components/ui/list-item"
+import { Badge } from "@/components/ui/badge"
+import {
+  Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
+} from "@/components/ui/select"
 import {
   Table, TableBody, TableCell, TableHead, TableHeader, TableRow,
 } from "@/components/ui/table"
 import {
-  DataIcon, SchemaIcon, ErdIcon, StarIcon, OverflowIcon,
-  UserGroupIcon, PencilIcon, FilterIcon, ChevronRightIcon,
-  BarChartIcon, ChevronDownIcon,
+  BarChartIcon, StarFillIcon, OverflowIcon,
+  SearchIcon,
 } from "@/components/icons"
-import {
-  Hash, AlignJustify, Clock, Plus, X, RefreshCw, Settings2,
-} from "lucide-react"
+import { ArrowUpDown, Plus } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
-type FieldType = "measure" | "dimension" | "date"
-type GridTab   = "data" | "measures" | "fields"
-type Panel     = "datasets" | "filters" | "viz"
+type DashStatus = "Published" | "Draft"
 
-// ─── Data ─────────────────────────────────────────────────────────────────────
-
-const DATASETS = [
-  { id: "order_analysis",         name: "order_analysis" },
-  { id: "line_item_stats",        name: "line_item_stats" },
-  { id: "regional_sales_summary", name: "regional_sales_summary" },
-]
-
-const MEASURES = [
-  "Total Orders", "Total Revenue", "Average Order Value",
-  "7 Day Trailing Revenue", "MTD Orders", "YTD Revenue",
-]
-
-const FIELDS: { name: string; type: FieldType }[] = [
-  { name: "Order Key",      type: "measure" },
-  { name: "Customer Key",   type: "measure" },
-  { name: "Order Status",   type: "dimension" },
-  { name: "Total Price",    type: "measure" },
-  { name: "Order Date",     type: "date" },
-  { name: "Order Priority", type: "dimension" },
-  { name: "Clerk",          type: "dimension" },
-  { name: "Ship Priority",  type: "measure" },
-  { name: "Comment",        type: "dimension" },
-  { name: "Ship Date",      type: "date" },
-  { name: "Commit Date",    type: "date" },
-  { name: "Receipt Date",   type: "date" },
-  { name: "Ship Mode",      type: "dimension" },
-  { name: "Quantity",       type: "measure" },
-  { name: "Extended Price", type: "measure" },
-  { name: "Discount",       type: "measure" },
-  { name: "Tax",            type: "measure" },
-  { name: "Return Flag",    type: "dimension" },
-  { name: "Line Status",    type: "dimension" },
-  { name: "Part Key",       type: "measure" },
-  { name: "Supplier Key",   type: "measure" },
-  { name: "Line Number",    type: "measure" },
-  { name: "Part Name",      type: "dimension" },
-  { name: "Supplier Name",  type: "dimension" },
-]
-
-const GRID_ROWS = [
-  { idx:  1, ok:  1, ck:  1, status: "O", price: 172132.34, date: "2025-03-04", priority: "2-HIGH",          clerk: "Flynn F.", sp: 0, comment: "Standard shipping re…" },
-  { idx:  2, ok:  2, ck:  2, status: "O", price: 105853.75, date: "2025-03-04", priority: "2-HIGH",          clerk: "Alex A.",  sp: 0, comment: "Economy shipping re…" },
-  { idx:  3, ok:  3, ck:  3, status: "P", price:  49701.77, date: "2025-03-04", priority: "3-MEDIUM",        clerk: "Flynn F.", sp: 0, comment: "Economy shipping re…" },
-  { idx:  4, ok:  4, ck:  4, status: "P", price: 153644.95, date: "2025-03-04", priority: "3-MEDIUM",        clerk: "Alex A.",  sp: 0, comment: "Standard shipping re…" },
-  { idx:  5, ok:  5, ck:  5, status: "P", price: 168587.24, date: "2025-03-04", priority: "5-LOW",           clerk: "Drew D.",  sp: 0, comment: "Express shipping re…" },
-  { idx:  6, ok:  6, ck:  6, status: "F", price:  37212.54, date: "2025-03-05", priority: "3-MEDIUM",        clerk: "Blake B.", sp: 0, comment: "Standard shipping re…" },
-  { idx:  7, ok:  7, ck:  7, status: "O", price:  57205.86, date: "2025-03-05", priority: "2-HIGH",          clerk: "Alex A.",  sp: 0, comment: "Economy shipping re…" },
-  { idx:  8, ok:  8, ck:  8, status: "O", price: 164576.21, date: "2025-03-05", priority: "3-MEDIUM",        clerk: "Casey C.", sp: 0, comment: "Economy shipping re…" },
-  { idx:  9, ok:  9, ck:  9, status: "F", price:  63021.14, date: "2025-03-05", priority: "5-LOW",           clerk: "Jamie J.", sp: 0, comment: "Express shipping re…" },
-  { idx: 10, ok: 10, ck: 10, status: "O", price: 153977.83, date: "2025-03-05", priority: "4-NOT SPECIFIED", clerk: "Jamie J.", sp: 0, comment: "Economy shipping re…" },
-  { idx: 11, ok: 11, ck: 11, status: "F", price: 178287.63, date: "2025-03-06", priority: "5-LOW",           clerk: "Flynn F.", sp: 0, comment: "Standard shipping re…" },
-  { idx: 12, ok: 12, ck: 12, status: "P", price: 111172.60, date: "2025-03-06", priority: "2-HIGH",          clerk: "Casey C.", sp: 0, comment: "Economy shipping re…" },
-  { idx: 13, ok: 13, ck: 13, status: "P", price:  96144.40, date: "2025-03-06", priority: "4-NOT SPECIFIED", clerk: "Gray G.",  sp: 0, comment: "Express shipping re…" },
-  { idx: 14, ok: 14, ck: 14, status: "P", price:  44344.56, date: "2025-03-06", priority: "4-NOT SPECIFIED", clerk: "Jamie J.", sp: 0, comment: "Express shipping re…" },
-  { idx: 15, ok: 15, ck: 15, status: "O", price:  89234.10, date: "2025-03-06", priority: "1-URGENT",        clerk: "Alex A.",  sp: 0, comment: "Priority shipping re…" },
-  { idx: 16, ok: 16, ck: 16, status: "F", price: 201456.78, date: "2025-03-07", priority: "2-HIGH",          clerk: "Drew D.",  sp: 0, comment: "Standard shipping re…" },
-  { idx: 17, ok: 17, ck: 17, status: "O", price:  33891.22, date: "2025-03-07", priority: "5-LOW",           clerk: "Blake B.", sp: 0, comment: "Economy shipping re…" },
-  { idx: 18, ok: 18, ck: 18, status: "P", price: 145023.66, date: "2025-03-07", priority: "3-MEDIUM",        clerk: "Casey C.", sp: 0, comment: "Standard shipping re…" },
-]
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-function fmt(n: number) {
-  return n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+type Dashboard = {
+  id: string
+  name: string
+  status: DashStatus
+  owner: string
+  updatedAt: string
+  tags: string[]
 }
 
-function FieldTypeIcon({ type, size = 10 }: { type: FieldType; size?: number }) {
-  const cls = `text-muted-foreground shrink-0`
-  if (type === "measure")   return <Hash       size={size} className={cls} />
-  if (type === "date")      return <Clock      size={size} className={cls} />
-  return <AlignJustify size={size} className={cls} />
-}
+// ─── Sample data ──────────────────────────────────────────────────────────────
 
-// ─── Left icon nav ─────────────────────────────────────────────────────────────
-
-const LEFT_NAV: { id: Panel; label: string; icon: React.ComponentType<{ size?: number; className?: string }> }[] = [
-  { id: "datasets", label: "Datasets",       icon: DataIcon },
-  { id: "filters",  label: "Filters",        icon: FilterIcon },
-  { id: "viz",      label: "Visualizations", icon: BarChartIcon },
+const FEATURED = [
+  { id: "f1", name: "Executive KPIs",       desc: "Revenue, orders, and growth trends",    color: "bg-blue-50 dark:bg-blue-950/40" },
+  { id: "f2", name: "Supply Chain Monitor", desc: "Inventory, lead times, and throughput", color: "bg-purple-50 dark:bg-purple-950/40" },
+  { id: "f3", name: "Customer Segments",    desc: "Cohort analysis and LTV breakdown",     color: "bg-teal-50 dark:bg-teal-950/40" },
 ]
 
-// ─── Page ──────────────────────────────────────────────────────────────────────
+const DASHBOARDS: Dashboard[] = [
+  { id: "1", name: "Executive KPIs",            status: "Published", owner: "Joy Xie",       updatedAt: "Mar 30, 2026, 02:15 PM", tags: ["finance"] },
+  { id: "2", name: "Supply Chain Monitor",       status: "Published", owner: "Alex Rivera",   updatedAt: "Mar 28, 2026, 11:40 AM", tags: ["ops"] },
+  { id: "3", name: "Customer Segments",          status: "Published", owner: "Jordan Kim",    updatedAt: "Mar 25, 2026, 09:00 AM", tags: ["marketing"] },
+  { id: "4", name: "Avocado Dashboard",          status: "Draft",     owner: "Joy Xie",       updatedAt: "Mar 20, 2026, 04:30 PM", tags: [] },
+  { id: "5", name: "Regional Sales Summary",     status: "Published", owner: "Sam Nakamura",  updatedAt: "Mar 18, 2026, 03:00 PM", tags: ["sales"] },
+  { id: "6", name: "Order Analysis",             status: "Published", owner: "Morgan Ellis",  updatedAt: "Mar 15, 2026, 01:00 PM", tags: ["ops", "finance"] },
+  { id: "7", name: "7-Day Trailing Revenue",     status: "Draft",     owner: "Casey Patel",   updatedAt: "Mar 10, 2026, 10:30 AM", tags: ["finance"] },
+  { id: "8", name: "MTD Pipeline Dashboard",     status: "Published", owner: "Taylor Okonkwo", updatedAt: "Mar 08, 2026, 09:15 AM", tags: ["sales"] },
+]
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function DashboardsPage() {
   const [activeNav, setActiveNav] = React.useState("dashboards")
-  const [activePanel, setActivePanel]   = React.useState<Panel | null>("datasets")
-  const [selectedDataset, setSelectedDataset] = React.useState("order_analysis")
-  const [gridTab, setGridTab]           = React.useState<GridTab>("data")
-  const [filterText, setFilterText]     = React.useState("")
+  const [search, setSearch]       = React.useState("")
+  const [ownerFilter, setOwnerFilter] = React.useState("")
+  const [starred, setStarred]     = React.useState<Record<string, boolean>>({ "1": true })
+  const router = useRouter()
 
-  const filteredRows = filterText
-    ? GRID_ROWS.filter((r) =>
-        Object.values(r).some((v) =>
-          String(v).toLowerCase().includes(filterText.toLowerCase())
-        )
-      )
-    : GRID_ROWS
+  const filtered = DASHBOARDS.filter((d) => {
+    const matchSearch = !search || d.name.toLowerCase().includes(search.toLowerCase())
+    const matchOwner  = !ownerFilter || d.owner === ownerFilter
+    return matchSearch && matchOwner
+  })
 
   return (
-    <AppShell
-      activeItem={activeNav}
-      onNavigate={setActiveNav}
-      workspace="Production"
-      mainClassName="overflow-hidden"
-    >
-      <div className="flex h-full flex-col overflow-hidden">
+    <AppShell activeItem={activeNav} onNavigate={setActiveNav}>
+      <div className="flex flex-col gap-6 p-6">
 
-        {/* ── Dashboard title row ───────────────────────────────────────── */}
-        <div className="flex shrink-0 items-center justify-between border-b border-border px-4 py-3">
-          <div className="flex items-center gap-2">
-            <h1 className="text-sm font-semibold text-foreground">Order Analysis Dashboard</h1>
-            <Button variant="ghost" size="icon-xs" aria-label="Favorite" className="hover:text-star text-muted-foreground">
-              <StarIcon size={14} />
-            </Button>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <Button variant="ghost" size="icon-xs" aria-label="More options">
-              <OverflowIcon size={14} className="text-muted-foreground" />
-            </Button>
+        <PageHeader
+          title="Dashboards"
+          actions={
             <Button variant="outline" size="sm" className="gap-1.5">
-              <span className="h-2 w-2 rounded-full bg-[var(--success)] shrink-0" />
-              Serverless
-              <ChevronDownIcon size={12} className="text-muted-foreground" />
+              <Plus className="h-3.5 w-3.5" />
+              Create dashboard
             </Button>
-            <Button size="sm">Publish</Button>
-            <Button variant="outline" size="sm" className="gap-1.5">
-              <UserGroupIcon size={14} className="text-muted-foreground" />
-              Share
-            </Button>
+          }
+        />
+
+        {/* ── Featured ── */}
+        <div className="flex flex-col gap-3">
+          <h2 className="text-sm font-semibold text-foreground">Featured</h2>
+          <div className="grid grid-cols-3 gap-3">
+            {FEATURED.map((item) => (
+              <Link
+                key={item.id}
+                href="/dashboards/detail"
+                className="group flex flex-col gap-3 rounded-md border border-border bg-background hover:border-primary/40 transition-colors overflow-hidden"
+              >
+                <div className={cn("flex h-28 items-center justify-center", item.color)}>
+                  <BarChartIcon size={32} className="text-primary/30 group-hover:text-primary/50 transition-colors" />
+                </div>
+                <div className="flex flex-col gap-0.5 px-3 pb-3">
+                  <span className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                    {item.name}
+                  </span>
+                  <span className="text-hint text-muted-foreground">{item.desc}</span>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
 
-        {/* ── Tab bar ───────────────────────────────────────────────────── */}
-        <div className="flex shrink-0 items-center border-b border-border px-2 h-9">
-          {/* Data tab (active) */}
-          <button className="relative flex h-full items-center gap-1.5 px-3 text-xs font-semibold text-primary after:absolute after:bottom-0 after:left-0 after:right-0 after:h-[2px] after:bg-primary">
-            <BarChartIcon size={14} />
-            Data
-          </button>
-
-          <div className="mx-2 h-4 w-px bg-border" />
-
-          <Button variant="ghost" size="icon-xs" aria-label="Filter canvas">
-            <FilterIcon size={14} className="text-muted-foreground" />
-          </Button>
-          <span className="ml-1 text-xs text-muted-foreground">Order and Lineitem Overview</span>
-          <Button variant="ghost" size="icon-xs" className="ml-1" aria-label="Add canvas">
-            <Plus className="h-3.5 w-3.5 text-muted-foreground" />
-          </Button>
+        {/* ── Filter bar ── */}
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative">
+            <SearchIcon size={14} className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <Input className="w-52 pl-8" placeholder="Search dashboards" value={search} onChange={(e) => setSearch(e.target.value)} />
+          </div>
+          <Select value={ownerFilter} onValueChange={setOwnerFilter}>
+            <SelectTrigger className="w-auto min-w-[100px]">
+              <SelectValue placeholder="Owner" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="Joy Xie">Joy Xie</SelectItem>
+              <SelectItem value="Alex Rivera">Alex Rivera</SelectItem>
+              <SelectItem value="Jordan Kim">Jordan Kim</SelectItem>
+              <SelectItem value="Sam Nakamura">Sam Nakamura</SelectItem>
+            </SelectContent>
+          </Select>
+          <Select>
+            <SelectTrigger className="w-auto min-w-[80px]">
+              <SelectValue placeholder="Tags" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="finance">finance</SelectItem>
+              <SelectItem value="ops">ops</SelectItem>
+              <SelectItem value="sales">sales</SelectItem>
+              <SelectItem value="marketing">marketing</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        {/* ── Body ─────────────────────────────────────────────────────── */}
-        <div className="flex flex-1 overflow-hidden">
-
-          {/* ── Left icon nav ────────────────────────────────────────── */}
-          <div className="flex w-10 shrink-0 flex-col items-center border-r border-border py-1.5 gap-0.5">
-            {LEFT_NAV.map((item) => {
-              const isActive = activePanel === item.id
-              return (
-                <Button
-                  key={item.id}
-                  variant="ghost"
-                  size="icon-sm"
-                  title={item.label}
-                  aria-label={item.label}
-                  onClick={() => setActivePanel(isActive ? null : item.id)}
-                  className={isActive ? "bg-primary/10 text-primary hover:bg-primary/10 hover:text-primary" : "text-muted-foreground"}
-                >
-                  <item.icon size={16} />
-                </Button>
-              )
-            })}
-            <div className="flex-1" />
-            <Button variant="ghost" size="icon-sm" aria-label="Add panel" title="Add panel">
-              <Plus className="h-4 w-4 text-muted-foreground" />
-            </Button>
-          </div>
-
-          {/* ── Datasets panel ───────────────────────────────────────── */}
-          {activePanel === "datasets" && (
-            <div className="flex w-[280px] shrink-0 flex-col overflow-hidden border-r border-border">
-
-              {/* Panel header */}
-              <div className="flex shrink-0 items-center justify-between border-b border-border px-3 py-2">
-                <span className="text-xs font-semibold text-foreground">Datasets</span>
-                <Button variant="ghost" size="icon-xs" onClick={() => setActivePanel(null)} aria-label="Close panel">
-                  <X className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-              </div>
-
-              {/* Scrollable content */}
-              <div className="flex flex-1 flex-col overflow-y-auto">
-
-                {/* Dataset list */}
-                <div className="flex flex-col py-1">
-                  {DATASETS.map((ds) => (
-                    <ListItem
-                      key={ds.id}
-                      selected={selectedDataset === ds.id}
-                      icon={<SchemaIcon size={14} />}
-                      actions={<OverflowIcon size={12} className="text-muted-foreground" />}
-                      onClick={() => setSelectedDataset(ds.id)}
+        {/* ── Table ── */}
+        <div className="overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-8" />
+                <TableHead>
+                  <div className="flex items-center gap-1">Name <ArrowUpDown className="h-3 w-3 text-muted-foreground" /></div>
+                </TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Tags</TableHead>
+                <TableHead>Owner</TableHead>
+                <TableHead>Last updated</TableHead>
+                <TableHead className="w-8" />
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {filtered.map((dash) => (
+                <TableRow key={dash.id} className="group cursor-pointer" onClick={() => router.push("/dashboards/detail")}>
+                  {/* Star */}
+                  <TableCell className="w-8 pr-0">
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        setStarred((p) => ({ ...p, [dash.id]: !p[dash.id] }))
+                      }}
+                      aria-label={starred[dash.id] ? "Remove from favorites" : "Add to favorites"}
+                      className={cn(
+                        "transition-colors",
+                        starred[dash.id]
+                          ? "text-[var(--color-star)]"
+                          : "text-transparent group-hover:text-muted-foreground/40 hover:!text-[var(--color-star)]"
+                      )}
                     >
-                      {ds.name}
-                    </ListItem>
-                  ))}
-                </div>
+                      <StarFillIcon size={14} />
+                    </Button>
+                  </TableCell>
 
-                {/* New Dataset button */}
-                <div className="px-3 pb-3 pt-1">
-                  <Button variant="outline" size="xs" className="gap-1 w-full justify-start">
-                    <Plus className="h-3 w-3" />
-                    New Dataset
-                  </Button>
-                </div>
-
-                <div className="border-t border-border" />
-
-                {/* Dataset schema detail */}
-                <div className="flex flex-col py-2">
-
-                  {/* SOURCE section */}
-                  <div className="px-3 py-1.5">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">Source</span>
-                  </div>
-
-                  {/* Source table row */}
-                  <div className="group flex flex-col px-3 py-1">
-                    <div className="flex items-center gap-1.5">
-                      <ErdIcon size={14} className="shrink-0 text-muted-foreground" />
-                      <span className="flex-1 text-xs font-semibold text-foreground">orders</span>
-                      <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Button variant="ghost" size="icon-xs" aria-label="Edit source">
-                          <PencilIcon size={12} className="text-muted-foreground" />
-                        </Button>
-                        <Button variant="ghost" size="icon-xs" aria-label="Filter source">
-                          <FilterIcon size={12} className="text-muted-foreground" />
-                        </Button>
-                      </div>
+                  {/* Name */}
+                  <TableCell>
+                    <div className="flex items-center gap-2">
+                      <BarChartIcon size={16} className="shrink-0 text-primary" />
+                      <Link
+                        href="/dashboards/detail"
+                        className="text-primary hover:underline"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {dash.name}
+                      </Link>
                     </div>
-                    <span className="ml-[22px] text-xs text-muted-foreground">samples.tpch</span>
-                  </div>
+                  </TableCell>
 
-                  {/* Joins */}
-                  <ListItem icon={<span className="w-[14px]" />} actions={<ChevronRightIcon size={12} />} className="text-muted-foreground">
-                    3 joins
-                  </ListItem>
-
-                  {/* MEASURES section */}
-                  <div className="mt-2 flex items-center justify-between px-3 py-1">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Measures ({MEASURES.length})
+                  {/* Status — plain text with dot indicator */}
+                  <TableCell>
+                    <span className={cn(
+                      "flex items-center gap-1.5 text-sm",
+                      dash.status === "Published" ? "text-foreground" : "text-muted-foreground"
+                    )}>
+                      <span className={cn(
+                        "h-1.5 w-1.5 rounded-full shrink-0",
+                        dash.status === "Published" ? "bg-[var(--success)]" : "bg-muted-foreground/40"
+                      )} />
+                      {dash.status}
                     </span>
-                    <Button variant="ghost" size="icon-xs" aria-label="Add measure">
-                      <Plus className="h-3 w-3 text-muted-foreground" />
+                  </TableCell>
+
+                  {/* Tags */}
+                  <TableCell>
+                    <div className="flex gap-1">
+                      {dash.tags.map((t) => (
+                        <Badge key={t} variant="secondary">{t}</Badge>
+                      ))}
+                    </div>
+                  </TableCell>
+
+                  <TableCell className="text-muted-foreground">{dash.owner}</TableCell>
+                  <TableCell className="text-muted-foreground">{dash.updatedAt}</TableCell>
+
+                  {/* Overflow */}
+                  <TableCell>
+                    <Button
+                      variant="ghost"
+                      size="icon-xs"
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      aria-label="More options"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <OverflowIcon size={14} className="text-muted-foreground" />
                     </Button>
-                  </div>
-                  {MEASURES.map((m) => (
-                    <ListItem key={m} icon={<Hash size={11} />} className="h-7">
-                      {m}
-                    </ListItem>
-                  ))}
-
-                  {/* FIELDS section */}
-                  <div className="mt-2 flex items-center justify-between px-3 py-1">
-                    <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                      Fields ({FIELDS.length})
-                    </span>
-                    <Button variant="ghost" size="icon-xs" aria-label="Add field">
-                      <Plus className="h-3 w-3 text-muted-foreground" />
-                    </Button>
-                  </div>
-                  {FIELDS.map((f) => (
-                    <ListItem key={f.name} icon={<FieldTypeIcon type={f.type} size={11} />} className="h-7">
-                      {f.name}
-                    </ListItem>
-                  ))}
-
-                </div>
-              </div>
-            </div>
-          )}
-
-          {/* ── Data grid ────────────────────────────────────────────── */}
-          <div className="flex flex-1 flex-col overflow-hidden">
-
-            {/* Grid sub-tab bar + toolbar */}
-            <div className="flex shrink-0 items-center justify-between border-b border-border px-3">
-              {/* Sub-tabs */}
-              <Tabs value={gridTab} onValueChange={(v) => setGridTab(v as GridTab)}>
-                <TabsList variant="line" className="h-9 gap-0 rounded-none border-0 bg-transparent p-0">
-                  <TabsTrigger value="data" className="gap-1.5 text-xs">
-                    <SchemaIcon size={12} />
-                    order_analysis
-                  </TabsTrigger>
-                  <TabsTrigger value="measures" className="text-xs">
-                    Measures ({MEASURES.length})
-                  </TabsTrigger>
-                  <TabsTrigger value="fields" className="text-xs">
-                    Fields ({FIELDS.length})
-                  </TabsTrigger>
-                </TabsList>
-              </Tabs>
-
-              {/* Toolbar */}
-              <div className="flex items-center gap-1">
-                <Button variant="ghost" size="icon-xs" aria-label="Refresh">
-                  <RefreshCw className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-                <div className="relative">
-                  <FilterIcon size={12} className="pointer-events-none absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    className="h-7 w-36 pl-6 text-xs"
-                    placeholder="Filter..."
-                    value={filterText}
-                    onChange={(e) => setFilterText(e.target.value)}
-                  />
-                </div>
-                <Button variant="ghost" size="icon-xs" aria-label="Settings">
-                  <Settings2 className="h-3.5 w-3.5 text-muted-foreground" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Table */}
-            {gridTab === "data" && (
-              <div className="flex-1 overflow-auto">
-                <Table>
-                  <TableHeader>
-                    <TableRow>
-                      <TableHead className="w-12 text-center text-xs uppercase tracking-wider">Index</TableHead>
-                      {[
-                        { label: "Order Key",      type: "measure" as FieldType },
-                        { label: "Customer Key",   type: "measure" as FieldType },
-                        { label: "Order Status",   type: "dimension" as FieldType },
-                        { label: "Total Price",    type: "measure" as FieldType },
-                        { label: "Order Date",     type: "date" as FieldType },
-                        { label: "Order Priority", type: "dimension" as FieldType },
-                        { label: "Clerk",          type: "dimension" as FieldType },
-                        { label: "Ship Priority",  type: "measure" as FieldType },
-                        { label: "Comment",        type: "dimension" as FieldType },
-                      ].map((col) => (
-                        <TableHead key={col.label} className="text-xs uppercase tracking-wider whitespace-nowrap">
-                          <div className="flex items-center gap-1">
-                            <FieldTypeIcon type={col.type} size={10} />
-                            {col.label}
-                          </div>
-                        </TableHead>
-                      ))}
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {filteredRows.map((row) => (
-                      <TableRow key={row.idx} className="cursor-pointer text-xs">
-                        <TableCell className="text-center text-muted-foreground">{row.idx}</TableCell>
-                        <TableCell>{row.ok}</TableCell>
-                        <TableCell>{row.ck}</TableCell>
-                        <TableCell>{row.status}</TableCell>
-                        <TableCell className="tabular-nums">{fmt(row.price)}</TableCell>
-                        <TableCell className="tabular-nums">{row.date}</TableCell>
-                        <TableCell>{row.priority}</TableCell>
-                        <TableCell>{row.clerk}</TableCell>
-                        <TableCell>{row.sp}</TableCell>
-                        <TableCell className="max-w-[180px] truncate text-muted-foreground">{row.comment}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </div>
-            )}
-
-            {gridTab === "measures" && (
-              <div className="flex-1 overflow-auto p-4">
-                <div className="overflow-hidden rounded border border-border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="text-xs uppercase tracking-wider">Measure</TableHead>
-                        <TableHead className="text-xs uppercase tracking-wider">Expression</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {MEASURES.map((m) => (
-                        <TableRow key={m} className="text-xs">
-                          <TableCell>
-                            <div className="flex items-center gap-1.5">
-                              <Hash size={11} className="text-muted-foreground" />
-                              {m}
-                            </div>
-                          </TableCell>
-                          <TableCell className="font-mono text-muted-foreground">
-                            {"COUNT(*)"}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              </div>
-            )}
-
-            {gridTab === "fields" && (
-              <div className="flex-1 overflow-auto p-4">
-                <div className="overflow-hidden rounded border border-border">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="text-xs uppercase tracking-wider">Field</TableHead>
-                        <TableHead className="text-xs uppercase tracking-wider">Type</TableHead>
-                        <TableHead className="text-xs uppercase tracking-wider">Source</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      {FIELDS.map((f) => (
-                        <TableRow key={f.name} className="text-xs">
-                          <TableCell>
-                            <div className="flex items-center gap-1.5">
-                              <FieldTypeIcon type={f.type} size={11} />
-                              {f.name}
-                            </div>
-                          </TableCell>
-                          <TableCell className="text-muted-foreground capitalize">{f.type}</TableCell>
-                          <TableCell className="font-mono text-muted-foreground text-xs">orders</TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </div>
-              </div>
-            )}
-
-          </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
         </div>
+
       </div>
     </AppShell>
   )

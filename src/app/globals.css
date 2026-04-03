@@ -10,6 +10,9 @@
  * ─────────────────────────────────────────────────────────────────────────── */
 @theme {
   /* DuBois Blue */
+  --color-blue-100: #f0f8ff;
+  --color-blue-200: #d7edfe;
+  --color-blue-300: #bae1fc;
   --color-blue-400: #8acaff;
   --color-blue-500: #4299e0;
   --color-blue-600: #2272b4;
@@ -34,28 +37,43 @@
   --color-grey-100: #e8ecf0;
   --color-grey-200: #d1d9e1;
   --color-grey-300: #c0cdd8;
+  --color-grey-350: #92a4b3;
   --color-grey-400: #8396a5;
   --color-grey-500: #5f7281;
   --color-grey-600: #445461;
+  --color-grey-650: #37444f;
   --color-grey-700: #1f272d;
   --color-grey-800: #11171c;
 
   /* DuBois Red */
+  --color-red-100: #fff5f7;
+  --color-red-200: #fde2e8;
+  --color-red-300: #fbd0d8;
   --color-red-400: #f792a6;
   --color-red-500: #e65b77;
   --color-red-600: #c82d4c;
   --color-red-700: #9e102c;
+  --color-red-800: #630316;
 
   /* DuBois Green */
+  --color-green-100: #f3fcf6;
+  --color-green-200: #d4f7df;
+  --color-green-300: #b1ecc5;
   --color-green-400: #8ddda8;
   --color-green-500: #3ba65e;
   --color-green-600: #277c43;
   --color-green-700: #115026;
+  --color-green-800: #093919;
 
   /* DuBois Yellow/Amber */
+  --color-yellow-100: #fff9eb;
+  --color-yellow-200: #fceaca;
+  --color-yellow-300: #f8d4a5;
+  --color-yellow-400: #f2be88;
   --color-yellow-500: #de7921;
   --color-yellow-600: #be501e;
   --color-yellow-700: #93320b;
+  --color-yellow-800: #5f1b02;
 
   /* Databricks Brand */
   --color-brand-red: #FF3621;
@@ -162,7 +180,7 @@
   --radius-md: calc(var(--radius) + 4px);   /* 8px for cards/modals */
   --radius-lg: calc(var(--radius) + 8px);   /* 12px */
   --radius-xl: calc(var(--radius) + 12px);
-  --radius-2xl: calc(var(--radius) + 16px);
+  --radius-2xl: calc(var(--radius) + 20px);
   --radius-full: 9999px;
 }
 
@@ -215,7 +233,10 @@
   --border-success: #a3d9b6;
   --background-danger:  #fff5f7;
   --background-warning: #fff9eb;
-  --background-success: #f0faf4;
+  --background-success: #f3fcf6;
+
+  /* Code background — DuBois codeBackground semantic token */
+  --code-bg: rgba(82, 82, 82, 0.08);
 
   /* Chart colors */
   --chart-1: #2272b4;
@@ -234,6 +255,10 @@
   --sidebar-border: #ebebeb;
   --sidebar-ring: #2272b4;
 
+  /* NewButton brand tints — pre-resolved rgba so Figma can bind to a variable */
+  --newbutton-bg:             rgba(255, 54, 33, 0.0800);
+  --newbutton-border:         rgba(255, 54, 33, 0.1200);
+
   /* Interaction state tints — pre-resolved rgba so Figma can bind to a variable */
   --action-default-bg-hover:  rgba(34, 114, 180, 0.0800);
   --action-default-bg-press:  rgba(34, 114, 180, 0.1600);
@@ -248,6 +273,32 @@
   /* Overlay + skeleton */
   --overlay:  rgba(0, 0, 0, 0.2600);
   --skeleton: rgba(162, 162, 162, 0.1600);
+
+  /* Tag/Badge background tokens — production exact RGBA (light mode) */
+  --tag-bg-default:    rgba(22, 22, 22, 0.0500);
+  --tag-bg-charcoal:   #424242;
+  --tag-bg-lemon:      rgba(255, 191, 1, 0.1800);
+  --tag-bg-lime:       rgba(2, 179, 2, 0.0800);
+  --tag-bg-teal:       rgba(2, 192, 150, 0.0900);
+  --tag-bg-turquoise:  rgba(2, 192, 213, 0.0900);
+  --tag-bg-indigo:     rgba(1, 68, 255, 0.0600);
+  --tag-bg-purple:     rgba(59, 0, 255, 0.0500);
+  --tag-bg-pink:       rgba(240, 1, 150, 0.0600);
+  --tag-bg-coral:      rgba(240, 0, 64, 0.0600);
+  --tag-bg-brown:      rgba(171, 86, 2, 0.0800);
+
+  /* Tag/Badge text tokens (light mode) */
+  --tag-text-default:    #161616;
+  --tag-text-charcoal:   #ebebeb;
+  --tag-text-lemon:      #4f3422;
+  --tag-text-lime:       #203c25;
+  --tag-text-teal:       #0d3d38;
+  --tag-text-turquoise:  #0d3c48;
+  --tag-text-indigo:     #101d46;
+  --tag-text-purple:     #2f265f;
+  --tag-text-pink:       #651249;
+  --tag-text-coral:      #64172b;
+  --tag-text-brown:      #3e332e;
 }
 
 /* ─── Dark Mode ──────────────────────────────────────────────────────────── */
@@ -283,13 +334,13 @@
   --warning: #de7921;
   --success: #3ba65e;
 
-  /* Alert / validation tinted borders and backgrounds — custom, no DuBois semantic tokens */
-  --border-danger:  rgba(232, 58, 95, 0.3);
-  --border-warning: rgba(220, 98, 34, 0.3);
-  --border-success: rgba(60, 164, 94, 0.3);
-  --background-danger:  rgba(232, 58, 95, 0.08);
-  --background-warning: rgba(220, 98, 34, 0.08);
-  --background-success: rgba(60, 164, 94, 0.08);
+  /* Alert / validation tinted borders and backgrounds — dark mode DuBois semantic tokens */
+  --border-danger:  #e65b77;
+  --border-warning: #de7921;
+  --border-success: #3ba65e;
+  --background-danger:  rgba(200, 45, 76, 0.1600);
+  --background-warning: rgba(190, 80, 30, 0.1600);
+  --background-success: rgba(39, 124, 67, 0.1600);
 
   --chart-1: #4299e0;
   --chart-2: #3ba65e;
@@ -306,6 +357,10 @@
   --sidebar-border: #1f272d;
   --sidebar-ring: #8acaff;
 
+  /* NewButton brand tints — same value in dark mode (brand red is mode-agnostic) */
+  --newbutton-bg:             rgba(255, 54, 33, 0.0800);
+  --newbutton-border:         rgba(255, 54, 33, 0.1200);
+
   /* Interaction state tints */
   --action-default-bg-hover:  rgba(138, 202, 255, 0.0800);
   --action-default-bg-press:  rgba(138, 202, 255, 0.1600);
@@ -320,6 +375,43 @@
   /* Overlay + skeleton */
   --overlay:  rgba(0, 0, 0, 0.4500);
   --skeleton: rgba(144, 164, 181, 0.1600);
+
+  /* DuBois Shadow Scale — dark mode (stronger opacity) */
+  --shadow-db-xs: 0px 1px 0px 0px rgba(0, 0, 0, 0.45);
+  --shadow-db-sm: 0px 2px 3px -1px rgba(0, 0, 0, 0.45),
+    0px 1px 0px 0px rgba(0, 0, 0, 0.26);
+  --shadow-db-md: 0px 3px 6px 0px rgba(0, 0, 0, 0.45);
+  --shadow-db-lg: 0px 2px 16px 0px rgba(0, 0, 0, 0.61);
+  --shadow-db-xl: 0px 8px 40px 0px rgba(0, 0, 0, 0.87);
+
+  /* Tag/Badge background tokens — dark mode */
+  --tag-bg-default:    rgba(232, 236, 240, 0.0800);
+  --tag-bg-charcoal:   #c0cdd8;
+  --tag-bg-lemon:      rgba(255, 191, 1, 0.1800);
+  --tag-bg-lime:       rgba(2, 179, 2, 0.0800);
+  --tag-bg-teal:       rgba(2, 192, 150, 0.1200);
+  --tag-bg-turquoise:  rgba(2, 192, 213, 0.1200);
+  --tag-bg-indigo:     rgba(1, 68, 255, 0.1200);
+  --tag-bg-purple:     rgba(59, 0, 255, 0.1200);
+  --tag-bg-pink:       rgba(240, 1, 150, 0.1200);
+  --tag-bg-coral:      rgba(240, 0, 64, 0.1000);
+  --tag-bg-brown:      rgba(171, 86, 2, 0.1000);
+
+  /* Code background — dark mode: grey650 */
+  --code-bg: #37444f;
+
+  /* Tag/Badge text tokens — dark mode */
+  --tag-text-default:    #e8ecf0;
+  --tag-text-charcoal:   #11171c;
+  --tag-text-lemon:      #ffe7b3;
+  --tag-text-lime:       #c2f0c2;
+  --tag-text-teal:       #adf0dd;
+  --tag-text-turquoise:  #b6ecf7;
+  --tag-text-indigo:     #dddffe;
+  --tag-text-purple:     #e2ddfe;
+  --tag-text-pink:       #fdd1ea;
+  --tag-text-coral:      #fed2e1;
+  --tag-text-brown:      #f2e1ca;
 }
 
 /* ─── Base Styles ─────────────────────────────────────────────────────────── */
@@ -348,10 +440,36 @@
 
   /* DuBois bold weight = 600 */
   b, strong { font-weight: 600; }
+
+  /* DuBois code — fontSizeBase (13px), lineHeightBase (20px), codeBackground token */
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 13px;
+    line-height: 20px;
+    background: var(--code-bg);
+    border-radius: 4px;
+    padding: 2px 4px;
+    border: none;
+  }
+}
+
+/* ─── DuBois Spinner Animation ───────────────────────────────────────────── */
+/* Production uses steps(60, end) — stepped rotation, not smooth spin */
+@keyframes dubois-spin {
+  from { transform: rotate(0deg) translate3d(0, 0, 0); }
+  to   { transform: rotate(360deg) translate3d(0, 0, 0); }
 }
 
 /* ─── DuBois Utility Classes ──────────────────────────────────────────────── */
 @layer utilities {
+  /* DuBois hint — 12px/16px. Explicit rule because Tailwind v4 may resolve
+     `text-hint` as a color lookup instead of a font-size utility, causing
+     the element to inherit body's 13px instead of rendering at 12px. */
+  .text-hint {
+    font-size: 0.75rem; /* 12px */
+    line-height: 1rem;  /* 16px */
+  }
+
   /* AI Gradient */
   .bg-ai-gradient {
     background: linear-gradient(135deg, #4299e0 20.5%, #ca42e0 46.91%, #ff5f46 79.5%);

@@ -28,7 +28,10 @@ export const ClockKeyIcon = forwardRef<SVGSVGElement, ClockKeyIconProps>(
               fill="currentColor"
               d="M8 1.5a6.5 6.5 0 0 0-5.07 10.57l-1.065 1.065A8 8 0 1 1 15.418 11h-1.65A6.5 6.5 0 0 0 8 1.5"
             />
-            <path fill="currentColor" d="M7.25 8V4h1.5v3.25H11v1.5H8A.75.75 0 0 1 7.25 8" />
+            <path
+              fill="currentColor"
+              d="M7.25 8V4h1.5v3.25H11v1.5H8A.75.75 0 0 1 7.25 8"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

@@ -24,8 +24,14 @@ export const ChevronDoubleRightIcon = forwardRef<SVGSVGElement, ChevronDoubleRig
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="m7.954 5.056 2.937 2.946-2.937 2.945 1.062 1.059 3.993-4.004-3.993-4.005z" />
-            <path fill="currentColor" d="m3.994 5.056 2.937 2.946-2.937 2.945 1.062 1.059L9.05 8.002 5.056 3.997z" />
+      <path
+              fill="currentColor"
+              d="m7.954 5.056 2.937 2.946-2.937 2.945 1.062 1.059 3.993-4.004-3.993-4.005z"
+            />
+            <path
+              fill="currentColor"
+              d="m3.994 5.056 2.937 2.946-2.937 2.945 1.062 1.059L9.05 8.002 5.056 3.997z"
+            />
     </svg>
   )
 );

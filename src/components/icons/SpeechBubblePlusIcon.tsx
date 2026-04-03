@@ -24,7 +24,10 @@ export const SpeechBubblePlusIcon = forwardRef<SVGSVGElement, SpeechBubblePlusIc
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.25 9.5V7.75H5.5v-1.5h1.75V4.5h1.5v1.75h1.75v1.5H8.75V9.5z" />
+      <path
+              fill="currentColor"
+              d="M7.25 9.5V7.75H5.5v-1.5h1.75V4.5h1.5v1.75h1.75v1.5H8.75V9.5z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

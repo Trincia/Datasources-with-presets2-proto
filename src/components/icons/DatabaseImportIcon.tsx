@@ -24,7 +24,10 @@ export const DatabaseImportIcon = forwardRef<SVGSVGElement, DatabaseImportIconPr
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="m9.72 4.22-.97.97V1h-1.5v4.19l-.97-.97-1.06 1.06L8 8.06l2.78-2.78z" />
+      <path
+              fill="currentColor"
+              d="m9.72 4.22-.97.97V1h-1.5v4.19l-.97-.97-1.06 1.06L8 8.06l2.78-2.78z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

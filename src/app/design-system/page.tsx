@@ -26,6 +26,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Spinner } from "@/components/ui/spinner";
+import { Empty } from "@/components/ui/empty";
+import { SegmentedControl, SegmentedItem } from "@/components/ui/segmented-control";
+import { ListItem } from "@/components/ui/list-item";
 import {
   Card,
   CardHeader,
@@ -59,6 +63,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
@@ -73,6 +84,19 @@ import {
   BreadcrumbPage,
   BreadcrumbEllipsis,
 } from "@/components/ui/breadcrumb";
+
+import { Hint } from "@/components/ui/hint";
+import { Slider } from "@/components/ui/slider";
+import { RadioTile, RadioTileGroup } from "@/components/ui/radio-tile";
+import { Stepper } from "@/components/ui/stepper";
+import { SplitButton } from "@/components/ui/split-button";
+import { NotebookCell } from "@/components/ui/notebook-cell";
+import {
+  Pagination, PaginationContent, PaginationItem,
+  PaginationLink, PaginationPrevious, PaginationNext, PaginationEllipsis,
+} from "@/components/ui/pagination";
+import { Progress } from "@/components/ui/progress";
+import { Tree, type TreeNode as TreeNodeType } from "@/components/ui/tree";
 
 import * as Icons from "@/components/icons";
 
@@ -133,8 +157,8 @@ function Swatch({ color, label, hex, cssVar }: { color: string; label: string; h
       />
       <div>
         <div className="text-xs font-semibold text-foreground">{label}</div>
-        <div className="text-[11px] text-muted-foreground font-mono">{hex}</div>
-        {cssVar && <div className="text-[11px] text-muted-foreground font-mono truncate">{cssVar}</div>}
+        <div className="text-hint text-muted-foreground font-mono">{hex}</div>
+        {cssVar && <div className="text-hint text-muted-foreground font-mono truncate">{cssVar}</div>}
       </div>
     </div>
   );
@@ -157,11 +181,33 @@ const statusColor: Record<string, string> = {
   Failed:  "destructive",
 };
 
+// ─── Tree sample data ─────────────────────────────────────────────────────────
+
+const DEMO_TREE: TreeNodeType[] = [
+  {
+    id: "notebooks",
+    label: "Notebooks",
+    icon: Icons.FolderIcon,
+    defaultExpanded: true,
+    children: [
+      { id: "nb-1", label: "analysis.py", icon: Icons.NotebookIcon },
+      { id: "nb-2", label: "etl_pipeline.sql", icon: Icons.QueryEditorIcon },
+    ],
+  },
+  { id: "queries", label: "Queries", icon: Icons.FolderIcon },
+  { id: "dashboards", label: "Dashboards", icon: Icons.FolderIcon },
+]
+
 // ─── Main page ────────────────────────────────────────────────────────────────
 
 export default function DesignSystemPage() {
   const [iconSearch, setIconSearch] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [segTab, setSegTab] = useState("table");
+  const [segTime, setSegTime] = useState("day");
+  const [radioTile, setRadioTile] = useState("standard");
+  const [sliderVal, setSliderVal] = useState([40]);
+  const [treeSelected, setTreeSelected] = useState("nb-1");
 
   const iconEntries = Object.entries(Icons) as [string, React.ComponentType<{ size?: number; className?: string }>][];
   const filteredIcons = iconEntries.filter(([name]) =>
@@ -179,7 +225,7 @@ export default function DesignSystemPage() {
           </p>
         </div>
 
-        {/* ── Colors ─────────────────────────────────────────────────────── */}
+
         <Section id="colors" title="Colors" description="DuBois primitive palette. Always use semantic CSS variables in components, not raw hex.">
           <div className="flex flex-col gap-8">
             <Group label="Blue — Primary Actions">
@@ -234,8 +280,8 @@ export default function DesignSystemPage() {
           </div>
         </Section>
 
-        {/* ── Typography ─────────────────────────────────────────────────── */}
-        <Section id="typography" title="Typography" description="Base: 13px / 20px line-height. Bold = 600 (never 700). Helvetica Neue.">
+
+        <Section id="typography" title="Typography" description="Base: 13px / 20px line-height. Bold = 600 (never 700). System font (SF Pro on macOS).">
           <div className="flex flex-col gap-4 border border-border rounded-md p-6">
             <div className="flex items-baseline gap-4 border-b border-border pb-4">
               <span className="w-24 shrink-0 text-xs text-muted-foreground">h1 / 32px</span>
@@ -258,17 +304,18 @@ export default function DesignSystemPage() {
               <p>The quick brown fox jumps over the lazy dog. Base font size is 13px with 20px line-height.</p>
             </div>
             <div className="flex items-baseline gap-4 border-b border-border pb-4">
-              <span className="w-24 shrink-0 text-xs text-muted-foreground">small / 12px</span>
-              <p className="text-xs text-muted-foreground">Secondary metadata, timestamps, helper text</p>
+              <span className="w-24 shrink-0 text-xs text-muted-foreground">hint / 12px</span>
+              <p className="text-hint text-muted-foreground">Secondary metadata, timestamps, helper text</p>
             </div>
             <div className="flex items-baseline gap-4">
-              <span className="w-24 shrink-0 text-xs text-muted-foreground">code / 12px</span>
-              <code className="font-mono text-xs bg-secondary px-1.5 py-0.5 rounded">SELECT * FROM catalog.schema.table</code>
+              <span className="w-24 shrink-0 text-xs text-muted-foreground">code / 13px</span>
+              <code>SELECT * FROM catalog.schema.table</code>
             </div>
           </div>
         </Section>
 
         {/* ── Spacing ────────────────────────────────────────────────────── */}
+
         <Section id="spacing" title="Spacing" description="Base unit: 8px. xs=4px · sm=8px · md=16px · lg=24px · xl=32px">
           <div className="flex flex-col gap-3">
             {[
@@ -292,6 +339,39 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Buttons ────────────────────────────────────────────────────── */}
+
+        <Section id="icons" title="Icons" description={`${iconEntries.length} Databricks-specific DuBois icons. All 16×16, currentColor.`}>
+          <div className="mb-3">
+            <Input
+              placeholder="Search icons..."
+              value={iconSearch}
+              onChange={(e) => setIconSearch(e.target.value)}
+              className="max-w-xs"
+            />
+          </div>
+          {filteredIcons.length === 0 ? (
+            <p className="text-sm text-muted-foreground py-8 text-center">No icons match &ldquo;{iconSearch}&rdquo;</p>
+          ) : (
+            <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-1">
+              {filteredIcons.map(([name, Icon]) => (
+                <Tooltip key={name}>
+                  <TooltipTrigger asChild>
+                    <div className="flex flex-col items-center gap-2 rounded p-3 hover:bg-secondary cursor-default transition-colors">
+                      <Icon size={16} className="text-foreground shrink-0" />
+                      <span className="text-hint text-muted-foreground text-center leading-tight truncate w-full text-center">
+                        {name.replace("Icon", "")}
+                      </span>
+                    </div>
+                  </TooltipTrigger>
+                  <TooltipContent>{name}</TooltipContent>
+                </Tooltip>
+              ))}
+            </div>
+          )}
+        </Section>
+
+        {/* ── Breadcrumb ─────────────────────────────────────────────────── */}
+
         <Section id="buttons" title="Buttons" description="DuBois heights: 32px (sm, default) · 24px (xs). All use 4px radius, weight 600.">
           <div className="flex flex-col gap-6">
             <DemoRow label="Default">
@@ -331,7 +411,26 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Form Controls ──────────────────────────────────────────────── */}
-        <Section id="forms" title="Form Controls" description="40px input height, 4px radius, grey100 border, blue600 focus ring.">
+        <Separator className="my-8" />
+
+        {/* ── Split Button ───────────────────────────────────────────────── */}
+        <Section id="split-button" title="Split Button" description="Primary action with attached dropdown arrow. Used in list-page toolbars (e.g. Jobs &amp; Pipelines). Import from @/components/ui/split-button.">
+          <div className="flex flex-col gap-5">
+            <Group label="Variants">
+              <div className="flex flex-wrap items-center gap-3">
+                <SplitButton>Create</SplitButton>
+                <SplitButton variant="outline">Options</SplitButton>
+                <SplitButton variant="destructive">Delete</SplitButton>
+              </div>
+            </Group>
+            <Group label="Disabled">
+              <SplitButton disabled>Create</SplitButton>
+            </Group>
+          </div>
+        </Section>
+
+
+        <Section id="forms" title="Form Controls" description="32px input height (h-8), 4px radius, 2px solid focus ring, hover border turns blue.">
           <div className="grid grid-cols-2 gap-8">
             <div className="flex flex-col gap-4">
               <Group label="Text Input">
@@ -357,19 +456,49 @@ export default function DesignSystemPage() {
                       placeholder="Enter password"
                       className="pr-9"
                     />
-                    <button
+                    <Button
                       type="button"
+                      variant="ghost"
+                      size="icon-xs"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2"
+                      aria-label={showPassword ? "Hide password" : "Show password"}
                     >
                       {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               </Group>
             </div>
 
             <div className="flex flex-col gap-4">
+              <Group label="Select">
+                <div className="flex flex-col gap-1.5">
+                  <Label htmlFor="demo-select">Node type</Label>
+                  <Select>
+                    <SelectTrigger id="demo-select">
+                      <SelectValue placeholder="Select node type" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="standard">Standard_DS3_v2</SelectItem>
+                      <SelectItem value="memory">Standard_E8s_v3</SelectItem>
+                      <SelectItem value="compute">Standard_F8s_v2</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex flex-col gap-1.5">
+                  <Label>Disabled</Label>
+                  <Select disabled>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Cannot select" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="x">Option</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </Group>
+
               <Group label="Textarea">
                 <div className="flex flex-col gap-1.5">
                   <Label htmlFor="demo-textarea">Description</Label>
@@ -410,45 +539,107 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Badges ─────────────────────────────────────────────────────── */}
-        <Section id="badges" title="Badges & Tags" description="Rectangular (4px radius). DuBois secondary palette for categorical labeling.">
-          <div className="flex flex-col gap-5">
-            <Group label="Semantic">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="default">Default</Badge>
-                <Badge variant="secondary">Secondary</Badge>
-                <Badge variant="destructive">Error</Badge>
-                <Badge variant="outline">Outline</Badge>
+        <Separator className="my-8" />
+
+        {/* ── Hint ──────────────────────────────────────────────────────────── */}
+        <Section id="hint" title="Hint" description="Helper text below form fields — 12px/16px, muted-foreground. Import from @/components/ui/hint.">
+          <div className="flex flex-col gap-6">
+            <Group label="Above input (DuBois: Hint precedes the control)">
+              {/* DuBois pattern: label+hint tight (gap-1 / 4px), then control (gap-2 / 8px) */}
+              <div className="flex flex-col gap-2 max-w-xs">
+                <div className="flex flex-col gap-1">
+                  <Label htmlFor="hint-demo">Cluster name</Label>
+                  <Hint>Must be lowercase and contain no spaces.</Hint>
+                </div>
+                <Input id="hint-demo" placeholder="my-cluster" />
               </div>
             </Group>
-            <Group label="DuBois Secondary Palette">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="coral">Coral</Badge>
-                <Badge variant="brown">Brown</Badge>
-                <Badge variant="indigo">Indigo</Badge>
-                <Badge variant="lemon">Lemon</Badge>
-                <Badge variant="lime">Lime</Badge>
-                <Badge variant="pink">Pink</Badge>
-                <Badge variant="purple">Purple</Badge>
-                <Badge variant="teal">Teal</Badge>
-                <Badge variant="turquoise">Turquoise</Badge>
-              </div>
-            </Group>
-            <Group label="In context">
-              <div className="flex flex-wrap gap-2">
-                <Badge variant="lime">Running</Badge>
-                <Badge variant="teal">Streaming</Badge>
-                <Badge variant="secondary">Idle</Badge>
-                <Badge variant="destructive">Failed</Badge>
-                <Badge variant="indigo">Scheduled</Badge>
-                <Badge variant="lemon">Pending</Badge>
-                <Badge variant="coral">Deprecated</Badge>
-                <Badge variant="purple">Beta</Badge>
+            <Group label="Above select">
+              <div className="flex flex-col gap-2 max-w-xs">
+                <div className="flex flex-col gap-1">
+                  <Label>Runtime version</Label>
+                  <Hint>LTS versions receive security patches for 2 years.</Hint>
+                </div>
+                <Select>
+                  <SelectTrigger><SelectValue placeholder="Select a version" /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="14">14.3 LTS (Scala 2.12)</SelectItem>
+                    <SelectItem value="15">15.4 LTS (Scala 2.12)</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </Group>
           </div>
         </Section>
 
-        {/* ── Alerts ─────────────────────────────────────────────────────── */}
+        <Separator className="my-8" />
+
+        {/* ── Slider ────────────────────────────────────────────────────────── */}
+        <Section id="slider" title="Slider" description="Range input — Radix-based, 3px track, 20px thumb, primary fill. Import from @/components/ui/slider.">
+          <div className="flex flex-col gap-6">
+            <Group label="Default">
+              <div className="flex flex-col gap-4 max-w-xs">
+                <Slider
+                  value={sliderVal}
+                  onValueChange={setSliderVal}
+                  min={0}
+                  max={100}
+                />
+                <p className="text-hint text-muted-foreground">Value: {sliderVal[0]}</p>
+              </div>
+            </Group>
+            <Group label="Disabled">
+              <div className="max-w-xs">
+                <Slider defaultValue={[60]} disabled />
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        <Separator className="my-8" />
+
+        {/* ── Radio Tile ────────────────────────────────────────────────────── */}
+        <Section id="radio-tile" title="Radio Tile" description="Card-style radio button with optional icon and description. Import from @/components/ui/radio-tile.">
+          <div className="flex flex-col gap-6">
+            <Group label="Basic">
+              <RadioTileGroup value={radioTile} onValueChange={setRadioTile} className="gap-2">
+                <RadioTile value="standard" label="Standard" description="General purpose cluster for all workloads." />
+                <RadioTile value="single" label="Single node" description="Lightweight driver-only cluster." />
+                <RadioTile value="high-concurrency" label="High concurrency" description="Optimized for concurrent SQL queries." />
+              </RadioTileGroup>
+            </Group>
+            <Group label="Disabled">
+              <RadioTileGroup value="standard">
+                <RadioTile value="standard" label="Standard" disabled />
+                <RadioTile value="single" label="Single node" disabled />
+              </RadioTileGroup>
+            </Group>
+          </div>
+        </Section>
+
+
+        <Section id="segmented" title="Segmented Control" description="Toggle button group for exclusive selection. Active item: blue tint bg + border.">
+          <div className="flex flex-col gap-5">
+            <Group label="Default">
+              <SegmentedControl value={segTab} onValueChange={setSegTab}>
+                <SegmentedItem value="table">Table</SegmentedItem>
+                <SegmentedItem value="schema">Schema</SegmentedItem>
+                <SegmentedItem value="lineage">Lineage</SegmentedItem>
+              </SegmentedControl>
+            </Group>
+            <Group label="Time range">
+              <SegmentedControl value={segTime} onValueChange={setSegTime}>
+                <SegmentedItem value="day">Day</SegmentedItem>
+                <SegmentedItem value="week">Week</SegmentedItem>
+                <SegmentedItem value="month">Month</SegmentedItem>
+                <SegmentedItem value="custom">Custom</SegmentedItem>
+              </SegmentedControl>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── ListItem ───────────────────────────────────────────────────── */}
+
         <Section id="alerts" title="Alerts" description="Left-border accent with tinted background. Four severity levels.">
           <div className="flex flex-col gap-3">
             <Alert variant="info">
@@ -475,6 +666,192 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Tables ─────────────────────────────────────────────────────── */}
+
+        <Section id="spinner" title="Spinner" description="Loading indicator. Three sizes: small (16px) · default (24px) · large (32px). Defaults to muted-foreground; use inheritColor for parent color.">
+          <div className="flex flex-col gap-5">
+            <Group label="Sizes">
+              <div className="flex items-center gap-6">
+                <div className="flex flex-col items-center gap-2">
+                  <Spinner size="small" />
+                  <span className="text-hint text-muted-foreground">small</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Spinner size="default" />
+                  <span className="text-hint text-muted-foreground">default</span>
+                </div>
+                <div className="flex flex-col items-center gap-2">
+                  <Spinner size="large" />
+                  <span className="text-hint text-muted-foreground">large</span>
+                </div>
+              </div>
+            </Group>
+            <Group label="Color inherit">
+              <div className="flex items-center gap-4">
+                <span className="text-primary flex items-center gap-1.5 text-sm">
+                  <Spinner size="small" inheritColor />
+                  Loading…
+                </span>
+                <span className="text-destructive flex items-center gap-1.5 text-sm">
+                  <Spinner size="small" inheritColor />
+                  Retrying…
+                </span>
+              </div>
+            </Group>
+            <Group label="In a button">
+              <div className="flex items-center gap-2">
+                <Button disabled>
+                  <Spinner size="small" inheritColor />
+                  Saving…
+                </Button>
+                <Button variant="outline" disabled>
+                  <Spinner size="small" inheritColor />
+                  Loading
+                </Button>
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── Empty state ─────────────────────────────────────────────────── */}
+        <Separator className="my-8" />
+
+        {/* ── Progress ───────────────────────────────────────────────────── */}
+        <Section id="progress" title="Progress" description="Linear progress bar. Primary fill, 8px (h-2) track height. Import from @/components/ui/progress.">
+          <div className="flex flex-col gap-5 max-w-sm">
+            <Group label="Values">
+              <div className="flex flex-col gap-3">
+                <Progress value={20} />
+                <Progress value={50} />
+                <Progress value={80} />
+                <Progress value={100} />
+              </div>
+            </Group>
+            <Group label="With label">
+              <div className="flex flex-col gap-1.5">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-foreground">Uploading…</span>
+                  <span className="text-hint text-muted-foreground">65%</span>
+                </div>
+                <Progress value={65} />
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        <Separator className="my-8" />
+
+        {/* ── Stepper ───────────────────────────────────────────────────────── */}
+        <Section id="stepper" title="Stepper" description="Step progress indicator with 5 statuses: upcoming · completed · loading · error · warning. Import from @/components/ui/stepper.">
+          <div className="flex flex-col gap-8">
+            <Group label="Horizontal — step 2 active">
+              <Stepper
+                currentStepIndex={1}
+                steps={[
+                  { title: "Configure", status: "completed" },
+                  { title: "Libraries", status: "upcoming" },
+                  { title: "Review", status: "upcoming" },
+                ]}
+              />
+            </Group>
+            <Group label="Horizontal — with descriptions">
+              <Stepper
+                currentStepIndex={1}
+                steps={[
+                  { title: "Cluster", description: "Choose compute type", status: "completed" },
+                  { title: "Libraries", description: "Add dependencies", status: "upcoming" },
+                  { title: "Review", description: "Confirm and launch", status: "upcoming" },
+                ]}
+              />
+            </Group>
+            <Group label="Horizontal — error & warning">
+              <Stepper
+                currentStepIndex={1}
+                steps={[
+                  { title: "Configure", status: "error" },
+                  { title: "Libraries", status: "warning" },
+                  { title: "Review", status: "upcoming" },
+                ]}
+              />
+            </Group>
+            <Group label="Vertical">
+              <Stepper
+                direction="vertical"
+                currentStepIndex={1}
+                steps={[
+                  { title: "Configure cluster", description: "Choose compute type and size.", status: "completed" },
+                  { title: "Add libraries", description: "Install packages and dependencies.", status: "upcoming" },
+                  { title: "Review & launch", description: "Confirm settings before starting.", status: "upcoming" },
+                ]}
+              />
+            </Group>
+          </div>
+        </Section>
+
+
+        <Section id="empty" title="Empty State" description="Centered empty placeholder. 64px icon slot (defaults to InboxIcon), optional title, description, and action.">
+          <div className="flex flex-col gap-6">
+            <Group label="With title + action">
+              <div className="border border-border rounded-md py-12">
+                <Empty
+                  title="No pipelines yet"
+                  description="Create a pipeline to start ingesting and transforming data."
+                  action={<Button size="sm"><Plus className="h-4 w-4" />Create pipeline</Button>}
+                />
+              </div>
+            </Group>
+            <Group label="Description only">
+              <div className="border border-border rounded-md py-12">
+                <Empty description="No results match your search criteria. Try adjusting your filters." />
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── SegmentedControl ───────────────────────────────────────────── */}
+
+        <Section id="badges" title="Badges & Tags" description="Rectangular (4px radius). Background and text use exact RGBA CSS tokens from DuBois semantics.">
+          <div className="flex flex-col gap-5">
+            <Group label="Semantic">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="default">Default</Badge>
+                <Badge variant="secondary">Secondary</Badge>
+                <Badge variant="destructive">Error</Badge>
+                <Badge variant="outline">Outline</Badge>
+              </div>
+            </Group>
+            <Group label="DuBois Tag Palette (RGBA tokens)">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="default_tag">Default</Badge>
+                <Badge variant="charcoal">Charcoal</Badge>
+                <Badge variant="coral">Coral</Badge>
+                <Badge variant="brown">Brown</Badge>
+                <Badge variant="indigo">Indigo</Badge>
+                <Badge variant="lemon">Lemon</Badge>
+                <Badge variant="lime">Lime</Badge>
+                <Badge variant="pink">Pink</Badge>
+                <Badge variant="purple">Purple</Badge>
+                <Badge variant="teal">Teal</Badge>
+                <Badge variant="turquoise">Turquoise</Badge>
+              </div>
+            </Group>
+            <Group label="In context">
+              <div className="flex flex-wrap gap-2">
+                <Badge variant="lime">Running</Badge>
+                <Badge variant="teal">Streaming</Badge>
+                <Badge variant="secondary">Idle</Badge>
+                <Badge variant="destructive">Failed</Badge>
+                <Badge variant="indigo">Scheduled</Badge>
+                <Badge variant="lemon">Pending</Badge>
+                <Badge variant="coral">Deprecated</Badge>
+                <Badge variant="purple">Beta</Badge>
+                <Badge variant="charcoal">Archived</Badge>
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── Alerts ─────────────────────────────────────────────────────── */}
+
         <Section id="tables" title="Tables" description="DuBois row hover (rgba 4%) and selected (rgba 8%) states. Semibold column headers.">
           <div className="border border-border rounded-md overflow-hidden">
             <Table>
@@ -516,6 +893,7 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Cards ──────────────────────────────────────────────────────── */}
+
         <Section id="cards" title="Cards" description="8px radius, db-sm shadow. Tighter padding than shadcn defaults.">
           <div className="grid grid-cols-3 gap-4">
             {/* Metric card */}
@@ -563,6 +941,197 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Dialogs ────────────────────────────────────────────────────── */}
+
+        <Section id="list-item" title="List Item" description="Selectable panel row (32px). Active: blue-tinted bg. Actions appear on hover/selected.">
+          <div className="flex flex-col gap-5">
+            <Group label="States">
+              <div className="border border-border rounded-md overflow-hidden w-72">
+                <ListItem
+                  icon={<Icons.NotebookIcon size={16} />}
+                  selected
+                >
+                  analysis-notebook
+                </ListItem>
+                <ListItem icon={<Icons.PipelineIcon size={16} />}>
+                  etl-pipeline
+                </ListItem>
+                <ListItem icon={<Icons.WorkflowsIcon size={16} />}>
+                  daily-workflow
+                </ListItem>
+                <ListItem icon={<Icons.QueryEditorIcon size={16} />}>
+                  sql-query
+                </ListItem>
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── Icons ──────────────────────────────────────────────────────── */}
+
+        <Section id="tabs-demo" title="Tabs">
+          <div className="flex flex-col gap-6">
+            <Group label="Line variant (DuBois style)">
+              <Tabs defaultValue="tab1">
+                <TabsList variant="line">
+                  <TabsTrigger value="tab1">Overview</TabsTrigger>
+                  <TabsTrigger value="tab2">Schema</TabsTrigger>
+                  <TabsTrigger value="tab3">Sample data</TabsTrigger>
+                  <TabsTrigger value="tab4">Permissions</TabsTrigger>
+                </TabsList>
+                <TabsContent value="tab1" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Table overview and metadata.</p>
+                </TabsContent>
+                <TabsContent value="tab2" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Column definitions and types.</p>
+                </TabsContent>
+                <TabsContent value="tab3" className="pt-4">
+                  <p className="text-sm text-muted-foreground">First 100 rows of data.</p>
+                </TabsContent>
+                <TabsContent value="tab4" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Access control settings.</p>
+                </TabsContent>
+              </Tabs>
+            </Group>
+
+            <Group label="Pill variant">
+              <Tabs defaultValue="a">
+                <TabsList>
+                  <TabsTrigger value="a">Notebooks</TabsTrigger>
+                  <TabsTrigger value="b">Pipelines</TabsTrigger>
+                  <TabsTrigger value="c">Jobs</TabsTrigger>
+                </TabsList>
+                <TabsContent value="a" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Your notebooks.</p>
+                </TabsContent>
+                <TabsContent value="b" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Your pipelines.</p>
+                </TabsContent>
+                <TabsContent value="c" className="pt-4">
+                  <p className="text-sm text-muted-foreground">Your jobs.</p>
+                </TabsContent>
+              </Tabs>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── Avatar + Misc ──────────────────────────────────────────────── */}
+
+        <Section id="breadcrumb" title="Breadcrumb" description="Navigation trail. Links use text-primary, current page uses text-muted-foreground, separator is a small ChevronRight.">
+          <div className="flex flex-col gap-4">
+            <Group label="Default">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Catalog</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>main</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </Group>
+
+            <Group label="Deeper path">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Data Engineering</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Pipelines</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">prod-etl</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Settings</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </Group>
+
+            <Group label="With ellipsis">
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbEllipsis />
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbLink href="#">prod-etl</BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Settings</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
+            </Group>
+          </div>
+        </Section>
+
+        {/* ── AI Components ──────────────────────────────────────────────── */}
+        <Separator className="my-8" />
+
+        {/* ── Pagination ─────────────────────────────────────────────────── */}
+        <Section id="pagination" title="Pagination" description="Page navigation with Previous / Next / numbered links. Import from @/components/ui/pagination.">
+          <div className="flex flex-col gap-5">
+            <Group label="Default">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+                  <PaginationItem><PaginationLink href="#">1</PaginationLink></PaginationItem>
+                  <PaginationItem><PaginationLink href="#" isActive>2</PaginationLink></PaginationItem>
+                  <PaginationItem><PaginationLink href="#">3</PaginationLink></PaginationItem>
+                  <PaginationItem><PaginationEllipsis /></PaginationItem>
+                  <PaginationItem><PaginationLink href="#">8</PaginationLink></PaginationItem>
+                  <PaginationItem><PaginationNext href="#" /></PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </Group>
+            <Group label="Simple (jobs-style ghost buttons)">
+              <div className="flex items-center justify-end gap-1 w-full">
+                <Button variant="ghost" size="xs" className="gap-1">
+                  <Icons.ChevronLeftIcon size={12} /> Previous
+                </Button>
+                <Button variant="ghost" size="xs" className="gap-1">
+                  Next <Icons.ChevronRightIcon size={12} />
+                </Button>
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        <Separator className="my-8" />
+
+        {/* ── Tree ───────────────────────────────────────────────────────── */}
+        <Section id="tree" title="Tree" description="File-tree navigation with expand/collapse and selection. Import from @/components/ui/tree.">
+          <div className="flex flex-col gap-5">
+            <Group label="With icons">
+              <div className="w-64 overflow-hidden rounded border border-border">
+                <Tree
+                  nodes={DEMO_TREE}
+                  selectedId={treeSelected}
+                  onSelect={setTreeSelected}
+                />
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+
         <Section id="dialogs" title="Dialogs & Sheets" description="40px padding, no header/footer dividers. 8px radius.">
           <div className="flex flex-wrap gap-3">
             {/* Confirm dialog */}
@@ -671,53 +1240,121 @@ export default function DesignSystemPage() {
         </Section>
 
         {/* ── Tabs ───────────────────────────────────────────────────────── */}
-        <Section id="tabs-demo" title="Tabs">
+
+        <Section id="ai" title="AI Components" description="Databricks AI gradient: #4299E0 → #CA42E0 → #FF5F46 at 135°">
           <div className="flex flex-col gap-6">
-            <Group label="Line variant (DuBois style)">
-              <Tabs defaultValue="tab1">
-                <TabsList variant="line">
-                  <TabsTrigger value="tab1">Overview</TabsTrigger>
-                  <TabsTrigger value="tab2">Schema</TabsTrigger>
-                  <TabsTrigger value="tab3">Sample data</TabsTrigger>
-                  <TabsTrigger value="tab4">Permissions</TabsTrigger>
-                </TabsList>
-                <TabsContent value="tab1" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Table overview and metadata.</p>
-                </TabsContent>
-                <TabsContent value="tab2" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Column definitions and types.</p>
-                </TabsContent>
-                <TabsContent value="tab3" className="pt-4">
-                  <p className="text-sm text-muted-foreground">First 100 rows of data.</p>
-                </TabsContent>
-                <TabsContent value="tab4" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Access control settings.</p>
-                </TabsContent>
-              </Tabs>
+            <Group label="AI Gradient Background">
+              <div className="h-16 rounded-md bg-ai-gradient" />
             </Group>
 
-            <Group label="Pill variant">
-              <Tabs defaultValue="a">
-                <TabsList>
-                  <TabsTrigger value="a">Notebooks</TabsTrigger>
-                  <TabsTrigger value="b">Pipelines</TabsTrigger>
-                  <TabsTrigger value="c">Jobs</TabsTrigger>
-                </TabsList>
-                <TabsContent value="a" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Your notebooks.</p>
-                </TabsContent>
-                <TabsContent value="b" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Your pipelines.</p>
-                </TabsContent>
-                <TabsContent value="c" className="pt-4">
-                  <p className="text-sm text-muted-foreground">Your jobs.</p>
-                </TabsContent>
-              </Tabs>
+            <Group label="AI Gradient Text">
+              <p className="text-2xl font-semibold text-ai-gradient">
+                Databricks AI / BI
+              </p>
+            </Group>
+
+<Group label="AI Sparkle Button">
+              <Button className="bg-ai-gradient text-white hover:opacity-90 border-0">
+                <Sparkles className="h-4 w-4" />
+                Generate with AI
+              </Button>
+            </Group>
+
+            <Group label="Inline AI indicator">
+              <div className="flex items-center gap-2 text-sm">
+                <span
+                  className="inline-flex h-2 w-2 rounded-full bg-ai-gradient"
+                />
+                <span className="text-muted-foreground">AI-generated content</span>
+              </div>
             </Group>
           </div>
         </Section>
 
-        {/* ── Avatar + Misc ──────────────────────────────────────────────── */}
+        <Separator className="my-8" />
+
+        {/* ── Shell ──────────────────────────────────────── */}
+        <Section id="shell" title="Shell" description="App-level layout components: PageHeader, TopBar, Sidebar.">
+          <div className="flex flex-col gap-8">
+
+            <Group label="PageHeader — full">
+              <div className="rounded-md border border-border p-6">
+                <PageHeader
+                  breadcrumbs={
+                    <Breadcrumb>
+                      <BreadcrumbList>
+                        <BreadcrumbItem><BreadcrumbLink href="#">Data Engineering</BreadcrumbLink></BreadcrumbItem>
+                        <BreadcrumbSeparator />
+                        <BreadcrumbItem><BreadcrumbPage>Pipelines</BreadcrumbPage></BreadcrumbItem>
+                      </BreadcrumbList>
+                    </Breadcrumb>
+                  }
+                  title="prod-etl-v2"
+                  badge={<Badge variant="lime">Running</Badge>}
+                  description="Delta Live Tables pipeline · Last run 2 min ago · 124 tasks"
+                  actions={
+                    <>
+                      <Button variant="ghost" size="icon-xs"><Settings className="h-4 w-4" /></Button>
+                      <Button variant="outline" size="sm">View logs</Button>
+                      <Button size="sm">Start</Button>
+                    </>
+                  }
+                />
+              </div>
+            </Group>
+
+            <Group label="PageHeader — minimal">
+              <div className="rounded-md border border-border p-6">
+                <PageHeader title="SQL Warehouses" description="Serverless compute for running SQL queries." actions={<Button size="sm">Create warehouse</Button>} />
+              </div>
+            </Group>
+
+            <Group label="TopBar">
+              <div className="overflow-hidden rounded-md border border-border">
+                <TopBar sidebarOpen={true} workspace="Production" userInitial="N" />
+              </div>
+              <div className="overflow-hidden rounded-md border border-border mt-2">
+                <TopBar sidebarOpen={false} workspace="Production" userInitial="N" />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">Top: sidebar open · Bottom: sidebar collapsed</p>
+            </Group>
+
+            <Group label="Sidebar — expanded">
+              <div className="overflow-hidden rounded-md border border-border" style={{ height: 480 }}>
+                <Sidebar open={true} activeItem="workspace" />
+              </div>
+            </Group>
+
+
+            <Group label="Full shell">
+              <div className="text-sm text-muted-foreground">
+                Visit{" "}
+                <Link href="/shell" className="text-primary underline underline-offset-2">
+                  /shell
+                </Link>{" "}
+                to see the full AppShell with TopBar + Sidebar + demo content.
+              </div>
+            </Group>
+          </div>
+        </Section>
+
+        <Separator className="my-8" />
+
+        {/* ── Notebook Cell ──────────────────────────────────────────────── */}
+        <Section id="notebook-cell" title="Notebook Cell" description="Editor cell with gutter, run button, language badge, and action toolbar. Import from @/components/ui/notebook-cell.">
+          <div className="flex flex-col gap-5">
+            <Group label="Python cell">
+              <NotebookCell language="Python" lineCount={3}>
+                <span className="text-muted-foreground">{"# Example cell content"}</span>
+              </NotebookCell>
+            </Group>
+            <Group label="SQL cell">
+              <NotebookCell language="SQL" lineCount={2} />
+            </Group>
+          </div>
+        </Section>
+
+
         <Section id="misc" title="Misc Components">
           <div className="flex flex-col gap-6">
             <Group label="Avatars">
@@ -753,239 +1390,7 @@ export default function DesignSystemPage() {
           </div>
         </Section>
 
-        {/* ── Icons ──────────────────────────────────────────────────────── */}
-        <Section id="icons" title="Icons" description={`${iconEntries.length} Databricks-specific DuBois icons. All 16×16, currentColor.`}>
-          <div className="mb-3">
-            <Input
-              placeholder="Search icons..."
-              value={iconSearch}
-              onChange={(e) => setIconSearch(e.target.value)}
-              className="max-w-xs"
-            />
-          </div>
-          {filteredIcons.length === 0 ? (
-            <p className="text-sm text-muted-foreground py-8 text-center">No icons match &ldquo;{iconSearch}&rdquo;</p>
-          ) : (
-            <div className="grid grid-cols-[repeat(auto-fill,minmax(100px,1fr))] gap-1">
-              {filteredIcons.map(([name, Icon]) => (
-                <Tooltip key={name}>
-                  <TooltipTrigger asChild>
-                    <div className="flex flex-col items-center gap-2 rounded p-3 hover:bg-secondary cursor-default transition-colors">
-                      <Icon size={16} className="text-foreground shrink-0" />
-                      <span className="text-[10px] text-muted-foreground text-center leading-tight truncate w-full text-center">
-                        {name.replace("Icon", "")}
-                      </span>
-                    </div>
-                  </TooltipTrigger>
-                  <TooltipContent>{name}</TooltipContent>
-                </Tooltip>
-              ))}
-            </div>
-          )}
-        </Section>
-
-        {/* ── Breadcrumb ─────────────────────────────────────────────────── */}
-        <Section id="breadcrumb" title="Breadcrumb" description="Navigation trail. Links use text-primary, current page uses text-muted-foreground, separator is a small ChevronRight.">
-          <div className="flex flex-col gap-4">
-            <Group label="Default">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Catalog</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>main</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </Group>
-
-            <Group label="Deeper path">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Data Engineering</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Pipelines</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">prod-etl</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Settings</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </Group>
-
-            <Group label="With ellipsis">
-              <Breadcrumb>
-                <BreadcrumbList>
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbEllipsis />
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbLink href="#">prod-etl</BreadcrumbLink>
-                  </BreadcrumbItem>
-                  <BreadcrumbSeparator />
-                  <BreadcrumbItem>
-                    <BreadcrumbPage>Settings</BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </Group>
-          </div>
-        </Section>
-
-        {/* ── AI Components ──────────────────────────────────────────────── */}
-        <Section id="ai" title="AI Components" description="Databricks AI gradient: #4299E0 → #CA42E0 → #FF5F46 at 135°">
-          <div className="flex flex-col gap-6">
-            <Group label="AI Gradient Background">
-              <div className="h-16 rounded-md bg-ai-gradient" />
-            </Group>
-
-            <Group label="AI Gradient Text">
-              <p className="text-2xl font-semibold text-ai-gradient">
-                Databricks AI / BI
-              </p>
-            </Group>
-
-            <Group label="AI Gradient Border Card">
-              <div className="relative rounded-md p-px bg-ai-gradient w-72">
-                <div className="rounded-[calc(0.375rem-1px)] bg-card px-4 py-3">
-                  <div className="flex items-center gap-2 mb-1">
-                    <Sparkles className="h-4 w-4 text-ai-gradient" style={{ color: "#CA42E0" }} />
-                    <span className="text-sm font-semibold">AI Suggestion</span>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Based on your data, this column contains timestamps. Convert to DateType?
-                  </p>
-                  <div className="mt-3 flex gap-2">
-                    <Button size="xs">Apply</Button>
-                    <Button size="xs" variant="ghost">Dismiss</Button>
-                  </div>
-                </div>
-              </div>
-            </Group>
-
-            <Group label="AI Sparkle Button">
-              <Button className="bg-ai-gradient text-white hover:opacity-90 border-0">
-                <Sparkles className="h-4 w-4" />
-                Generate with AI
-              </Button>
-            </Group>
-
-            <Group label="Inline AI indicator">
-              <div className="flex items-center gap-2 text-sm">
-                <span
-                  className="inline-flex h-2 w-2 rounded-full bg-ai-gradient"
-                />
-                <span className="text-muted-foreground">AI-generated content</span>
-              </div>
-            </Group>
-          </div>
-        </Section>
-
-        <Separator className="my-8" />
-
-        {/* ── Shell ──────────────────────────────────────── */}
-        <Section id="shell" title="Shell" description="App-level layout components: TopBar and Sidebar.">
-          <div className="flex flex-col gap-8">
-
-            <Group label="TopBar">
-              <div className="overflow-hidden rounded-md border border-border">
-                <TopBar sidebarOpen={true} workspace="Production" userInitial="N" />
-              </div>
-              <div className="overflow-hidden rounded-md border border-border mt-2">
-                <TopBar sidebarOpen={false} workspace="Production" userInitial="N" />
-              </div>
-              <p className="text-xs text-muted-foreground mt-1">Top: sidebar open · Bottom: sidebar collapsed</p>
-            </Group>
-
-            <Group label="Sidebar — expanded">
-              <div className="overflow-hidden rounded-md border border-border" style={{ height: 480 }}>
-                <Sidebar open={true} activeItem="workspace" />
-              </div>
-            </Group>
-
-
-            <Group label="PageHeader — minimal">
-              <div className="rounded-md border border-border p-6">
-                <PageHeader title="Page title" />
-              </div>
-            </Group>
-
-            <Group label="PageHeader — with breadcrumb + actions">
-              <div className="rounded-md border border-border p-6">
-                <PageHeader
-                  breadcrumbs={
-                    <Breadcrumb>
-                      <BreadcrumbList>
-                        <BreadcrumbItem>
-                          <BreadcrumbLink href="#">Workspace</BreadcrumbLink>
-                        </BreadcrumbItem>
-                        <BreadcrumbSeparator />
-                        <BreadcrumbItem>
-                          <BreadcrumbPage>Catalog</BreadcrumbPage>
-                        </BreadcrumbItem>
-                      </BreadcrumbList>
-                    </Breadcrumb>
-                  }
-                  title="main"
-                  titleIcons={
-                    <Button variant="ghost" size="icon-xs" aria-label="Copy link">
-                      <Plus className="h-4 w-4" />
-                    </Button>
-                  }
-                  actions={
-                    <>
-                      <Button variant="ghost" size="icon-xs">
-                        <Settings className="h-4 w-4" />
-                      </Button>
-                      <Button variant="outline" size="sm">Share</Button>
-                      <Button size="sm">Create</Button>
-                    </>
-                  }
-                />
-              </div>
-            </Group>
-
-            <Group label="PageHeader — with description">
-              <div className="rounded-md border border-border p-6">
-                <PageHeader
-                  title="SQL Warehouses"
-                  description="Serverless compute for running SQL queries and dashboards."
-                  actions={<Button size="sm">Create warehouse</Button>}
-                />
-              </div>
-            </Group>
-
-            <Group label="Full shell">
-              <div className="text-sm text-muted-foreground">
-                Visit{" "}
-                <a href="/shell" className="text-primary underline underline-offset-2">
-                  /shell
-                </a>{" "}
-                to see the full AppShell with TopBar + Sidebar + demo content.
-              </div>
-            </Group>
-          </div>
-        </Section>
-
+        {/* ── Spinner ────────────────────────────────────────────────────── */}
         <Separator className="my-8" />
         <p className="text-xs text-muted-foreground pb-8">
           Databricks Designer Starter Kit · DuBois tokens on shadcn/ui · Tailwind v4

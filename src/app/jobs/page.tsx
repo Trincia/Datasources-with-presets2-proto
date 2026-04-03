@@ -85,31 +85,34 @@ export default function JobsPage() {
 
         {/* ── Create new ───────────────────────────────────────────────── */}
         <div className="flex flex-col gap-3">
-          <button
+          <Button
+            variant="ghost"
+            size="sm"
             onClick={() => setCreateOpen((v) => !v)}
-            className="flex w-fit items-center gap-1 text-sm text-foreground hover:text-primary transition-colors"
+            className="gap-1 px-0 justify-start text-foreground hover:text-primary hover:bg-transparent"
           >
             {createOpen
               ? <ChevronDownIcon  size={14} className="text-muted-foreground" />
               : <ChevronRightIcon size={14} className="text-muted-foreground" />}
             <span>Create new</span>
-          </button>
+          </Button>
 
           {createOpen && (
             <div className="grid grid-cols-3 gap-3">
               {CREATE_CARDS.map((card) => (
-                <button
+                <Button
                   key={card.title}
-                  className="flex items-center gap-3 rounded border border-border bg-background px-4 py-3 text-left transition-colors hover:bg-secondary"
+                  variant="ghost"
+                  className="h-auto w-full justify-start gap-3 rounded border border-border bg-background px-4 py-3 text-left hover:bg-secondary"
                 >
                   <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded bg-secondary">
                     <card.icon size={16} className="text-muted-foreground" />
                   </div>
-                  <div className="flex flex-col gap-0.5">
-                    <span className="text-sm font-semibold text-foreground">{card.title}</span>
-                    <span className="text-xs text-muted-foreground">{card.desc}</span>
+                  <div className="flex min-w-0 flex-col gap-0.5">
+                    <span className="truncate text-sm font-semibold text-foreground">{card.title}</span>
+                    <span className="truncate text-xs text-muted-foreground">{card.desc}</span>
                   </div>
-                </button>
+                </Button>
               ))}
             </div>
           )}
@@ -119,12 +122,12 @@ export default function JobsPage() {
         <Tabs defaultValue="jobs">
 
           {/* Tab bar + send feedback */}
-          <div className="flex items-end justify-between">
-            <TabsList variant="line">
+          <div className="flex items-center justify-between border-b border-border">
+            <TabsList variant="line" className="border-b-0">
               <TabsTrigger value="jobs">Jobs &amp; pipelines</TabsTrigger>
               <TabsTrigger value="runs">Runs</TabsTrigger>
             </TabsList>
-            <Button variant="ghost" size="xs" className="mb-px gap-1 text-primary">
+            <Button variant="ghost" size="xs" className="gap-1 text-primary">
               <SpeechBubbleIcon size={14} />
               Send feedback
             </Button>
@@ -157,7 +160,7 @@ export default function JobsPage() {
               </SegmentedControl>
 
               <Select value={tagsFilter} onValueChange={setTagsFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="w-auto min-w-[80px]">
                   <SelectValue placeholder="Tags" />
                 </SelectTrigger>
                 <SelectContent>
@@ -168,7 +171,7 @@ export default function JobsPage() {
               </Select>
 
               <Select value={runAsFilter} onValueChange={setRunAsFilter}>
-                <SelectTrigger>
+                <SelectTrigger className="w-auto min-w-[90px]">
                   <SelectValue placeholder="Run as" />
                 </SelectTrigger>
                 <SelectContent>
@@ -181,7 +184,7 @@ export default function JobsPage() {
             </div>
 
             {/* ── Table ──────────────────────────────────────────────── */}
-            <div className="overflow-hidden rounded border border-border">
+            <div className="overflow-hidden">
               <Table>
                 <TableHeader>
                   <TableRow>

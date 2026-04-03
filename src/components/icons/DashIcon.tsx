@@ -24,7 +24,12 @@ export const DashIcon = forwardRef<SVGSVGElement, DashIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" fillRule="evenodd" d="M15 8.75H1v-1.5h14z" clipRule="evenodd" />
+      <path
+              fill="currentColor"
+              fillRule="evenodd"
+              d="M15 8.75H1v-1.5h14z"
+              clipRule="evenodd"
+            />
     </svg>
   )
 );

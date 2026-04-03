@@ -180,7 +180,7 @@ export default function JobDetailPage() {
 
               {/* ── Runs tab ─────────────────────────────────────────── */}
               <TabsContent value="runs" className="mt-4">
-                <div className="overflow-hidden rounded border border-border">
+                <div className="overflow-hidden">
                   <Table>
                     <TableHeader>
                       <TableRow>

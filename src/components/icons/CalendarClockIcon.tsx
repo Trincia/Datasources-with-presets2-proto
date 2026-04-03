@@ -30,7 +30,10 @@ export const CalendarClockIcon = forwardRef<SVGSVGElement, CalendarClockIconProp
               d="M4.5 0v2H1.75a.75.75 0 0 0-.75.75v11.5c0 .414.336.75.75.75H6v-1.5H2.5V7H15V2.75a.75.75 0 0 0-.75-.75H11.5V0H10v2H6V0zm9 5.5v-2h-11v2z"
               clipRule="evenodd"
             />
-            <path fill="currentColor" d="M10.25 10.5V12c0 .199.079.39.22.53l1 1 1.06-1.06-.78-.78V10.5z" />
+            <path
+              fill="currentColor"
+              d="M10.25 10.5V12c0 .199.079.39.22.53l1 1 1.06-1.06-.78-.78V10.5z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

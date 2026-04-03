@@ -32,7 +32,7 @@ export const ReplyIcon = forwardRef<SVGSVGElement, ReplyIconProps>(
               y={0}
               maskUnits="userSpaceOnUse"
               style={{
-                maskType: 'alpha',
+                maskType: "alpha",
               }}
             >
               <path fill="currentColor" d="M0 0h16v16H0z" />

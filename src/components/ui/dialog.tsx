@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { XIcon } from "lucide-react"
-import { Dialog as DialogPrimitive } from "radix-ui"
+import { Dialog as DialogPrimitive, VisuallyHidden } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
@@ -49,8 +49,9 @@ function DialogOverlay({
 function DialogContent({
   className,
   children,
+  title,
   ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content>) {
+}: React.ComponentProps<typeof DialogPrimitive.Content> & { title?: string }) {
   return (
     <DialogPortal data-slot="dialog-portal">
       <DialogOverlay />
@@ -63,6 +64,12 @@ function DialogContent({
         )}
         {...props}
       >
+        {/* Fallback visually-hidden title satisfies Radix accessibility check when no DialogTitle is provided */}
+        {title && (
+          <VisuallyHidden.Root>
+            <DialogPrimitive.Title>{title}</DialogPrimitive.Title>
+          </VisuallyHidden.Root>
+        )}
         {children}
       </DialogPrimitive.Content>
     </DialogPortal>
@@ -121,7 +128,7 @@ function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-body"
-      className={cn("flex flex-col gap-5 px-6", className)}
+      className={cn("flex flex-col gap-5 px-6 pt-2", className)}
       {...props}
     />
   )

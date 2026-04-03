@@ -59,29 +59,35 @@ export function EditorTabBar({
           const isActive = tab.id === activeTabId
           const Icon = TAB_ICONS[tab.type]
           return (
-            <button
+            <div
               key={tab.id}
+              role="tab"
+              tabIndex={0}
+              aria-selected={isActive}
               onClick={() => onTabClick(tab.id)}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") onTabClick(tab.id) }}
               className={cn(
-                "group relative flex h-full items-center gap-1.5 border-r border-border px-3 text-xs transition-colors shrink-0 max-w-[200px]",
+                "group relative flex h-full cursor-pointer items-center gap-1.5 border-r border-border px-3 text-xs transition-colors shrink-0 max-w-[200px] focus:outline-none",
                 isActive
                   ? "bg-background text-foreground font-semibold"
                   : "bg-secondary text-muted-foreground hover:bg-muted hover:text-foreground"
               )}
             >
-              {/* Active bottom border indicator */}
+              {/* Active top border indicator */}
               {isActive && (
-                <span className="absolute bottom-0 left-0 h-0.5 w-full bg-primary" />
+                <span className="absolute top-0 left-0 h-0.5 w-full bg-primary" />
               )}
               <Icon size={13} className={cn("shrink-0", isActive ? "text-primary" : "text-muted-foreground")} />
               <span className="truncate">{tab.label}</span>
               {tab.modified && !isActive && (
                 <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-muted-foreground/60" />
               )}
-              <button
+              <Button
+                variant="ghost"
+                size="icon-xs"
                 onClick={(e) => { e.stopPropagation(); onTabClose(tab.id) }}
                 className={cn(
-                  "ml-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded transition-colors",
+                  "ml-0.5 h-4 w-4 shrink-0 rounded transition-colors",
                   "opacity-0 group-hover:opacity-100",
                   isActive && "opacity-100",
                   "hover:bg-muted-foreground/20"
@@ -89,8 +95,8 @@ export function EditorTabBar({
                 aria-label={`Close ${tab.label}`}
               >
                 <CloseIcon size={10} className="text-muted-foreground" />
-              </button>
-            </button>
+              </Button>
+            </div>
           )
         })}
       </div>

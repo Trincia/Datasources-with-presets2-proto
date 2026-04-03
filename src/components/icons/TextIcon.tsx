@@ -24,7 +24,10 @@ export const TextIcon = forwardRef<SVGSVGElement, TextIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M7.118 13V4.62H4.083V3.135h7.84v1.483H8.883V13z" />
+      <path
+              fill="currentColor"
+              d="M7.118 13V4.62H4.083V3.135h7.84v1.483H8.883V13z"
+            />
     </svg>
   )
 );

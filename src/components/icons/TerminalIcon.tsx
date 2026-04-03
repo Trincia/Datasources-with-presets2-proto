@@ -24,7 +24,10 @@ export const TerminalIcon = forwardRef<SVGSVGElement, TerminalIconProps>(
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <path fill="currentColor" d="M5.03 4.97 8.06 8l-3.03 3.03-1.06-1.06L5.94 8 3.97 6.03zM12 9.5H8V11h4z" />
+      <path
+              fill="currentColor"
+              d="M5.03 4.97 8.06 8l-3.03 3.03-1.06-1.06L5.94 8 3.97 6.03zM12 9.5H8V11h4z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

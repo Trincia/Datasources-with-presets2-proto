@@ -28,7 +28,10 @@ export const BadgeCodeOffIcon = forwardRef<SVGSVGElement, BadgeCodeOffIconProps>
               fill="currentColor"
               d="M16 2.75v11.19l-1.5-1.5V3.5h-3.05a.75.75 0 0 1-.735-.6 1.75 1.75 0 0 0-3.43 0 .75.75 0 0 1-.735.6h-.99L4.06 2H6a3.25 3.25 0 0 1 6 0h3.25a.75.75 0 0 1 .75.75"
             />
-            <path fill="currentColor" d="m12.1 10.04-1.06-1.06.48-.48-1.97-1.97 1.06-1.06 3.031 3.03z" />
+            <path
+              fill="currentColor"
+              d="m12.1 10.04-1.06-1.06.48-.48-1.97-1.97 1.06-1.06 3.031 3.03z"
+            />
             <path
               fill="currentColor"
               fillRule="evenodd"

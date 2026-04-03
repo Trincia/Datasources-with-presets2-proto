@@ -35,7 +35,11 @@ export const TableVectorIcon = forwardRef<SVGSVGElement, TableVectorIconProps>(
             <circle cx={9.5} cy={12.5} r={0.5} fill="currentColor" />
             <circle cx={13.75} cy={13.75} r={0.75} fill="currentColor" />
             <circle cx={9.75} cy={9.75} r={0.75} fill="currentColor" />
-            <path stroke="currentColor" strokeWidth={0.3} d="M13.5 13.5 12 12m0 0 .5-2.5M12 12l-2.5.5M10 10l2 2" />
+            <path
+              stroke="currentColor"
+              strokeWidth={0.3}
+              d="M13.5 13.5 12 12m0 0 .5-2.5M12 12l-2.5.5M10 10l2 2"
+            />
     </svg>
   )
 );

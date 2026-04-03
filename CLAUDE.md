@@ -147,7 +147,7 @@ src/
 │   ├── shell/
 │   │   ├── AppShell.tsx      ← Layout wrapper (owns sidebar open/close state)
 │   │   ├── TopBar.tsx        ← 48px top navigation bar
-│   │   ├── Sidebar.tsx       ← Collapsible left nav (220px / hidden)
+│   │   ├── Sidebar.tsx       ← Collapsible left nav (200px / hidden)
 │   │   ├── NewButton.tsx     ← Brand-tinted "+ New" sidebar button (32px, rounded-md)
 │   │   ├── PageHeader.tsx    ← Page-level header: breadcrumbs + title + actions
 │   │   ├── DatabricksLogo.tsx← SVG lockup, dark-mode aware
@@ -192,7 +192,7 @@ Props: `activeItem` `onNavigate` `workspace` `userInitial`
 - AI button: `<DbIcon icon={SparkleIcon} color="ai" size={16} />` — always AI gradient, not muted
 
 ### Sidebar rules
-- Width: `w-[220px]` expanded / `w-0 overflow-hidden` collapsed (fully hidden, never icon-only)
+- Width: `w-[200px]` expanded / `w-0 overflow-hidden` collapsed (fully hidden, never icon-only)
 - When collapsed, main content gets `ml-2` for equal left/right spacing (both 8px)
 - `+ New` button: `NewButton` component — `h-8` (32px), `rounded-md` (8px), brand-red tint `rgba(255,54,33,…)`
 - NewButton and nav scroll together in a single `overflow-y-auto` container

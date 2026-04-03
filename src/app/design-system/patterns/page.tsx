@@ -4,10 +4,12 @@ import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Hint } from "@/components/ui/hint"
 import { Textarea } from "@/components/ui/textarea"
 import { Badge } from "@/components/ui/badge"
 import { Switch } from "@/components/ui/switch"
-import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Empty } from "@/components/ui/empty"
 import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select"
@@ -18,9 +20,7 @@ import {
   Dialog, DialogContent, DialogHeader, DialogTitle,
   DialogDescription, DialogFooter, DialogBody, DialogTrigger,
 } from "@/components/ui/dialog"
-import {
-  Card, CardContent, CardHeader, CardTitle, CardDescription,
-} from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import {
   Pagination, PaginationContent, PaginationItem,
   PaginationLink, PaginationNext, PaginationPrevious,
@@ -30,7 +30,8 @@ import {
   BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
-import { SearchIcon, FilterIcon, ChevronDownIcon, OverflowIcon } from "@/components/icons"
+import { PageHeader } from "@/components/shell"
+import { SearchIcon, FilterIcon, OverflowIcon, DangerIcon } from "@/components/icons"
 import { WorkflowsIcon, NotebookIcon, PipelineIcon, DataIcon } from "@/components/icons"
 import { AlertCircle, ArrowUpDown, Plus, Trash2, TrendingUp, TrendingDown } from "lucide-react"
 import { cn } from "@/lib/utils"
@@ -115,7 +116,7 @@ function DataTablePattern() {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div className="flex flex-col gap-4">
       {/* Toolbar */}
       <div className="flex flex-wrap items-center gap-2">
         <div className="relative">
@@ -145,7 +146,7 @@ function DataTablePattern() {
         </Button>
         <div className="ml-auto flex items-center gap-2">
           {selected.size > 0 && (
-            <span className="text-xs text-muted-foreground">{selected.size} selected</span>
+            <span className="text-hint text-muted-foreground">{selected.size} selected</span>
           )}
           <Button size="sm" className="gap-1">
             <Plus className="h-4 w-4" />
@@ -160,12 +161,10 @@ function DataTablePattern() {
           <TableHeader>
             <TableRow>
               <TableHead className="w-8">
-                <input
-                  type="checkbox"
-                  className="h-4 w-4 rounded border-border"
+                <Checkbox
                   checked={selected.size === paged.length && paged.length > 0}
-                  onChange={(e) => {
-                    if (e.target.checked) setSelected(new Set(paged.map((r) => r.id)))
+                  onCheckedChange={(checked) => {
+                    if (checked) setSelected(new Set(paged.map((r) => r.id)))
                     else setSelected(new Set())
                   }}
                 />
@@ -193,17 +192,17 @@ function DataTablePattern() {
             ) : paged.map((row) => (
               <TableRow key={row.id} className={cn("group", selected.has(row.id) && "bg-primary/5")}>
                 <TableCell>
-                  <input
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-border"
+                  <Checkbox
                     checked={selected.has(row.id)}
-                    onChange={() => toggleSelect(row.id)}
+                    onCheckedChange={() => toggleSelect(row.id)}
                   />
                 </TableCell>
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <TypeIcon type={row.type} />
-                    <span className="text-primary hover:underline cursor-pointer">{row.name}</span>
+                    <Button variant="link" size="sm" className="h-auto p-0">
+                      {row.name}
+                    </Button>
                   </div>
                 </TableCell>
                 <TableCell className="text-muted-foreground">{row.type}</TableCell>
@@ -213,7 +212,7 @@ function DataTablePattern() {
                   </Badge>
                 </TableCell>
                 <TableCell className="text-muted-foreground">{row.owner}</TableCell>
-                <TableCell className="text-muted-foreground font-mono text-xs">{row.duration}</TableCell>
+                <TableCell className="text-muted-foreground font-mono text-hint">{row.duration}</TableCell>
                 <TableCell className="text-muted-foreground">{row.updated}</TableCell>
                 <TableCell>
                   <Button
@@ -233,7 +232,7 @@ function DataTablePattern() {
 
       {/* Footer */}
       <div className="flex items-center justify-between">
-        <span className="text-xs text-muted-foreground">
+        <span className="text-hint text-muted-foreground">
           {filtered.length} run{filtered.length !== 1 ? "s" : ""}
         </span>
         {totalPages > 1 && (
@@ -287,15 +286,18 @@ function FormLayoutPattern() {
   return (
     <div className="max-w-lg">
       <form
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-4"
         onSubmit={(e) => { e.preventDefault(); setSubmitted(true) }}
         noValidate
       >
         {/* Name */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="pf-name">
-            Job name <span className="text-destructive">*</span>
-          </Label>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="pf-name">
+              Job name <span className="text-destructive">*</span>
+            </Label>
+            <Hint>Must be unique within the workspace.</Hint>
+          </div>
           <Input
             id="pf-name"
             placeholder="e.g. daily_aggregations"
@@ -304,18 +306,19 @@ function FormLayoutPattern() {
             aria-invalid={!!nameError}
             className={nameError ? "border-destructive focus-visible:ring-destructive" : ""}
           />
-          {nameError ? (
-            <p className="text-hint text-destructive flex items-center gap-1">
-              <AlertCircle className="h-3 w-3" /> {nameError}
-            </p>
-          ) : (
-            <p className="text-hint text-muted-foreground">Must be unique within the workspace.</p>
+          {nameError && (
+            <span className="text-hint text-destructive flex items-center gap-1" role="alert">
+              <DangerIcon size={12} className="shrink-0" /> {nameError}
+            </span>
           )}
         </div>
 
         {/* Cluster */}
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor="pf-cluster">Cluster</Label>
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="pf-cluster">Cluster</Label>
+            <Hint>The cluster this job will run on.</Hint>
+          </div>
           <Select value={cluster} onValueChange={setCluster}>
             <SelectTrigger id="pf-cluster">
               <SelectValue placeholder="Select a cluster" />
@@ -326,11 +329,10 @@ function FormLayoutPattern() {
               <SelectItem value="serverless">Serverless</SelectItem>
             </SelectContent>
           </Select>
-          <p className="text-hint text-muted-foreground">The cluster this job will run on.</p>
         </div>
 
         {/* Description */}
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
           <Label htmlFor="pf-desc">Description</Label>
           <Textarea
             id="pf-desc"
@@ -380,10 +382,10 @@ function MetricCards() {
       {METRICS.map((m) => {
         const up = m.delta >= 0
         return (
-          <Card key={m.title} className="flex flex-col gap-4 p-5">
+          <Card key={m.title} className="flex flex-col gap-4 p-4">
             <div className="flex items-start justify-between">
               <div className="flex flex-col gap-1">
-                <span className="text-xs text-muted-foreground">{m.title}</span>
+                <span className="text-hint text-muted-foreground">{m.title}</span>
                 <span className="text-2xl font-semibold text-foreground leading-none">{m.value}</span>
               </div>
               <m.icon size={20} className="text-muted-foreground mt-0.5" />
@@ -399,7 +401,7 @@ function MetricCards() {
                 </span>
                 <span className="text-muted-foreground">{m.deltaLabel}</span>
               </div>
-              <Badge variant={m.badgeVariant as Parameters<typeof Badge>[0]["variant"]} className="text-[10px]">
+              <Badge variant={m.badgeVariant as Parameters<typeof Badge>[0]["variant"]}>
                 {m.badge}
               </Badge>
             </div>
@@ -428,14 +430,14 @@ function SettingsPanel() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm text-foreground">Job status alerts</p>
-              <p className="text-hint text-muted-foreground">Notify on run completion and failure.</p>
+              <Hint>Notify on run completion and failure.</Hint>
             </div>
             <Switch checked={notifications} onCheckedChange={setNotifications} />
           </div>
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm text-foreground">Email alerts</p>
-              <p className="text-hint text-muted-foreground">Send alerts to your registered email.</p>
+              <Hint>Send alerts to your registered email.</Hint>
             </div>
             <Switch checked={emailAlerts} onCheckedChange={setEmailAlerts} disabled={!notifications} />
           </div>
@@ -449,11 +451,11 @@ function SettingsPanel() {
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm text-foreground">Auto-retry on failure</p>
-              <p className="text-hint text-muted-foreground">Automatically retry failed runs.</p>
+              <Hint>Automatically retry failed runs.</Hint>
             </div>
             <Switch checked={autoRetry} onCheckedChange={setAutoRetry} />
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <Label htmlFor="sp-retries" className="shrink-0 text-sm text-foreground w-24">
               Max retries
             </Label>
@@ -474,7 +476,7 @@ function SettingsPanel() {
       {/* Section: Schedule */}
       <div className="px-5 py-4">
         <h3 className="mb-3 text-sm font-semibold text-foreground">Schedule</h3>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
           <Label htmlFor="sp-tz" className="shrink-0 text-sm text-foreground w-24">
             Timezone
           </Label>
@@ -507,34 +509,28 @@ function EmptyStatePattern() {
   return (
     <div className="grid gap-6 sm:grid-cols-2">
       {/* Generic empty */}
-      <div className="flex flex-col items-center justify-center gap-3 rounded-md border border-border py-14 px-6 text-center">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-          <WorkflowsIcon size={20} className="text-muted-foreground" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-foreground">No jobs yet</p>
-          <p className="mt-1 text-hint text-muted-foreground">
-            Create your first job to start running workflows.
-          </p>
-        </div>
-        <Button size="sm" className="gap-1 mt-1">
-          <Plus className="h-4 w-4" />
-          Create job
-        </Button>
+      <div className="rounded-md border border-border py-14 px-6">
+        <Empty
+          image={<WorkflowsIcon size={64} />}
+          title="No jobs yet"
+          description="Create your first job to start running workflows."
+          action={
+            <Button size="sm" className="gap-1">
+              <Plus className="h-4 w-4" />
+              Create job
+            </Button>
+          }
+        />
       </div>
 
       {/* Filter empty */}
-      <div className="flex flex-col items-center justify-center gap-3 rounded-md border border-border py-14 px-6 text-center">
-        <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-          <SearchIcon size={20} className="text-muted-foreground" />
-        </div>
-        <div>
-          <p className="text-sm font-semibold text-foreground">No results found</p>
-          <p className="mt-1 text-hint text-muted-foreground">
-            Try adjusting your search or filter criteria.
-          </p>
-        </div>
-        <Button variant="outline" size="sm">Clear filters</Button>
+      <div className="rounded-md border border-border py-14 px-6">
+        <Empty
+          image={<SearchIcon size={64} />}
+          title="No results found"
+          description="Try adjusting your search or filter criteria."
+          action={<Button variant="outline" size="sm">Clear filters</Button>}
+        />
       </div>
     </div>
   )
@@ -597,35 +593,32 @@ function ConfirmDeletePattern() {
 
 function PageHeaderPattern() {
   return (
-    <div className="flex flex-col gap-4 rounded-md border border-border p-5">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem><BreadcrumbLink href="#">Workspace</BreadcrumbLink></BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem><BreadcrumbLink href="#">Jobs & Pipelines</BreadcrumbLink></BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem><BreadcrumbPage>daily_aggregations</BreadcrumbPage></BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <div className="flex items-start justify-between gap-4">
-        <div className="flex flex-col gap-1">
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-semibold text-foreground">daily_aggregations</h1>
-            <Badge variant="lime">Active</Badge>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Runs every day at 02:00 UTC · Cluster: Shared autoscaling
-          </p>
-        </div>
-        <div className="flex items-center gap-2 shrink-0">
-          <Button variant="ghost" size="icon-sm" aria-label="More options">
-            <OverflowIcon size={16} className="text-muted-foreground" />
-          </Button>
-          <Button variant="outline" size="sm">Edit</Button>
-          <Button size="sm">Run now</Button>
-        </div>
-      </div>
+    <div className="rounded-md border border-border p-5">
+      <PageHeader
+        breadcrumbs={
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem><BreadcrumbLink href="#">Workspace</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbLink href="#">Jobs &amp; Pipelines</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbPage>daily_aggregations</BreadcrumbPage></BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+        }
+        title="daily_aggregations"
+        badge={<Badge variant="lime">Active</Badge>}
+        description="Runs every day at 02:00 UTC · Cluster: Shared autoscaling"
+        actions={
+          <>
+            <Button variant="ghost" size="icon-sm" aria-label="More options">
+              <OverflowIcon size={16} className="text-muted-foreground" />
+            </Button>
+            <Button variant="outline" size="sm">Edit</Button>
+            <Button size="sm">Run now</Button>
+          </>
+        }
+      />
     </div>
   )
 }

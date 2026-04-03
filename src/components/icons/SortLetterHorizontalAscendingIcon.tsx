@@ -24,7 +24,10 @@ export const SortLetterHorizontalAscendingIcon = forwardRef<SVGSVGElement, SortL
       role={ariaLabel ? "img" : undefined}
       {...props}
     >
-      <g fill="currentColor" clipPath="url(#SortLetterHorizontalAscendingIcon_svg__a)">
+      <g
+              fill="currentColor"
+              clipPath="url(#SortLetterHorizontalAscendingIcon_svg__a)"
+            >
               <path d="m14.06 4-4.03 4.03-1.06-1.06 2.22-2.22H5v-1.5h6.19L8.97 1.03l1.06-1.06z" />
               <path
                 fillRule="evenodd"

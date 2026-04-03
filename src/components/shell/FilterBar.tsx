@@ -79,7 +79,7 @@ export function FilterBar({
       {/* Dropdown selects */}
       {selects.map((sel, i) => (
         <Select key={i} value={sel.value} onValueChange={sel.onValueChange}>
-          <SelectTrigger>
+          <SelectTrigger className="w-auto min-w-[80px]">
             <SelectValue placeholder={sel.placeholder} />
           </SelectTrigger>
           <SelectContent>

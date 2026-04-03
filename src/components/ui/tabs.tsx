@@ -27,7 +27,7 @@ function Tabs({
 
 const tabsListVariants = cva(
   // DuBois: 32px height, no internal padding for line variant
-  "rounded p-[3px] group-data-[orientation=horizontal]/tabs:h-8 data-[variant=line]:rounded-none data-[variant=line]:p-0 group/tabs-list text-muted-foreground inline-flex w-fit items-center justify-center group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
+  "rounded p-[3px] group-data-[orientation=horizontal]/tabs:h-8 data-[variant=line]:rounded-none data-[variant=line]:p-0 group/tabs-list text-muted-foreground inline-flex w-fit items-center justify-center data-[variant=line]:justify-start group-data-[orientation=vertical]/tabs:h-fit group-data-[orientation=vertical]/tabs:flex-col",
   {
     variants: {
       variant: {

@@ -78,6 +78,12 @@ Violation examples (never do these):
 | Success | `text-[var(--success)]` | green-600 #277C43 |
 | Warning | `text-[var(--warning)]` | yellow-600 #BE501E |
 
+### List & Table Text Colors — common mistake
+- **Data cell content** (dates, types, statuses, numeric values, names): always `text-foreground`
+- **Secondary annotations** (namespace paths, descriptions, sub-labels below a primary value): `text-muted-foreground`
+- **Never** use `text-muted-foreground` for a standalone data column — if it's a data value the user needs to read, it's `text-foreground`
+- Examples: timestamp column → `text-foreground` · type badge label → `text-foreground` · path below item name → `text-muted-foreground` · column header → `text-foreground font-semibold`
+
 ### Component Overrides Already Applied
 These shadcn components have DuBois overrides — use them as-is:
 - **`Button`** — 4px radius, sizes: `sm` 32px (default) · `xs` 24px · `icon-sm` 32px · `icon-xs` 24px, semibold, variants: `default` `outline` `ghost` `destructive` `link`

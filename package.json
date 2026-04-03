@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "figma:publish": "npx @figma/code-connect@1 publish",
-    "figma:unpublish": "npx @figma/code-connect@1 unpublish"
+    "figma:publish": "npx @figma/code-connect@1 connect publish",
+    "figma:unpublish": "npx @figma/code-connect@1 connect unpublish"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

@@ -231,9 +231,11 @@
   --border-danger:  #fbd0d8;
   --border-warning: #f8d4a5;
   --border-success: #a3d9b6;
+  --border-info:    #bae1fc;
   --background-danger:  #fff5f7;
   --background-warning: #fff9eb;
   --background-success: #f3fcf6;
+  --background-info:    #f0f8ff;
 
   /* Code background — DuBois codeBackground semantic token */
   --code-bg: rgba(82, 82, 82, 0.08);
@@ -338,9 +340,11 @@
   --border-danger:  #e65b77;
   --border-warning: #de7921;
   --border-success: #3ba65e;
+  --border-info:    #4299e0;
   --background-danger:  rgba(200, 45, 76, 0.1600);
   --background-warning: rgba(190, 80, 30, 0.1600);
   --background-success: rgba(39, 124, 67, 0.1600);
+  --background-info:    rgba(34, 114, 180, 0.1600);
 
   --chart-1: #4299e0;
   --chart-2: #3ba65e;

@@ -3,13 +3,31 @@
  *
  * Source format: uses `Icon` wrapper, default export, `1em` size
  * Target format: standalone forwardRef SVG, named export, `size` prop
+ *
+ * ⚠️  INTERNAL MAINTAINERS ONLY — requires access to the Databricks `universe` monorepo.
+ * External users: the 445 icons are already bundled in `src/components/icons/`.
+ * You do not need to run this script unless you are pulling new icons from the DuBois source.
+ *
+ * Usage:
+ *   SRC_DIR=<path-to-universe>/design-system/src/design-system/Icon/__generated/icons \
+ *   node scripts/sync-icons.mjs
  */
 
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from "url";
 
-const SRC_DIR = "/Users/joy/universe/design-system/src/design-system/Icon/__generated/icons";
-const OUT_DIR = "/Users/joy/Git/db-starter-kit-1/src/components/icons";
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// SRC_DIR: path to the DuBois icon source in the universe monorepo.
+// Override with the SRC_DIR env var: SRC_DIR=/path/to/universe/... node scripts/sync-icons.mjs
+const SRC_DIR = process.env.SRC_DIR;
+if (!SRC_DIR) {
+  console.error("❌  SRC_DIR is not set.\n   Usage: SRC_DIR=<path-to-universe>/design-system/src/design-system/Icon/__generated/icons node scripts/sync-icons.mjs");
+  process.exit(1);
+}
+
+const OUT_DIR = path.resolve(__dirname, "../src/components/icons");
 
 const sourceFiles = fs.readdirSync(SRC_DIR).filter((f) => f.endsWith(".tsx"));
 

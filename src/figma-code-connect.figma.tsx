@@ -116,7 +116,7 @@ figma.connect(
   {
     props: {
       variant: figma.enum("Variant", {
-        default:     "default",
+        info:        "info",
         destructive: "destructive",
         warning:     "warning",
         success:     "success",
@@ -161,19 +161,21 @@ figma.connect(
   {
     props: {
       variant: figma.enum("Variant", {
-        default:     "default",
-        secondary:   "secondary",
-        destructive: "destructive",
-        outline:     "outline",
-        coral:       "coral",
-        brown:       "brown",
-        indigo:      "indigo",
-        lemon:       "lemon",
-        lime:        "lime",
-        pink:        "pink",
-        purple:      "purple",
-        teal:        "teal",
-        turquoise:   "turquoise",
+        default:      "default",
+        secondary:    "secondary",
+        destructive:  "destructive",
+        outline:      "outline",
+        default_tag:  "default_tag",
+        charcoal:     "charcoal",
+        coral:        "coral",
+        brown:        "brown",
+        indigo:       "indigo",
+        lemon:        "lemon",
+        lime:         "lime",
+        pink:         "pink",
+        purple:       "purple",
+        teal:         "teal",
+        turquoise:    "turquoise",
       }),
       children: figma.string("Label"),
     },
@@ -227,6 +229,7 @@ figma.connect(
         sm: "sm",
         xs: "xs",
         "icon-sm": "icon-sm",
+        "icon-xs": "icon-xs",
       }),
       children: figma.string("Label"),
       icon: figma.boolean("Has Icon", {
@@ -838,14 +841,20 @@ figma.connect(
   "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1201-25",
   {
     props: {
-      hasTitle:  figma.boolean("Has Title"),
-      hasAction: figma.boolean("Has Action"),
+      title:  figma.boolean("Has Title", {
+        true:  "No results found",
+        false: undefined,
+      }),
+      action: figma.boolean("Has Action", {
+        true:  <Button size="sm">Get started</Button>,
+        false: undefined,
+      }),
     },
-    example: ({ hasTitle, hasAction }) => (
+    example: ({ title, action }) => (
       <Empty
-        title={hasTitle ? "No results found" : undefined}
+        title={title}
         description="There's nothing here yet."
-        action={hasAction ? <Button size="sm">Get started</Button> : undefined}
+        action={action}
       />
     ),
   }

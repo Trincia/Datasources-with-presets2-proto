@@ -13,7 +13,7 @@ Patterns and rules for creating components in the Databricks UI starter kit Figm
 | An icon | `figma.importComponentByKeyAsync(key)` → create instance | Drawing a 14×14 frame placeholder |
 | A primitive (Button, Input…) | `importComponentSetByKeyAsync` → find variant → `createInstance()` | Recreating the shape from scratch |
 
-Token variable keys and component keys are documented in `memory/figma_node_map.md`.
+Token variable keys and component keys can be discovered via the Figma MCP `get_variable_defs` and `search_design_system` tools against file key `KHFOMM4oUyT9XgeeXpbzns`.
 
 ---
 

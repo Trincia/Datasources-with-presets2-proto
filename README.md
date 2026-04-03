@@ -32,6 +32,8 @@ npm run dev
 | [`/`](http://localhost:3000) | Landing page |
 | [`/shell`](http://localhost:3000/shell) | App shell demo — workspace home |
 | [`/jobs`](http://localhost:3000/jobs) | Jobs & Pipelines page example |
+| [`/compute`](http://localhost:3000/compute) | Compute clusters page example |
+| [`/dashboards`](http://localhost:3000/dashboards) | Dashboards card grid example |
 | [`/design-system`](http://localhost:3000/design-system) | Full component reference |
 
 ---
@@ -134,7 +136,7 @@ Then create `src/app/catalog/page.tsx` with `activeItem="catalog"` passed to `Ap
 
 | Rule | Value |
 |---|---|
-| Base font | Helvetica Neue · 13px · 20px line-height |
+| Base font | SF Pro / system-ui · 13px · 20px line-height |
 | Bold weight | `font-semibold` (600) — never `font-bold` (700) |
 | Button/input radius | `rounded` (4px) |
 | Card/modal radius | `rounded-md` (8px) |
@@ -152,9 +154,13 @@ src/
 │   ├── globals.css           ← DuBois theme (Tailwind v4 @theme)
 │   ├── layout.tsx            ← ThemeProvider + TooltipProvider
 │   ├── page.tsx              ← Landing page
-│   ├── shell/                ← Workspace home demo (/shell)
-│   ├── jobs/                 ← Jobs & Pipelines demo (/jobs)
-│   └── design-system/        ← Component reference (/design-system)
+│   └── (demo)/               ← Demo pages (delete this folder to start fresh)
+│       ├── shell/            ← Workspace home (/shell)
+│       ├── jobs/             ← Jobs & Pipelines (/jobs)
+│       ├── compute/          ← Compute clusters (/compute)
+│       ├── dashboards/       ← Dashboards (/dashboards)
+│       ├── workspace/        ← Notebook editor (/workspace/notebook)
+│       └── design-system/    ← Component reference (/design-system)
 ├── components/
 │   ├── ui/                   ← shadcn/ui components (DuBois-overridden)
 │   │   ├── button.tsx
@@ -188,7 +194,7 @@ All DuBois tokens are defined for both light and dark in `globals.css`. Toggle w
 
 ## Tech stack
 
-- **Next.js 15** (App Router, TypeScript)
+- **Next.js 16** (App Router, TypeScript)
 - **Tailwind CSS v4** (CSS-first config in `globals.css`, no `tailwind.config.ts`)
 - **shadcn/ui** (New York style, DuBois-overridden)
 - **next-themes** (dark mode)

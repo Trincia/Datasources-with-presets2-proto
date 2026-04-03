@@ -47,8 +47,8 @@ export default function Home() {
             delete the <code>(demo)</code> folder, and start building your app.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-1">
-            <Button asChild><Link href="/shell">Open shell demo</Link></Button>
-            <Button variant="outline" asChild><Link href="/design-system">Design system</Link></Button>
+            <Button asChild><Link href="/shell" prefetch={false}>Open shell demo</Link></Button>
+            <Button variant="outline" asChild><Link href="/design-system" prefetch={false}>Design system</Link></Button>
           </div>
         </div>
 
@@ -57,6 +57,7 @@ export default function Home() {
             <Link
               key={demo.href}
               href={demo.href}
+              prefetch={false}
               className="group flex flex-col gap-2 rounded-md border border-border bg-background p-4 transition-colors hover:border-primary/40 hover:bg-secondary"
             >
               <div className="flex items-center gap-2">

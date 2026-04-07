@@ -7,6 +7,7 @@
  * Publish changes:  npx figma connect publish
  * Delete mappings:  npx figma connect unpublish
  */
+import React from "react"
 import figma from "@figma/code-connect"
 
 // ─── UI Components ───────────────────────────────────────────────────────────
@@ -537,16 +538,10 @@ figma.connect(
   Tabs,
   "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=707-9",
   {
-    props: {
-      variant: figma.enum("Variant", {
-        default:   "default",
-        line:      "line",
-        contained: "contained",
-      }),
-    },
-    example: ({ variant }) => (
+    props: {},
+    example: () => (
       <Tabs defaultValue="tab1">
-        <TabsList variant={variant}>
+        <TabsList>
           <TabsTrigger value="tab1">Tab 1</TabsTrigger>
           <TabsTrigger value="tab2">Tab 2</TabsTrigger>
           <TabsTrigger value="tab3">Tab 3</TabsTrigger>
@@ -590,14 +585,10 @@ figma.connect(
   PageHeader,
   "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=446-6",
   {
-    props: {
-      starred: figma.boolean("Starred"),
-    },
-    example: ({ starred }) => (
+    props: {},
+    example: () => (
       <PageHeader
         title="Page title"
-        starred={starred}
-        onStarToggle={() => {}}
         breadcrumbs={
           <Breadcrumb>
             <BreadcrumbList>
@@ -910,6 +901,33 @@ figma.connect(
   }
 )
 
+// ─── TreeRow ── node 1328-20 ─────────────────────────────────────────────────
+// TreeRow is a Figma sub-component; in code, rows are driven by the nodes[] array on <Tree>.
+figma.connect(
+  Tree,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1328-20",
+  {
+    props: {
+      variant: figma.enum("Variant", {
+        default: "default",
+        nav:     "nav",
+      }),
+    },
+    example: ({ variant }) => (
+      <Tree
+        variant={variant}
+        nodes={[
+          { id: "parent", label: "Parent", defaultExpanded: true, children: [
+            { id: "child", label: "Child" },
+          ]},
+        ]}
+        selectedId="child"
+        onSelect={() => {}}
+      />
+    ),
+  }
+)
+
 // ─── SidePanel ── node 1205-11 ───────────────────────────────────────────────
 figma.connect(
   SidePanel,
@@ -930,6 +948,88 @@ figma.connect(
           },
         ]}
         selectedId="projects"
+        onSelect={() => {}}
+      />
+    ),
+  }
+)
+
+// ─── TabItem ── node 1286-2 ──────────────────────────────────────────────────
+// TabItem is a Figma sub-component; in code, tabs are rendered as <TabsTrigger> inside <TabsList>.
+figma.connect(
+  TabsTrigger,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1286-2",
+  {
+    props: {},
+    example: () => (
+      <Tabs defaultValue="tab1">
+        <TabsList>
+          <TabsTrigger value="tab1">Tab 1</TabsTrigger>
+          <TabsTrigger value="tab2">Tab 2</TabsTrigger>
+        </TabsList>
+      </Tabs>
+    ),
+  }
+)
+
+// ─── TableCell ── node 1289-5 ────────────────────────────────────────────────
+// TableCell is a Figma sub-component; in code, cells live inside <TableRow> inside <TableBody>.
+figma.connect(
+  TableCell,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1289-5",
+  {
+    props: {},
+    example: () => (
+      <Table>
+        <TableBody>
+          <TableRow>
+            <TableCell>Cell value</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    ),
+  }
+)
+
+// ─── TableHeaderCell ── node 1289-7 ──────────────────────────────────────────
+// TableHeaderCell is a Figma sub-component; in code it maps to <TableHead> inside <TableHeader>.
+figma.connect(
+  TableHead,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1289-7",
+  {
+    props: {},
+    example: () => (
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Column</TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    ),
+  }
+)
+
+// ─── Tree (rebuilt) ── node 1330-76 ──────────────────────────────────────────
+figma.connect(
+  Tree,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1330-76",
+  {
+    props: {
+      variant: figma.enum("Variant", {
+        default: "default",
+        nav:     "nav",
+      }),
+    },
+    example: ({ variant }) => (
+      <Tree
+        variant={variant}
+        nodes={[
+          { id: "parent", label: "Parent", defaultExpanded: true, children: [
+            { id: "child", label: "Child" },
+          ]},
+        ]}
+        selectedId="child"
         onSelect={() => {}}
       />
     ),

@@ -147,4 +147,4 @@ node scripts/sync-icons.mjs
 
 The `CLAUDE.md` at the repo root contains all DuBois design rules baked in. When using Claude Code or any AI assistant in this repo, those rules are automatically applied.
 
-For Figma-to-code work, the rules in `docs/design-system-rules.md` give the AI full context on the token system, component locations, import paths, and known gotchas.
+For Figma-to-code work, the `figma-match-code` skill in `.claude-plugin/` provides full context on tokens, component references, and Plugin API gotchas.

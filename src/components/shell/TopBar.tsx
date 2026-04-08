@@ -7,7 +7,7 @@ import { DbIcon } from "@/components/ui/db-icon"
 import {
   SidebarOpenIcon,
   SidebarClosedIcon,
-  SparkleIcon,
+  GenieCodeIcon,
   SearchIcon,
   ChevronDownIcon,
   MenuIcon,
@@ -107,7 +107,7 @@ export function TopBar({
           onClick={onToggleGenie}
           className={cn(genieOpen && "bg-muted")}
         >
-          <DbIcon icon={SparkleIcon} color="ai" size={16} />
+          <DbIcon icon={GenieCodeIcon} color="ai" size={16} />
         </Button>
 
         <AppSwitcher />

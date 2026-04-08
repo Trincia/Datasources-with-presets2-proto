@@ -479,6 +479,10 @@
     background: linear-gradient(135deg, #4299e0 20.5%, #ca42e0 46.91%, #ff5f46 79.5%);
   }
 
+  .bg-ai-gradient-subtle {
+    background: linear-gradient(135deg, rgba(66,153,224,0.15) 20.5%, rgba(202,66,224,0.15) 46.91%, rgba(255,95,70,0.15) 79.5%);
+  }
+
   .text-ai-gradient {
     background: linear-gradient(135deg, #4299e0 20.5%, #ca42e0 46.91%, #ff5f46 79.5%);
     -webkit-background-clip: text;

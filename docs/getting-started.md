@@ -186,7 +186,7 @@ This kit includes a `figma-match-code` skill that rebuilds Figma frames from you
 
 **In Figma:**
 1. Open your Figma file
-2. Go to **Assets → Libraries** and enable the **"DB UI starter kit"** library (file key `KHFOMM4oUyT9XgeeXpbzns`)
+2. Go to **Assets → Libraries** and enable the **"Databricks UI starter kit"** library (file key `KHFOMM4oUyT9XgeeXpbzns`)
    - This gives you access to all component instances (Button, Badge, Table, Shell components), design token variables, and text styles
 3. Make sure the Figma MCP server is connected in your Claude Code session
 

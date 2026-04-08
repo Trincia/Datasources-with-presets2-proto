@@ -197,7 +197,7 @@ src/
 
 ## Figma writeback
 
-Sync your code changes back to Figma as real component instances using the `figma-match-code` skill. Import the **"DB UI starter kit"** Figma library into your file first, then describe what you want to Claude Code:
+Sync your code changes back to Figma as real component instances using the `figma-match-code` skill. Import the **"Databricks UI starter kit"** Figma library into your file first, then describe what you want to Claude Code:
 
 ```
 "Create a Figma component for the GenieCodePanel in the Shell page"

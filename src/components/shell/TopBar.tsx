@@ -21,6 +21,8 @@ interface TopBarProps {
   sidebarOpen?: boolean
   onToggleSidebar?: () => void
   onMobileMenuToggle?: () => void
+  onToggleGenie?: () => void
+  genieOpen?: boolean
   workspace?: string
   userInitial?: string
   className?: string
@@ -30,6 +32,8 @@ export function TopBar({
   sidebarOpen = true,
   onToggleSidebar,
   onMobileMenuToggle,
+  onToggleGenie,
+  genieOpen = false,
   workspace = "Production",
   userInitial = "N",
   className,
@@ -96,7 +100,13 @@ export function TopBar({
           <ChevronDownIcon size={16} className="text-muted-foreground" />
         </Button>
 
-        <Button variant="ghost" size="icon-sm" aria-label="AI Assistant">
+        <Button
+          variant="ghost"
+          size="icon-sm"
+          aria-label="Open Genie Code"
+          onClick={onToggleGenie}
+          className={cn(genieOpen && "bg-muted")}
+        >
           <DbIcon icon={SparkleIcon} color="ai" size={16} />
         </Button>
 

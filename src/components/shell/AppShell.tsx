@@ -3,6 +3,7 @@
 import * as React from "react"
 import { TopBar } from "./TopBar"
 import { Sidebar } from "./Sidebar"
+import { GenieCodePanel } from "./GenieCodePanel"
 import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 
@@ -27,6 +28,7 @@ export function AppShell({
 }: AppShellProps) {
   const [sidebarOpen, setSidebarOpen] = React.useState(true)   // desktop inline
   const [mobileOpen, setMobileOpen]   = React.useState(false)  // mobile sheet
+  const [genieOpen, setGenieOpen]     = React.useState(false)  // genie code panel
 
   return (
     <div className={cn("flex h-dvh flex-col overflow-hidden bg-secondary", className)}>
@@ -34,6 +36,8 @@ export function AppShell({
         sidebarOpen={sidebarOpen}
         onToggleSidebar={() => setSidebarOpen((v) => !v)}
         onMobileMenuToggle={() => setMobileOpen((v) => !v)}
+        onToggleGenie={() => setGenieOpen((v) => !v)}
+        genieOpen={genieOpen}
         workspace={workspace}
         userInitial={userInitial}
       />
@@ -64,12 +68,21 @@ export function AppShell({
         </div>
 
         <main className={cn(
-          "flex-1 overflow-y-auto rounded-md bg-background border border-border mb-2 mr-2",
+          "flex-1 overflow-y-auto rounded-md bg-background border border-border mb-2",
+          genieOpen ? "mr-1" : "mr-2",
           !sidebarOpen && "ml-2",
           mainClassName,
         )}>
           {children}
         </main>
+
+        {genieOpen && (
+          <GenieCodePanel
+            open={genieOpen}
+            onClose={() => setGenieOpen(false)}
+            className="rounded-md border border-border mb-2 mr-2"
+          />
+        )}
       </div>
     </div>
   )

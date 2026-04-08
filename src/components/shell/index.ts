@@ -1,4 +1,5 @@
 export { AppShell } from "./AppShell"
+export { GenieCodePanel } from "./GenieCodePanel"
 export { AppSwitcher } from "./AppSwitcher"
 export { TopBar } from "./TopBar"
 export { Sidebar } from "./Sidebar"

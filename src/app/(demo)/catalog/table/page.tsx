@@ -4,6 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { CatalogPanel } from "../_components/CatalogPanel"
 import { AppShell, PageHeader } from "@/components/shell"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
@@ -294,6 +295,9 @@ function CatalogTableContent() {
 
   return (
     <AppShell activeItem={activeNav} onNavigate={setActiveNav} workspace="Production" userInitial="J">
+      <div className="flex h-full overflow-hidden">
+      <CatalogPanel selectedId={`r-${tableName}`} />
+      <div className="flex-1 overflow-y-auto">
       <div className="flex flex-col gap-4 p-6">
 
         {/* ── Page header ──────────────────────────────────────────────── */}
@@ -665,6 +669,8 @@ function CatalogTableContent() {
           )}
         </Tabs>
       </div>
+      </div>{/* scroll wrapper */}
+      </div>{/* two-column */}
     </AppShell>
   )
 }

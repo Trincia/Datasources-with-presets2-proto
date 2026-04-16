@@ -1,25 +1,40 @@
 "use client"
 
 import * as React from "react"
+import { useState, useRef, useEffect } from "react"
 import { ChevronsLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { DbIcon } from "@/components/ui/db-icon"
 import { SuggestionPill } from "@/components/ui/suggestion-pill"
 import { cn } from "@/lib/utils"
+import { GenieCodeIcon, PlusIcon, OverflowIcon, CloseIcon } from "@/components/icons"
+import { GeniePrompt, type GenieTag } from "@/components/ai-elements/genie-prompt"
 import {
-  GenieCodeIcon,
-  PlusIcon,
-  OverflowIcon,
-  CloseIcon,
-  PaperclipIcon,
-  AtIcon,
-  SendIcon,
-} from "@/components/icons"
+  Message,
+  MessageContent,
+  MessageActions,
+  MessageAction,
+  MessageToolbar,
+} from "@/components/ai-elements/message"
+import {
+  ChainOfThought,
+  ChainOfThoughtHeader,
+  ChainOfThoughtContent,
+  ChainOfThoughtStep,
+} from "@/components/ai-elements/chain-of-thought"
+import { ThumbsUpIcon, ThumbsDownIcon, CopyIcon } from "lucide-react"
 
 interface GenieCodePanelProps {
   open: boolean
   onClose: () => void
   className?: string
+}
+
+type ChatMessage = {
+  id: string
+  role: "user" | "assistant"
+  content: string
+  thinking?: string
 }
 
 const SUGGESTION_CHIPS = [
@@ -28,7 +43,70 @@ const SUGGESTION_CHIPS = [
   "View latest automation",
 ]
 
+const MOCK_RESPONSES: Record<string, { thinking: string; answer: string }> = {
+  default: {
+    thinking: "Analyzing the request and checking available data pipelines...",
+    answer:
+      "I can help with that. Based on your current workspace, you have 3 active pipelines and 2 scheduled workflows. Would you like me to walk you through the options or create a new automation?",
+  },
+}
+
+let msgCounter = 0
+function uid() {
+  return `msg-${++msgCounter}`
+}
+
 export function GenieCodePanel({ open, onClose, className }: GenieCodePanelProps) {
+  const [messages, setMessages] = useState<ChatMessage[]>([])
+  const [input, setInput] = useState("")
+  const [tags, setTags] = useState<GenieTag[]>([])
+  const [isThinking, setIsThinking] = useState(false)
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop = scrollRef.current.scrollHeight
+    }
+  }, [messages, isThinking])
+
+  const handleSubmit = (value: string) => {
+    const text = value.trim()
+    if (!text) return
+
+    const userMsg: ChatMessage = { id: uid(), role: "user", content: text }
+    setMessages((prev) => [...prev, userMsg])
+    setInput("")
+    setTags([])
+    setIsThinking(true)
+
+    const response = MOCK_RESPONSES.default
+    setTimeout(() => {
+      setIsThinking(false)
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: uid(),
+          role: "assistant",
+          content: response.answer,
+          thinking: response.thinking,
+        },
+      ])
+    }, 1800)
+  }
+
+  const handleSuggestion = (label: string) => {
+    handleSubmit(label)
+  }
+
+  const handleNewConversation = () => {
+    setMessages([])
+    setInput("")
+    setTags([])
+    setIsThinking(false)
+  }
+
+  const isEmpty = messages.length === 0 && !isThinking
+
   return (
     <div
       className={cn(
@@ -48,7 +126,7 @@ export function GenieCodePanel({ open, onClose, className }: GenieCodePanelProps
               </span>
             </div>
             <div className="flex items-center gap-1">
-              <Button variant="ghost" size="icon-xs" aria-label="New conversation">
+              <Button variant="ghost" size="icon-xs" aria-label="New conversation" onClick={handleNewConversation}>
                 <PlusIcon className="h-4 w-4" />
               </Button>
               <Button variant="ghost" size="icon-xs" aria-label="More options">
@@ -60,59 +138,94 @@ export function GenieCodePanel({ open, onClose, className }: GenieCodePanelProps
             </div>
           </div>
 
-          {/* Body — empty state */}
-          <div className="flex flex-1 flex-col items-center justify-center overflow-hidden pt-3 px-3">
-            <div className="flex flex-col items-center gap-4 px-6 w-full">
-              {/* Genie Code icon */}
-              <DbIcon icon={GenieCodeIcon} color="ai" size={48} />
-
-              {/* Title + subtitle */}
-              <div className="flex flex-col gap-2 items-center text-center w-full">
-                <p className="text-xl font-semibold leading-7 text-foreground">
-                  Genie Code
-                </p>
-                <p className="text-[13px] leading-5 text-muted-foreground">
-                  Run multi-step data and AI tasks
-                </p>
+          {/* Body */}
+          <div ref={scrollRef} className="flex flex-1 flex-col overflow-y-auto px-3 pt-3">
+            {isEmpty ? (
+              /* Empty state */
+              <div className="flex flex-1 flex-col items-center justify-center">
+                <div className="flex flex-col items-center gap-4 px-6 w-full">
+                  <DbIcon icon={GenieCodeIcon} color="ai" size={48} />
+                  <div className="flex flex-col gap-2 items-center text-center w-full">
+                    <p className="text-xl font-semibold leading-7 text-foreground">
+                      Genie Code
+                    </p>
+                    <p className="text-[13px] leading-5 text-muted-foreground">
+                      Run multi-step data and AI tasks
+                    </p>
+                  </div>
+                  <div className="flex flex-wrap justify-center gap-2 w-full">
+                    {SUGGESTION_CHIPS.map((label) => (
+                      <SuggestionPill key={label} onClick={() => handleSuggestion(label)}>
+                        {label}
+                      </SuggestionPill>
+                    ))}
+                  </div>
+                </div>
               </div>
+            ) : (
+              /* Chat thread */
+              <div className="flex flex-col gap-4 pb-3">
+                {messages.map((msg) =>
+                  msg.role === "user" ? (
+                    <Message key={msg.id} from="user">
+                      <MessageContent>{msg.content}</MessageContent>
+                    </Message>
+                  ) : (
+                    <Message key={msg.id} from="assistant">
+                      {msg.thinking && (
+                        <ChainOfThought>
+                          <ChainOfThoughtHeader isStreaming={false}>
+                            Thought for a moment
+                          </ChainOfThoughtHeader>
+                          <ChainOfThoughtContent>
+                            <ChainOfThoughtStep label={msg.thinking} />
+                          </ChainOfThoughtContent>
+                        </ChainOfThought>
+                      )}
+                      <MessageContent>{msg.content}</MessageContent>
+                      <MessageToolbar>
+                        <MessageActions>
+                          <MessageAction tooltip="Copy">
+                            <CopyIcon className="h-4 w-4" />
+                          </MessageAction>
+                          <MessageAction tooltip="Helpful">
+                            <ThumbsUpIcon className="h-4 w-4" />
+                          </MessageAction>
+                          <MessageAction tooltip="Not helpful">
+                            <ThumbsDownIcon className="h-4 w-4" />
+                          </MessageAction>
+                        </MessageActions>
+                      </MessageToolbar>
+                    </Message>
+                  )
+                )}
 
-              {/* Suggestion chips */}
-              <div className="flex flex-wrap justify-center gap-2 w-full">
-                {SUGGESTION_CHIPS.map((label) => (
-                  <SuggestionPill key={label}>{label}</SuggestionPill>
-                ))}
+                {isThinking && (
+                  <Message from="assistant">
+                    <ChainOfThought>
+                      <ChainOfThoughtHeader isStreaming={true}>
+                        Thinking
+                      </ChainOfThoughtHeader>
+                    </ChainOfThought>
+                  </Message>
+                )}
               </div>
-            </div>
+            )}
           </div>
 
           {/* Compose area */}
-          <div className="flex shrink-0 flex-col gap-2 p-3 rounded-b-2xl">
-            {/* Input box */}
-            <div className="bg-background border border-border rounded-xl p-3 shadow-[var(--shadow-db-sm)] w-full">
-              {/* Text input */}
-              <textarea
-                rows={1}
-                placeholder="Start typing"
-                className="w-full resize-none bg-transparent text-[13px] leading-5 text-foreground placeholder:text-muted-foreground outline-none min-h-5"
-              />
-              {/* Action bar */}
-              <div className="flex items-end justify-between mt-3">
-                <div className="flex items-center gap-1">
-                  <Button variant="ghost" size="icon-xs" aria-label="Attach reference">
-                    <PaperclipIcon className="h-4 w-4" />
-                  </Button>
-                  <Button variant="ghost" size="icon-xs" aria-label="Mention object">
-                    <AtIcon className="h-4 w-4" />
-                  </Button>
-                </div>
-                <Button variant="ghost" size="icon-xs" aria-label="Send message">
-                  <SendIcon className="h-4 w-4" />
-                </Button>
-              </div>
-            </div>
-
-            {/* Footer */}
-            <p className="text-center text-[12px] leading-4 text-muted-foreground">
+          <div className="shrink-0 p-3">
+            <GeniePrompt
+              variant="chat"
+              size="small"
+              value={input}
+              onChange={setInput}
+              onSubmit={handleSubmit}
+              tags={tags}
+              onTagRemove={(id) => setTags((prev) => prev.filter((t) => t.id !== id))}
+              placeholder="Ask Genie Code..."
+            />
+            <p className="mt-2 text-center text-[12px] leading-4 text-muted-foreground">
               Only use the agent with code and data you trust
             </p>
           </div>

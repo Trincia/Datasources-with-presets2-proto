@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {
   Message,
   MessageContent,
@@ -95,9 +95,9 @@ import {
   WebPreviewBody,
   WebPreviewConsole,
 } from "@/components/ai-elements/web-preview";
-import { BookmarkIcon, CopyIcon, ThumbsUpIcon, ThumbsDownIcon, DownloadIcon, ArrowLeftIcon, ArrowRightIcon, RotateCwIcon, ExternalLinkIcon, MaximizeIcon } from "lucide-react";
-import { SparkleIcon, AssistantIcon, QueryEditorIcon, TableIcon } from "@/components/icons";
-import { DbIcon } from "@/components/ui/db-icon";
+import { BookmarkIcon, CopyIcon, ThumbsUpIcon, ThumbsDownIcon, DownloadIcon, ArrowLeftIcon, ArrowRightIcon, RotateCwIcon, ExternalLinkIcon, MaximizeIcon, LinkIcon, CheckIcon } from "lucide-react";
+import { AssistantIcon, QueryEditorIcon, TableIcon } from "@/components/icons";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import {
   SegmentedControl,
@@ -117,10 +117,31 @@ function AiSection({
   description?: string;
   children: React.ReactNode;
 }) {
+  const [copied, setCopied] = useState(false);
+
+  const copyLink = useCallback(() => {
+    const url = `${window.location.origin}${window.location.pathname}#${id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  }, [id]);
+
   return (
     <section id={id} className="mb-16 scroll-mt-6">
       <div className="mb-6 border-b border-border pb-4">
-        <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+        <div className="group flex items-center gap-1.5">
+          <h2 className="text-lg font-semibold text-foreground">{title}</h2>
+          <Button
+            variant="ghost"
+            size="icon-xs"
+            onClick={copyLink}
+            aria-label="Copy link"
+            className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity"
+          >
+            {copied ? <CheckIcon className="h-3 w-3" /> : <LinkIcon className="h-3 w-3" />}
+          </Button>
+        </div>
         {description && (
           <p className="mt-1 text-sm text-muted-foreground">{description}</p>
         )}
@@ -162,46 +183,13 @@ export function AiElementsTab() {
   const [genieVariant, setGenieVariant] = useState("all");
   const [genieSize, setGenieSize] = useState("all");
 
-  const sections = [
-    { id: "ae-message", label: "Message" },
-    { id: "ae-prompt-input", label: "Genie Prompt" },
-    { id: "ae-suggestions", label: "Suggestions" },
-    { id: "ae-chain-of-thought", label: "Chain of Thought" },
-    { id: "ae-code-block", label: "Code Block" },
-    { id: "ae-sources", label: "Sources" },
-    { id: "ae-reasoning", label: "Reasoning" },
-    { id: "ae-shimmer", label: "Shimmer" },
-    { id: "ae-tool", label: "Tool" },
-    { id: "ae-task", label: "Task" },
-    { id: "ae-checkpoint", label: "Checkpoint" },
-    { id: "ae-commit", label: "Commit" },
-    { id: "ae-snippet", label: "Snippet" },
-    { id: "ae-terminal", label: "Terminal" },
-    { id: "ae-web-preview", label: "Web Preview" },
-  ];
-
   return (
     <div>
       <div className="mb-12">
-        <div className="flex items-center gap-2">
-          <DbIcon icon={SparkleIcon} color="ai" size={20} />
-          <h1 className="text-2xl font-semibold text-foreground">AI Elements</h1>
-        </div>
+        <h1 className="text-2xl font-semibold text-foreground">AI Elements</h1>
         <p className="mt-2 text-sm text-muted-foreground">
           AI SDK UI components styled with DuBois tokens. Drop-in for chat, code, and agent UIs.
         </p>
-        {/* TOC */}
-        <div className="mt-6 flex flex-wrap gap-1.5">
-          {sections.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              className="rounded px-2 py-1 text-xs text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-            >
-              {label}
-            </a>
-          ))}
-        </div>
       </div>
 
       {/* ── Message ──────────────────────────────────────────────────────── */}

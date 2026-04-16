@@ -1,7 +1,6 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   Tooltip,
   TooltipContent,
@@ -9,7 +8,7 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import type { LucideProps } from "lucide-react";
-import { BookmarkIcon } from "lucide-react";
+import { FlagIcon } from "lucide-react";
 import type { ComponentProps, HTMLAttributes } from "react";
 
 export type CheckpointProps = HTMLAttributes<HTMLDivElement>;
@@ -21,13 +20,27 @@ export const Checkpoint = ({
 }: CheckpointProps) => (
   <div
     className={cn(
-      "flex items-center gap-0.5 overflow-hidden text-muted-foreground",
+      "flex w-full items-center justify-between gap-2 text-muted-foreground",
       className
     )}
     {...props}
   >
     {children}
-    <Separator />
+  </div>
+);
+
+export type CheckpointLabelProps = HTMLAttributes<HTMLDivElement>;
+
+export const CheckpointLabel = ({
+  className,
+  children,
+  ...props
+}: CheckpointLabelProps) => (
+  <div
+    className={cn("flex items-center gap-1.5 text-sm", className)}
+    {...props}
+  >
+    {children}
   </div>
 );
 
@@ -39,8 +52,20 @@ export const CheckpointIcon = ({
   ...props
 }: CheckpointIconProps) =>
   children ?? (
-    <BookmarkIcon className={cn("size-4 shrink-0", className)} {...props} />
+    <FlagIcon className={cn("size-4 shrink-0", className)} {...props} />
   );
+
+export type CheckpointActionsProps = HTMLAttributes<HTMLDivElement>;
+
+export const CheckpointActions = ({
+  className,
+  children,
+  ...props
+}: CheckpointActionsProps) => (
+  <div className={cn("flex items-center gap-1", className)} {...props}>
+    {children}
+  </div>
+);
 
 export type CheckpointTriggerProps = ComponentProps<typeof Button> & {
   tooltip?: string;

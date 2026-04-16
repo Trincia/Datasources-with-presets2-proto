@@ -57,6 +57,8 @@ import {
 import {
   Checkpoint,
   CheckpointIcon,
+  CheckpointLabel,
+  CheckpointActions,
   CheckpointTrigger,
 } from "@/components/ai-elements/checkpoint";
 import {
@@ -95,7 +97,7 @@ import {
   WebPreviewBody,
   WebPreviewConsole,
 } from "@/components/ai-elements/web-preview";
-import { BookmarkIcon, CopyIcon, ThumbsUpIcon, ThumbsDownIcon, DownloadIcon, ArrowLeftIcon, ArrowRightIcon, RotateCwIcon, ExternalLinkIcon, MaximizeIcon, LinkIcon, CheckIcon } from "lucide-react";
+import { BookmarkIcon, CopyIcon, ThumbsUpIcon, ThumbsDownIcon, DownloadIcon, ArrowLeftIcon, ArrowRightIcon, RotateCwIcon, ExternalLinkIcon, MaximizeIcon, LinkIcon, CheckIcon, RotateCcwIcon } from "lucide-react";
 import { AssistantIcon, QueryEditorIcon, TableIcon } from "@/components/icons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
@@ -666,18 +668,32 @@ export function AiElementsTab() {
         description="Inline divider with optional action buttons. Used to mark save points or branching moments in a conversation."
       >
         <DemoFrame>
-          <div className="max-w-lg flex flex-col gap-4">
+          <div className="max-w-lg flex flex-col gap-3">
             <Checkpoint>
-              <CheckpointIcon />
-              <CheckpointTrigger tooltip="Restore this checkpoint">
-                Checkpoint saved
-              </CheckpointTrigger>
+              <CheckpointLabel>
+                <CheckpointIcon />
+                Checkpoint
+              </CheckpointLabel>
+              <CheckpointActions>
+                <CheckpointTrigger variant="ghost" size="sm">View changes</CheckpointTrigger>
+                <CheckpointTrigger variant="outline" size="sm">
+                  <RotateCcwIcon className="size-4" />
+                  Restore
+                </CheckpointTrigger>
+              </CheckpointActions>
             </Checkpoint>
             <Checkpoint>
-              <CheckpointIcon>
-                <BookmarkIcon className="size-4 shrink-0 text-primary" />
-              </CheckpointIcon>
-              <CheckpointTrigger>Before refactor</CheckpointTrigger>
+              <CheckpointLabel>
+                <CheckpointIcon />
+                Before refactor
+              </CheckpointLabel>
+              <CheckpointActions>
+                <CheckpointTrigger variant="ghost" size="sm">View changes</CheckpointTrigger>
+                <CheckpointTrigger variant="outline" size="sm">
+                  <RotateCcwIcon className="size-4" />
+                  Restore
+                </CheckpointTrigger>
+              </CheckpointActions>
             </Checkpoint>
           </div>
         </DemoFrame>

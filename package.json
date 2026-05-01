@@ -9,6 +9,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "setup": "node scripts/setup.mjs",
+    "sync": "node scripts/sync.mjs",
     "figma:publish": "npx @figma/code-connect@1 connect publish",
     "figma:unpublish": "npx @figma/code-connect@1 connect unpublish"
   },

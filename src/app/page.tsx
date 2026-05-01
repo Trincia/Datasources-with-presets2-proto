@@ -2,25 +2,45 @@
 // Delete this file and replace with your own home page.
 // Demo pages live in src/app/(demo)/ — delete that folder too when you're ready.
 
+"use client"
+
+import { useState } from "react"
 import Link from "next/link"
+import { Copy, Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { SegmentedControl, SegmentedItem } from "@/components/ui/segmented-control"
 import { DatabricksLogo } from "@/components/shell/DatabricksLogo"
 import { ThemeToggle } from "@/components/theme-toggle"
-import {
-  NotebookIcon, WorkflowsIcon, BarChartIcon, CloudIcon, CatalogIcon, QueryEditorIcon,
-} from "@/components/icons"
 
-const DEMOS = [
-  { href: "/workspace",     icon: NotebookIcon,    label: "Workspace",   desc: "Full shell with sidebar, nav, and notebook editor" },
-  { href: "/jobs",          icon: WorkflowsIcon,   label: "Jobs",        desc: "Tabular list page with filter bar and split button" },
-  { href: "/dashboards",    icon: BarChartIcon,    label: "Dashboards",  desc: "Card grid with detail panel and chart preview" },
-  { href: "/compute",       icon: CloudIcon,       label: "Compute",     desc: "Tabs + table + pagination list page" },
-  { href: "/catalog",       icon: CatalogIcon,     label: "Catalog",     desc: "Table detail page with columns, lineage, and metadata sidebar" },
-  { href: "/sql",           icon: QueryEditorIcon, label: "SQL Editor",  desc: "Multi-tab SQL editor with query tree, toolbar, and output panel" },
+const AGENT_PROMPT = "git clone https://github.com/gioa/db-starter-kit.git && cd db-starter-kit && npm install && npm run setup && npm run dev"
+const SYNC_CMD = "curl -fsSL https://raw.githubusercontent.com/gioa/db-starter-kit/main/scripts/sync.mjs -o scripts/sync.mjs && node scripts/sync.mjs"
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false)
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(text)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <Button variant="ghost" size="icon-xs" onClick={handleCopy} aria-label="Copy">
+      {copied
+        ? <Check className="h-3 w-3 text-[var(--success)]" />
+        : <Copy className="h-3 w-3 text-muted-foreground" />}
+    </Button>
+  )
+}
+
+const STEPS = [
+  { n: "1", label: "Clone the repo", code: "git clone https://github.com/gioa/db-starter-kit.git && cd db-starter-kit" },
+  { n: "2", label: "Install and run setup", code: "npm install && npm run setup" },
+  { n: "3", label: "Start building", code: "npm run dev" },
 ]
 
 export default function Home() {
+  const [audience, setAudience] = useState("human")
+
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <header className="flex h-12 items-center justify-between border-b border-border px-6">
@@ -40,12 +60,13 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="flex flex-1 flex-col items-center justify-center gap-10 px-6 py-16">
+      <main className="flex flex-1 flex-col items-center gap-10 px-6 py-16">
+        {/* Hero */}
         <div className="flex flex-col items-center gap-3 text-center max-w-lg">
-          <h1 className="text-xl font-semibold text-foreground">Databricks UI Starter Kit</h1>
+          <h2 className="text-[22px] leading-[28px] font-semibold text-foreground">Welcome to Databricks</h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
             DuBois design system components, tokens, and page templates. Use this repo as a template,
-            delete the <code>(demo)</code> folder, and start building your app.
+            delete the <code className="bg-transparent">&#40;demo&#41;</code> folder, and start building your app.
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-1">
             <Button asChild><Link href="/shell" prefetch={false}>Open shell demo</Link></Button>
@@ -53,23 +74,67 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid w-full max-w-2xl grid-cols-2 gap-3 sm:grid-cols-3">
-          {DEMOS.map((demo) => (
-            <Link
-              key={demo.href}
-              href={demo.href}
-              prefetch={false}
-              className="group flex flex-col gap-2 rounded-md border border-border bg-background p-4 transition-colors hover:border-primary/40 hover:bg-secondary"
-            >
-              <div className="flex items-center gap-2">
-                <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded bg-secondary group-hover:bg-background transition-colors">
-                  <demo.icon size={14} className="text-muted-foreground group-hover:text-primary transition-colors" />
-                </div>
-                <span className="text-sm font-semibold text-foreground">{demo.label}</span>
+        {/* Getting started */}
+        <div className="w-full max-w-2xl rounded-md border border-border p-5 flex flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">Getting started</p>
+            <SegmentedControl value={audience} onValueChange={setAudience}>
+              <SegmentedItem value="human">Human</SegmentedItem>
+              <SegmentedItem value="agent">Agent</SegmentedItem>
+            </SegmentedControl>
+          </div>
+
+          {audience === "human" ? (
+            <>
+              <div className="flex flex-col gap-3">
+                {STEPS.map((s) => (
+                  <div key={s.n} className="flex items-start gap-3">
+                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-primary/10 text-[11px] font-semibold text-primary mt-0.5">
+                      {s.n}
+                    </span>
+                    <div className="flex flex-col gap-1 min-w-0 flex-1">
+                      <span className="text-sm text-foreground">{s.label}</span>
+                      <div className="flex items-center gap-2 border border-border rounded pl-2.5 pr-1 py-1">
+                        <code className="flex-1 text-xs font-mono text-foreground bg-transparent">{s.code}</code>
+                        <CopyButton text={s.code} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <p className="text-hint text-muted-foreground leading-relaxed">{demo.desc}</p>
-            </Link>
-          ))}
+              <div className="flex items-center gap-3 py-1">
+                <div className="flex-1 border-t border-border" />
+                <span className="text-hint text-muted-foreground shrink-0">update existing prototype</span>
+                <div className="flex-1 border-t border-border" />
+              </div>
+              <div className="flex items-center gap-2 border border-border rounded pl-2.5 pr-1 py-1">
+                <code className="flex-1 text-xs font-mono text-foreground bg-transparent">{SYNC_CMD}</code>
+                <CopyButton text={SYNC_CMD} />
+              </div>
+            </>
+          ) : (
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-2">
+                <p className="text-sm text-muted-foreground">New prototype:</p>
+                <div className="flex items-center gap-2 border border-border rounded pl-2.5 pr-1 py-1">
+                  <code className="flex-1 text-xs font-mono text-foreground bg-transparent">{AGENT_PROMPT}</code>
+                  <CopyButton text={AGENT_PROMPT} />
+                </div>
+              </div>
+              <div className="flex items-center gap-3 py-1">
+                <div className="flex-1 border-t border-border" />
+                <span className="text-hint text-muted-foreground shrink-0">update existing prototype</span>
+                <div className="flex-1 border-t border-border" />
+              </div>
+              <div className="flex flex-col gap-2">
+                <p className="text-sm text-muted-foreground">Already inside the project:</p>
+                <div className="flex items-center gap-2 border border-border rounded pl-2.5 pr-1 py-1">
+                  <code className="flex-1 text-xs font-mono text-foreground bg-transparent">{SYNC_CMD}</code>
+                  <CopyButton text={SYNC_CMD} />
+                </div>
+              </div>
+            </div>
+          )}
         </div>
 
         <p className="text-hint text-muted-foreground">Next.js · shadcn/ui · Tailwind v4 · DuBois tokens</p>

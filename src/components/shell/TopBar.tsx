@@ -11,13 +11,18 @@ import {
   SearchIcon,
   ChevronDownIcon,
   MenuIcon,
+  QuestionMarkIcon,
 } from "@/components/icons"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { DatabricksLogo } from "./DatabricksLogo"
 import { AppSwitcher } from "./AppSwitcher"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 interface TopBarProps {
+  variant?: "default" | "apps"
+  /** Overrides default placeholder for the search field */
+  searchPlaceholder?: string
   sidebarOpen?: boolean
   onToggleSidebar?: () => void
   onMobileMenuToggle?: () => void
@@ -29,6 +34,8 @@ interface TopBarProps {
 }
 
 export function TopBar({
+  variant = "default",
+  searchPlaceholder,
   sidebarOpen = true,
   onToggleSidebar,
   onMobileMenuToggle,
@@ -38,6 +45,13 @@ export function TopBar({
   userInitial = "N",
   className,
 }: TopBarProps) {
+  const isApps = variant === "apps"
+  const resolvedPlaceholder =
+    searchPlaceholder ??
+    (isApps
+      ? "Search apps"
+      : "Search data, notebooks, recents, and more...")
+
   return (
     <header
       className={cn(
@@ -71,6 +85,16 @@ export function TopBar({
           }
         </Button>
         <Link href="/"><DatabricksLogo height={18} /></Link>
+        {isApps && (
+          <>
+            <span className="select-none text-muted-foreground/40" aria-hidden>
+              |
+            </span>
+            <span className="text-sm font-semibold text-foreground">
+              Databricks Apps
+            </span>
+          </>
+        )}
       </div>
 
       {/* Center: search (hidden on mobile) */}
@@ -79,7 +103,7 @@ export function TopBar({
           <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           <Input
             className="h-8 rounded bg-background border-border pl-9 pr-14 text-xs placeholder:text-muted-foreground"
-            placeholder="Search data, notebooks, recents, and more..."
+            placeholder={resolvedPlaceholder}
           />
           <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-0.5 text-xs text-muted-foreground">
             <span>⌘</span>
@@ -100,15 +124,25 @@ export function TopBar({
           <ChevronDownIcon size={16} className="text-muted-foreground" />
         </Button>
 
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          aria-label="Open Genie Code"
-          onClick={onToggleGenie}
-          className={cn(genieOpen && "bg-muted")}
-        >
-          <DbIcon icon={GenieCodeIcon} color="ai" size={16} />
-        </Button>
+        {!isApps && (
+          <Button
+            variant="ghost"
+            size="icon-sm"
+            aria-label="Open Genie Code"
+            onClick={onToggleGenie}
+            className={cn(genieOpen && "bg-muted")}
+          >
+            <DbIcon icon={GenieCodeIcon} color="ai" size={16} />
+          </Button>
+        )}
+
+        {isApps && (
+          <Button variant="ghost" size="icon-sm" aria-label="Help">
+            <QuestionMarkIcon size={16} className="text-muted-foreground" />
+          </Button>
+        )}
+
+        {isApps && <ThemeToggle />}
 
         <AppSwitcher />
 

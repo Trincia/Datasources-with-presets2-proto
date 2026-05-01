@@ -103,9 +103,9 @@ export default function HomePage() {
 
         {/* Centered: title + search */}
         <div className="flex flex-col items-center gap-6">
-          <h1 className="text-2xl font-semibold text-foreground">
+          <h2 className="text-[22px] leading-[28px] font-semibold text-foreground">
             Welcome to Databricks
-          </h1>
+          </h2>
           <HeroSearch
             className="w-full"
             placeholder="Search data, notebooks, recents, and more..."

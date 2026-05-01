@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { useRouter, usePathname } from "next/navigation"
 import { AppIcon } from "@/components/icons"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -78,32 +79,44 @@ const APPS = [
     name: "Lakehouse",
     desc: "Analytics & AI on large-scale data",
     Icon: LakehouseIcon,
+    href: "/shell",
   },
   {
     id: "databricks-one",
     name: "Databricks One",
     desc: "Business insights from data and AI",
     Icon: DatabricksOneIcon,
+    href: "/shell",
   },
   {
     id: "lakebase",
     name: "Lakebase Postgres",
     desc: "Operational databases for applications",
     Icon: LakebaseIcon,
+    href: "/shell",
   },
   {
     id: "databricks-apps",
     name: "Databricks Apps",
     desc: "Create and manage your Databricks apps",
     Icon: DatabricksAppsIcon,
+    href: "/apps",
   },
 ] as const
+
+function activeAppIdFromPath(pathname: string): (typeof APPS)[number]["id"] {
+  if (pathname.startsWith("/apps")) return "databricks-apps"
+  return "lakehouse"
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export function AppSwitcher() {
+  const router = useRouter()
+  const pathname = usePathname()
+  const activeApp = activeAppIdFromPath(pathname)
+
   const [open, setOpen] = React.useState(false)
-  const [activeApp, setActiveApp] = React.useState("lakehouse")
   const ref = React.useRef<HTMLDivElement>(null)
 
   React.useEffect(() => {
@@ -127,7 +140,6 @@ export function AppSwitcher() {
       </Button>
 
       {open && (
-        // Figma: w-297px, rounded-12px, p-6px, Level 1 shadow, border border-border
         <div
           className="absolute right-0 top-full z-50 mt-1 w-[297px] rounded-md border border-border bg-background p-[6px] shadow-[var(--shadow-db-lg)]"
           role="menu"
@@ -138,23 +150,23 @@ export function AppSwitcher() {
               <button
                 key={app.id}
                 role="menuitem"
-                onClick={() => { setActiveApp(app.id); setOpen(false) }}
+                type="button"
+                onClick={() => {
+                  router.push(app.href)
+                  setOpen(false)
+                }}
                 className={cn(
-                  // Figma: h-50px, px-8px, py-8px, gap-8px, rounded-8px
                   "flex h-[50px] w-full items-center gap-2 rounded-md px-2 py-2 text-left transition-colors",
-                  isActive ? "bg-[var(--action-default-bg-hover)]" : "hover:bg-[var(--action-default-bg-hover)]"
+                  isActive ? "bg-[var(--action-default-bg-hover)]" : "hover:bg-[var(--action-default-bg-hover)]",
                 )}
               >
-                {/* Figma: AppIcon 32×32 container, p-4px, rounded-4px */}
                 <div className="flex size-8 shrink-0 items-center justify-center rounded p-1">
                   <app.Icon />
                 </div>
                 <div className="flex min-w-0 flex-col gap-1">
-                  {/* Figma: 13px semibold, textPrimary */}
-                  <span className="text-sm font-semibold leading-5 truncate text-foreground">
+                  <span className="truncate text-sm font-semibold leading-5 text-foreground">
                     {app.name}
                   </span>
-                  {/* Figma: 12px/16px regular, textSecondary */}
                   <span className="truncate text-hint text-muted-foreground">
                     {app.desc}
                   </span>

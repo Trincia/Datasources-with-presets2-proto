@@ -142,7 +142,7 @@ Then create `src/app/catalog/page.tsx` with `activeItem="catalog"` passed to `Ap
 
 | Rule | Value |
 |---|---|
-| Base font | SF Pro / system-ui · 13px · 20px line-height |
+| Base font | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, ...` (SF Pro on macOS) · 13px · 20px line-height |
 | Bold weight | `font-semibold` (600) — never `font-bold` (700) |
 | Button/input radius | `rounded` (4px) |
 | Card/modal radius | `rounded-md` (8px) |

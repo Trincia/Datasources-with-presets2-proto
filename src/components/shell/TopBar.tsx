@@ -3,6 +3,7 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { DbIcon } from "@/components/ui/db-icon"
 import {
   SidebarOpenIcon,
@@ -102,7 +103,7 @@ export function TopBar({
         <div className="relative flex w-full max-w-[500px] items-center">
           <SearchIcon size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
           <Input
-            className="h-8 rounded bg-background border-border pl-9 pr-14 text-xs placeholder:text-muted-foreground"
+            className="h-8 rounded bg-background border-border pl-9 pr-14 placeholder:text-muted-foreground"
             placeholder={resolvedPlaceholder}
           />
           <kbd className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-0.5 text-xs text-muted-foreground">
@@ -119,7 +120,7 @@ export function TopBar({
       {/* Figma: gap-1 (4px) between items */}
       <div className="flex items-center gap-1">
         {/* Figma: h-32px, px-12px, gap-4px, text-13px regular, chevron-16px */}
-        <Button variant="ghost" size="sm" className="hidden md:flex gap-1 px-3">
+        <Button variant="ghost" size="sm" className="hidden md:flex gap-1 px-3 font-normal">
           <span className="text-sm">{workspace}</span>
           <ChevronDownIcon size={16} className="text-muted-foreground" />
         </Button>
@@ -146,15 +147,11 @@ export function TopBar({
 
         <AppSwitcher />
 
-        {/* Figma: 32px circle, bg-primary, text-white */}
-        <Button
-          variant="ghost"
-          size="icon-sm"
-          className="ml-1 rounded-full bg-primary text-xs font-semibold text-primary-foreground hover:bg-blue-700 hover:text-primary-foreground"
-          aria-label="User menu"
-        >
-          {userInitial}
-        </Button>
+        <Avatar size="sm" className="ml-1 cursor-pointer hover:opacity-90">
+          <AvatarFallback className="bg-primary text-primary-foreground text-xs font-semibold">
+            {userInitial}
+          </AvatarFallback>
+        </Avatar>
       </div>
     </header>
   )

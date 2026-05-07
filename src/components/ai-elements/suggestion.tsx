@@ -33,7 +33,7 @@ export const Suggestion = ({
   suggestion,
   onClick,
   className,
-  variant = "outline",
+  variant = "default",
   size = "sm",
   children,
   ...props

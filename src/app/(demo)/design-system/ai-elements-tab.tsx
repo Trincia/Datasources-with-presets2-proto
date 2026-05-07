@@ -676,7 +676,7 @@ export function AiElementsTab() {
               </CheckpointLabel>
               <CheckpointActions>
                 <CheckpointTrigger variant="ghost" size="sm">View changes</CheckpointTrigger>
-                <CheckpointTrigger variant="outline" size="sm">
+                <CheckpointTrigger variant="default" size="sm">
                   <RotateCcwIcon className="size-4" />
                   Restore
                 </CheckpointTrigger>
@@ -689,7 +689,7 @@ export function AiElementsTab() {
               </CheckpointLabel>
               <CheckpointActions>
                 <CheckpointTrigger variant="ghost" size="sm">View changes</CheckpointTrigger>
-                <CheckpointTrigger variant="outline" size="sm">
+                <CheckpointTrigger variant="default" size="sm">
                   <RotateCcwIcon className="size-4" />
                   Restore
                 </CheckpointTrigger>

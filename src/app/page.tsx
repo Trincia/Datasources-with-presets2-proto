@@ -52,7 +52,7 @@ export default function Home() {
         </div>
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Button variant="outline" size="sm" asChild>
+          <Button variant="default" size="sm" asChild>
             <a href="https://github.com/gioa/db-starter-kit" target="_blank" rel="noopener noreferrer">
               GitHub
             </a>
@@ -70,7 +70,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-2 mt-1">
             <Button asChild><Link href="/shell" prefetch={false}>Open shell demo</Link></Button>
-            <Button variant="outline" asChild><Link href="/design-system" prefetch={false}>Design system</Link></Button>
+            <Button variant="default" asChild><Link href="/design-system" prefetch={false}>Design system</Link></Button>
           </div>
         </div>
 

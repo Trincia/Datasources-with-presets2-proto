@@ -334,7 +334,7 @@ export default function SqlEditorPage() {
 
             {/* Add parameter */}
             <div className="shrink-0 border-t border-border px-4 py-2">
-              <Button variant="outline" size="sm" className="text-xs h-7">
+              <Button variant="default" size="sm" className="text-xs h-7">
                 Add parameter
               </Button>
             </div>

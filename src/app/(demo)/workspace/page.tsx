@@ -244,7 +244,7 @@ export default function WorkspacePage() {
               onStarToggle={() => setStarred((p) => ({ ...p, [currentId]: !p[currentId] }))}
               actions={
                 <>
-                  <Button variant="outline" size="sm">Share</Button>
+                  <Button variant="default" size="sm">Share</Button>
                   <Button size="sm" className="gap-1">
                     Create <ChevronDownDbIcon size={12} />
                   </Button>
@@ -263,13 +263,13 @@ export default function WorkspacePage() {
                   onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
-              <Button variant="outline" size="sm" className="gap-1">
+              <Button variant="default" size="sm" className="gap-1">
                 Type <ChevronDownDbIcon size={12} className="text-muted-foreground" />
               </Button>
-              <Button variant="outline" size="sm" className="gap-1">
+              <Button variant="default" size="sm" className="gap-1">
                 Owner <ChevronDownDbIcon size={12} className="text-muted-foreground" />
               </Button>
-              <Button variant="outline" size="sm" className="gap-1">
+              <Button variant="default" size="sm" className="gap-1">
                 Last modified <ChevronDownDbIcon size={12} className="text-muted-foreground" />
               </Button>
               <Button variant="ghost" size="icon-sm" className="ml-auto" aria-label="Toggle view">

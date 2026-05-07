@@ -10,14 +10,12 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default:
+        primary:
           "bg-primary text-primary-foreground hover:bg-blue-700 active:bg-blue-800",
         destructive:
           "bg-destructive text-white hover:bg-red-700 active:bg-red-800 focus-visible:ring-destructive/20 dark:bg-destructive/60 dark:focus-visible:ring-destructive/40",
-        outline:
-          "border border-input bg-background hover:bg-[var(--action-default-bg-hover)] hover:text-blue-700 hover:border-primary dark:bg-input/30 dark:border-input dark:hover:bg-[var(--action-default-bg-hover)]",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
+        default:
+          "border border-input bg-transparent hover:bg-[var(--action-default-bg-hover)] hover:text-blue-700 hover:border-primary dark:border-input dark:hover:bg-[var(--action-default-bg-hover)]",
         ghost:
           "hover:bg-[var(--action-default-bg-hover)] hover:text-blue-700 dark:hover:bg-[var(--action-default-bg-hover)]",
         link: "text-primary underline-offset-4 hover:underline",
@@ -26,7 +24,7 @@ const buttonVariants = cva(
         // DuBois sizes: 32px sm (standard), 24px xs (compact)
         default: "h-8 px-3 has-[>svg]:px-2.5",
         sm: "h-8 px-3 has-[>svg]:px-2.5",
-        xs: "h-6 gap-1 px-2 text-xs has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
+        xs: "h-6 gap-1 px-2 has-[>svg]:px-1.5 [&_svg:not([class*='size-'])]:size-3",
         lg: "h-10 px-6 has-[>svg]:px-4",
         icon: "size-8",
         "icon-sm": "size-8",
@@ -35,7 +33,7 @@ const buttonVariants = cva(
       },
     },
     defaultVariants: {
-      variant: "default",
+      variant: "primary",
       size: "sm",
     },
   }
@@ -43,7 +41,7 @@ const buttonVariants = cva(
 
 function Button({
   className,
-  variant = "default",
+  variant = "primary",
   size = "default",
   asChild = false,
   ...props

@@ -311,7 +311,7 @@ figma.connect(
     example: () => (
       <Dialog>
         <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
+          <Button variant="default">Open Dialog</Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -322,7 +322,7 @@ figma.connect(
             <p>Dialog body content goes here.</p>
           </DialogBody>
           <DialogFooter>
-            <Button variant="outline">Cancel</Button>
+            <Button variant="default">Cancel</Button>
             <Button>Save</Button>
           </DialogFooter>
         </DialogContent>
@@ -340,7 +340,7 @@ figma.connect(
     example: () => (
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" size="sm">Options</Button>
+          <Button variant="default" size="sm">Options</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuItem>Edit</DropdownMenuItem>
@@ -465,7 +465,7 @@ figma.connect(
     example: ({ side }) => (
       <Sheet>
         <SheetTrigger asChild>
-          <Button variant="outline" size="sm">Open</Button>
+          <Button variant="default" size="sm">Open</Button>
         </SheetTrigger>
         <SheetContent side={side}>
           <SheetHeader>
@@ -602,7 +602,7 @@ figma.connect(
         description="Page description text"
         actions={
           <>
-            <Button variant="outline" size="sm">Secondary action</Button>
+            <Button variant="default" size="sm">Secondary action</Button>
             <Button size="sm">Primary action</Button>
           </>
         }

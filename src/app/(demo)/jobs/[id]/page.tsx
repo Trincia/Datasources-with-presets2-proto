@@ -117,7 +117,7 @@ export default function JobDetailPage() {
               <Button variant="ghost" size="icon-xs" aria-label="More">
                 <MoreVertical className="h-4 w-4" />
               </Button>
-              <Button variant="outline" size="sm">
+              <Button variant="default" size="sm">
                 <PencilIcon size={14} />
                 Edit
               </Button>

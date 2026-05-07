@@ -258,16 +258,16 @@ function LineageMiniDiagram({ nodes }: { nodes: LineageNode[] }) {
 
       {/* Zoom controls */}
       <div className="absolute bottom-2 right-2 flex gap-0.5">
-        <Button variant="outline" size="icon-xs" aria-label="Zoom in" className="text-xs font-semibold">
+        <Button variant="default" size="icon-xs" aria-label="Zoom in" className="text-xs font-semibold">
           +
         </Button>
-        <Button variant="outline" size="icon-xs" aria-label="Zoom out" className="text-xs font-semibold">
+        <Button variant="default" size="icon-xs" aria-label="Zoom out" className="text-xs font-semibold">
           −
         </Button>
-        <Button variant="outline" size="icon-xs" aria-label="Fullscreen">
+        <Button variant="default" size="icon-xs" aria-label="Fullscreen">
           <Maximize2 className="h-3 w-3" />
         </Button>
-        <Button variant="outline" size="icon-xs" aria-label="Lock">
+        <Button variant="default" size="icon-xs" aria-label="Lock">
           <svg className="h-3 w-3" viewBox="0 0 16 16" fill="none">
             <rect x="3" y="7" width="10" height="7" rx="1" stroke="currentColor" strokeWidth="1.2" />
             <path d="M5 7V5a3 3 0 0 1 6 0v2" stroke="currentColor" strokeWidth="1.2" />
@@ -343,18 +343,18 @@ function CatalogTableContent() {
           actions={
             <>
               <div className="flex items-center">
-                <Button variant="outline" size="sm" className="rounded-r-none border-r-0">
+                <Button variant="default" size="sm" className="rounded-r-none border-r-0">
                   Open in a dashboard
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-l-none px-1.5">
+                <Button variant="default" size="sm" className="rounded-l-none px-1.5">
                   <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
                 </Button>
               </div>
               <div className="flex items-center">
-                <Button variant="outline" size="sm" className="rounded-r-none border-r-0">
+                <Button variant="default" size="sm" className="rounded-r-none border-r-0">
                   Share
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-l-none px-1.5">
+                <Button variant="default" size="sm" className="rounded-l-none px-1.5">
                   <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
                 </Button>
               </div>
@@ -618,7 +618,7 @@ function CatalogTableContent() {
                     <span className="text-xs text-muted-foreground">
                       Last commit {TABLE.qualityLastCommit}
                     </span>
-                    <Button variant="outline" size="sm" className="mt-1 w-full">
+                    <Button variant="default" size="sm" className="mt-1 w-full">
                       View details
                     </Button>
                   </div>

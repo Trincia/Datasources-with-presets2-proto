@@ -144,11 +144,11 @@ export default function AppsBuildPage() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              <Button variant="outline" size="sm" type="button" className="gap-2">
+              <Button variant="default" size="sm" type="button" className="gap-2">
                 <DbIcon icon={SparkleIcon} color="ai" size={16} />
                 Need ideas?
               </Button>
-              <Button variant="outline" size="sm" type="button" className="gap-2">
+              <Button variant="default" size="sm" type="button" className="gap-2">
                 <BranchIcon size={16} className="text-muted-foreground" />
                 Import from Git
               </Button>

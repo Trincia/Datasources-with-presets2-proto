@@ -140,7 +140,7 @@ function DataTablePattern() {
             <SelectItem value="Pending">Pending</SelectItem>
           </SelectContent>
         </Select>
-        <Button variant="outline" size="sm" className="gap-1">
+        <Button variant="default" size="sm" className="gap-1">
           <FilterIcon size={14} className="text-muted-foreground" />
           Filters
         </Button>
@@ -346,7 +346,7 @@ function FormLayoutPattern() {
         {/* Actions */}
         <div className="flex items-center gap-2 pt-1">
           <Button type="submit" size="sm">Create job</Button>
-          <Button type="button" variant="outline" size="sm"
+          <Button type="button" variant="default" size="sm"
             onClick={() => { setName(""); setDescription(""); setCluster(""); setSubmitted(false) }}
           >
             Cancel
@@ -497,7 +497,7 @@ function SettingsPanel() {
       {/* Footer actions */}
       <div className="flex items-center gap-2 px-5 py-3">
         <Button size="sm">Save changes</Button>
-        <Button variant="outline" size="sm">Reset</Button>
+        <Button variant="default" size="sm">Reset</Button>
       </div>
     </div>
   )
@@ -529,7 +529,7 @@ function EmptyStatePattern() {
           image={<SearchIcon size={64} />}
           title="No results found"
           description="Try adjusting your search or filter criteria."
-          action={<Button variant="outline" size="sm">Clear filters</Button>}
+          action={<Button variant="default" size="sm">Clear filters</Button>}
         />
       </div>
     </div>
@@ -568,7 +568,7 @@ function ConfirmDeletePattern() {
             </Alert>
           </DialogBody>
           <DialogFooter>
-            <Button variant="outline" size="sm" onClick={() => setOpen(false)}>
+            <Button variant="default" size="sm" onClick={() => setOpen(false)}>
               Cancel
             </Button>
             <Button
@@ -614,7 +614,7 @@ function PageHeaderPattern() {
             <Button variant="ghost" size="icon-sm" aria-label="More options">
               <OverflowIcon size={16} className="text-muted-foreground" />
             </Button>
-            <Button variant="outline" size="sm">Edit</Button>
+            <Button variant="default" size="sm">Edit</Button>
             <Button size="sm">Run now</Button>
           </>
         }

@@ -144,13 +144,13 @@ export default function DashboardsPage() {
             <Button variant="ghost" size="icon-xs" aria-label="More options">
               <OverflowIcon size={14} className="text-muted-foreground" />
             </Button>
-            <Button variant="outline" size="sm" className="gap-1.5">
+            <Button variant="default" size="sm" className="gap-1.5">
               <span className="h-2 w-2 rounded-full bg-[var(--success)] shrink-0" />
               Serverless
               <ChevronDownIcon size={12} className="text-muted-foreground" />
             </Button>
             <Button size="sm">Publish</Button>
-            <Button variant="outline" size="sm" className="gap-1.5">
+            <Button variant="default" size="sm" className="gap-1.5">
               <UserGroupIcon size={14} className="text-muted-foreground" />
               Share
             </Button>
@@ -235,7 +235,7 @@ export default function DashboardsPage() {
 
                 {/* New Dataset button */}
                 <div className="px-3 pb-3 pt-1">
-                  <Button variant="outline" size="xs" className="gap-1 w-full justify-start">
+                  <Button variant="default" size="xs" className="gap-1 w-full justify-start">
                     <Plus className="h-3 w-3" />
                     New Dataset
                   </Button>

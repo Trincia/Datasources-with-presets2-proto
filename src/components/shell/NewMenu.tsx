@@ -139,7 +139,7 @@ export function NewMenu({ onItemClick, onAddData }: NewMenuProps) {
       {/* "Add or upload data" — top action */}
       <div className="px-2 py-1">
         <Button
-          variant="outline"
+          variant="default"
           size="sm"
           className="w-full justify-start gap-2"
           onClick={onAddData}

@@ -3,10 +3,6 @@
 import { useState, useEffect } from "react";
 import { AiElementsTab } from "./ai-elements-tab";
 import {
-  AlertCircle,
-  CheckCircle2,
-  Info,
-  AlertTriangle,
   Settings,
   Plus,
   Trash2,
@@ -15,7 +11,13 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
-import { SearchIcon, ChevronDownIcon } from "@/components/icons";
+import {
+  SearchIcon,
+  ChevronDownIcon,
+  InfoFillIcon,
+  DangerFillIcon,
+  WarningFillIcon,
+} from "@/components/icons";
 import Link from "next/link";
 import { TopBar } from "@/components/shell/TopBar";
 import { Sidebar } from "@/components/shell/Sidebar";
@@ -72,6 +74,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Switch } from "@/components/ui/switch";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -249,56 +252,172 @@ export default function DesignSystemPage() {
 
 
         <Section id="colors" title="Colors" description="DuBois primitive palette. Always use semantic CSS variables in components, not raw hex.">
-          <div className="flex flex-col gap-8">
-            <Group label="Blue — Primary Actions">
-              <div className="flex flex-wrap gap-4">
-                <Swatch color="#4BA3D6" label="blue-400" hex="#4BA3D6" />
-                <Swatch color="#2E86C1" label="blue-500" hex="#2E86C1" />
-                <Swatch color="#2272B4" label="blue-600" hex="#2272B4" cssVar="--primary" />
-                <Swatch color="#0E538B" label="blue-700" hex="#0E538B" />
-                <Swatch color="#04355D" label="blue-800" hex="#04355D" />
-              </div>
-            </Group>
+          <div className="flex flex-col gap-10">
 
-            <Group label="Grey — Neutrals">
-              <div className="flex flex-wrap gap-4">
-                <Swatch color="#F6F7F9" label="grey-050" hex="#F6F7F9" cssVar="--muted" />
-                <Swatch color="#E8ECF0" label="grey-100" hex="#E8ECF0" cssVar="--border" />
-                <Swatch color="#BDCDD9" label="grey-300" hex="#BDCDD9" />
-                <Swatch color="#5F7281" label="grey-500" hex="#5F7281" cssVar="--muted-fg" />
-                <Swatch color="#2A3A45" label="grey-700" hex="#2A3A45" />
-                <Swatch color="#11171C" label="grey-800" hex="#11171C" cssVar="--foreground" />
+            {/* ── Full ramps ── */}
+            {[
+              {
+                label: "Blue",
+                stops: [
+                  { step: "100", hex: "#F0F8FF" },
+                  { step: "200", hex: "#D7EDFE" },
+                  { step: "300", hex: "#BAE1FC" },
+                  { step: "400", hex: "#8ACAFF" },
+                  { step: "500", hex: "#4299E0" },
+                  { step: "600", hex: "#2272B4", tag: "--primary" },
+                  { step: "700", hex: "#0E538B" },
+                  { step: "800", hex: "#04355D" },
+                ],
+              },
+              {
+                label: "Neutral (warm grey)",
+                stops: [
+                  { step: "050", hex: "#F7F7F7", tag: "--secondary/--muted" },
+                  { step: "100", hex: "#EBEBEB", tag: "--border" },
+                  { step: "200", hex: "#D8D8D8" },
+                  { step: "300", hex: "#CBCBCB", tag: "--input" },
+                  { step: "350", hex: "#A2A2A2" },
+                  { step: "400", hex: "#939393" },
+                  { step: "500", hex: "#6F6F6F", tag: "--muted-fg" },
+                  { step: "600", hex: "#525252" },
+                  { step: "650", hex: "#424242" },
+                  { step: "700", hex: "#262626" },
+                  { step: "800", hex: "#161616", tag: "--foreground" },
+                ],
+              },
+              {
+                label: "Grey (blue-tinted)",
+                stops: [
+                  { step: "050", hex: "#F6F7F9" },
+                  { step: "100", hex: "#E8ECF0" },
+                  { step: "200", hex: "#D1D9E1" },
+                  { step: "300", hex: "#C0CDD8" },
+                  { step: "350", hex: "#92A4B3" },
+                  { step: "400", hex: "#8396A5" },
+                  { step: "500", hex: "#5F7281" },
+                  { step: "600", hex: "#445461" },
+                  { step: "650", hex: "#37444F", tag: "dark --input" },
+                  { step: "700", hex: "#1F272D", tag: "dark --secondary" },
+                  { step: "800", hex: "#11171C", tag: "dark --background" },
+                ],
+              },
+              {
+                label: "Red",
+                stops: [
+                  { step: "100", hex: "#FFF5F7" },
+                  { step: "200", hex: "#FDE2E8" },
+                  { step: "300", hex: "#FBD0D8" },
+                  { step: "400", hex: "#F792A6" },
+                  { step: "500", hex: "#E65B77", tag: "dark --destructive" },
+                  { step: "600", hex: "#C82D4C", tag: "--destructive" },
+                  { step: "700", hex: "#9E102C" },
+                  { step: "800", hex: "#630316" },
+                ],
+              },
+              {
+                label: "Green",
+                stops: [
+                  { step: "100", hex: "#F3FCF6" },
+                  { step: "200", hex: "#D4F7DF" },
+                  { step: "300", hex: "#B1ECC5" },
+                  { step: "400", hex: "#8DDDA8" },
+                  { step: "500", hex: "#3BA65E", tag: "dark --success" },
+                  { step: "600", hex: "#277C43", tag: "--success" },
+                  { step: "700", hex: "#115026" },
+                  { step: "800", hex: "#093919" },
+                ],
+              },
+              {
+                label: "Yellow",
+                stops: [
+                  { step: "100", hex: "#FFF9EB" },
+                  { step: "200", hex: "#FCEACA" },
+                  { step: "300", hex: "#F8D4A5" },
+                  { step: "400", hex: "#F2BE88" },
+                  { step: "500", hex: "#DE7921", tag: "dark --warning" },
+                  { step: "600", hex: "#BE501E", tag: "--warning" },
+                  { step: "700", hex: "#93320B" },
+                  { step: "800", hex: "#5F1B02" },
+                ],
+              },
+            ].map(({ label, stops }) => (
+              <div key={label} className="flex flex-col gap-2">
+                <span className="text-xs font-semibold text-muted-foreground">{label}</span>
+                <div className="flex gap-1">
+                  {stops.map(({ step, hex, tag }) => (
+                    <div key={step} className="flex flex-col gap-1.5 flex-1 min-w-0">
+                      <div
+                        className="h-8 w-full rounded-sm border border-black/[0.06]"
+                        style={{ background: hex }}
+                      />
+                      <div className="flex flex-col gap-0.5">
+                        <span className="text-hint font-semibold text-foreground font-mono leading-none">{step}</span>
+                        <span className="text-hint text-muted-foreground font-mono leading-none">{hex}</span>
+                        {tag && <span className="text-hint text-primary font-mono leading-none truncate">{tag}</span>}
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
-            </Group>
+            ))}
 
-            <Group label="Semantic">
-              <div className="flex flex-wrap gap-4">
-                <Swatch color="#C82D4C" label="Destructive" hex="#C82D4C" cssVar="--destructive" />
-                <Swatch color="#277C43" label="Success" hex="#277C43" cssVar="--success" />
-                <Swatch color="#BE501E" label="Warning" hex="#BE501E" cssVar="--warning" />
+            {/* ── Brand & misc ── */}
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-semibold text-muted-foreground">Brand &amp; Misc</span>
+              <div className="flex gap-4 flex-wrap">
+                {[
+                  { label: "brand-red", hex: "#FF3621", tag: "--color-brand-red" },
+                  { label: "star",      hex: "#FACB66", tag: "--color-star" },
+                ].map(({ label, hex, tag }) => (
+                  <div key={label} className="flex flex-col gap-1.5 w-20">
+                    <div className="h-8 w-full rounded-sm border border-black/[0.06]" style={{ background: hex }} />
+                    <div className="flex flex-col gap-0.5">
+                      <span className="text-hint font-semibold text-foreground font-mono">{label}</span>
+                      <span className="text-hint text-muted-foreground font-mono">{hex}</span>
+                      <span className="text-hint text-primary font-mono">{tag}</span>
+                    </div>
+                  </div>
+                ))}
               </div>
-            </Group>
+            </div>
 
-            <Group label="Brand & UI Conventions">
-              <div className="flex flex-wrap gap-4">
-                <Swatch color="#FF3621" label="brand-red" hex="#FF3621" cssVar="--color-brand-red" />
-                <Swatch color="#FACC15" label="star" hex="#FACC15" cssVar="--color-star" />
+            {/* ── Secondary palette — 3 stops each ── */}
+            <div className="flex flex-col gap-2">
+              <span className="text-xs font-semibold text-muted-foreground">Secondary — Tags &amp; Categorical</span>
+              <div className="flex flex-col gap-3">
+                {[
+                  { name: "coral",     stops: ["#FDECE9", "#E86247", "#C0411E"] },
+                  { name: "brown",     stops: ["#F3ECE6", "#A0694A", "#7A4930"] },
+                  { name: "indigo",    stops: ["#EBF0FD", "#5B7BE8", "#3557C7"] },
+                  { name: "lemon",     stops: ["#FDF9E6", "#D4A800", "#9C7C00"] },
+                  { name: "lime",      stops: ["#EEF9E6", "#6CBF3C", "#4A8C22"] },
+                  { name: "pink",      stops: ["#FDE8F8", "#D966C5", "#B03EA0"] },
+                  { name: "purple",    stops: ["#F0EAFD", "#9B6AE8", "#7040C8"] },
+                  { name: "teal",      stops: ["#E5F7F5", "#2DB0A0", "#1A8578"] },
+                  { name: "turquoise", stops: ["#E5F8FB", "#22B8CF", "#138B9E"] },
+                ].map(({ name, stops }) => (
+                  <div key={name} className="flex items-center gap-3">
+                    <span className="text-hint text-muted-foreground font-mono w-16 shrink-0">{name}</span>
+                    <div className="flex gap-1">
+                      {stops.map((hex, i) => {
+                        const step = i === 0 ? "100" : i === 1 ? "500" : "700"
+                        return (
+                          <div key={hex} className="flex flex-col gap-1 items-center">
+                            <div
+                              className="h-7 w-14 rounded-sm border border-black/[0.06]"
+                              style={{ background: hex }}
+                            />
+                            <span className="text-hint text-muted-foreground font-mono">{step}</span>
+                            <span className="text-hint text-muted-foreground font-mono">{hex}</span>
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </div>
+                ))}
               </div>
-            </Group>
+            </div>
 
-            <Group label="Secondary Palette — For Tags & Categorical">
-              <div className="flex flex-wrap gap-4">
-                <Swatch color="#E86247" label="coral"     hex="#E86247" />
-                <Swatch color="#A0694A" label="brown"     hex="#A0694A" />
-                <Swatch color="#5B7BE8" label="indigo"    hex="#5B7BE8" />
-                <Swatch color="#D4A800" label="lemon"     hex="#D4A800" />
-                <Swatch color="#6CBF3C" label="lime"      hex="#6CBF3C" />
-                <Swatch color="#D966C5" label="pink"      hex="#D966C5" />
-                <Swatch color="#9B6AE8" label="purple"    hex="#9B6AE8" />
-                <Swatch color="#2DB0A0" label="teal"      hex="#2DB0A0" />
-                <Swatch color="#22B8CF" label="turquoise" hex="#22B8CF" />
-              </div>
-            </Group>
           </div>
         </Section>
 
@@ -396,16 +515,16 @@ export default function DesignSystemPage() {
 
         <Section id="buttons" title="Buttons" description="DuBois heights: 32px (sm, default) · 24px (xs). All use 4px radius, weight 600.">
           <div className="flex flex-col gap-6">
-            <DemoRow label="Default">
-              <Button>Primary</Button>
-              <Button size="xs">Primary xs</Button>
-              <Button size="icon-sm"><Plus className="h-4 w-4" /></Button>
-              <Button size="icon-xs"><Plus className="h-4 w-4" /></Button>
+            <DemoRow label="Primary">
+              <Button variant="primary">Primary</Button>
+              <Button variant="primary" size="xs">Primary xs</Button>
+              <Button variant="primary" size="icon-sm"><Plus className="h-4 w-4" /></Button>
+              <Button variant="primary" size="icon-xs"><Plus className="h-4 w-4" /></Button>
             </DemoRow>
-            <DemoRow label="Outline">
-              <Button variant="outline">Outline</Button>
-              <Button variant="outline" size="xs">Outline xs</Button>
-              <Button variant="outline" size="icon-sm"><Settings className="h-4 w-4" /></Button>
+            <DemoRow label="Default">
+              <Button variant="default">Default</Button>
+              <Button variant="default" size="xs">Default xs</Button>
+              <Button variant="default" size="icon-sm"><Settings className="h-4 w-4" /></Button>
             </DemoRow>
             <DemoRow label="Ghost">
               <Button variant="ghost">Ghost</Button>
@@ -419,14 +538,21 @@ export default function DesignSystemPage() {
             <DemoRow label="Link">
               <Button variant="link">Link button</Button>
             </DemoRow>
-            <DemoRow label="With icons">
-              <Button><Plus className="h-4 w-4" />New notebook</Button>
-              <Button variant="outline"><SearchIcon size={16} />Search</Button>
-              <Button variant="outline"><ChevronDownIcon size={16} />Options</Button>
+            <DemoRow label="Leading icon">
+              <Button variant="primary"><Plus className="h-4 w-4" />New notebook</Button>
+              <Button variant="default"><SearchIcon size={16} />Search</Button>
+            </DemoRow>
+            <DemoRow label="Trailing icon (menu)">
+              <Button variant="primary">Actions<ChevronDownIcon size={16} /></Button>
+              <Button variant="default">Options<ChevronDownIcon size={16} /></Button>
+            </DemoRow>
+            <DemoRow label="Both icons">
+              <Button variant="primary"><Plus className="h-4 w-4" />New<ChevronDownIcon size={16} /></Button>
+              <Button variant="default"><SearchIcon size={16} />Search<ChevronDownIcon size={16} /></Button>
             </DemoRow>
             <DemoRow label="States">
               <Button disabled>Disabled</Button>
-              <Button variant="outline" disabled>Disabled</Button>
+              <Button variant="default" disabled>Disabled</Button>
               <Button variant="ghost" disabled>Disabled</Button>
             </DemoRow>
           </div>
@@ -440,8 +566,8 @@ export default function DesignSystemPage() {
           <div className="flex flex-col gap-5">
             <Group label="Variants">
               <div className="flex flex-wrap items-center gap-3">
-                <SplitButton>Create</SplitButton>
-                <SplitButton variant="outline">Options</SplitButton>
+                <SplitButton variant="primary">Create</SplitButton>
+                <SplitButton variant="default">Options</SplitButton>
                 <SplitButton variant="destructive">Delete</SplitButton>
               </div>
             </Group>
@@ -543,6 +669,23 @@ export default function DesignSystemPage() {
                 </div>
               </Group>
 
+              <Group label="Radio">
+                <div className="flex flex-col gap-2">
+                  <RadioGroup defaultValue="standard">
+                    {["Standard", "Single node", "High concurrency"].map((label) => (
+                      <div key={label} className="flex items-center gap-2">
+                        <RadioGroupItem id={`radio-${label}`} value={label.toLowerCase().replace(/ /g, "-")} />
+                        <Label htmlFor={`radio-${label}`} className="font-normal cursor-pointer">{label}</Label>
+                      </div>
+                    ))}
+                    <div className="flex items-center gap-2">
+                      <RadioGroupItem id="radio-disabled" value="disabled" disabled />
+                      <Label htmlFor="radio-disabled" className="font-normal opacity-40">Disabled option</Label>
+                    </div>
+                  </RadioGroup>
+                </div>
+              </Group>
+
               <Group label="Switch">
                 <div className="flex flex-col gap-2">
                   {[
@@ -567,9 +710,9 @@ export default function DesignSystemPage() {
         <Section id="hint" title="Hint" description="Helper text below form fields — 12px/16px, muted-foreground. Import from @/components/ui/hint.">
           <div className="flex flex-col gap-6">
             <Group label="Above input (DuBois: Hint precedes the control)">
-              {/* DuBois pattern: label+hint tight (gap-1 / 4px), then control (gap-2 / 8px) */}
+              {/* DuBois pattern: label+hint flush (no gap), then control (gap-2 / 8px) */}
               <div className="flex flex-col gap-2 max-w-xs">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                   <Label htmlFor="hint-demo">Cluster name</Label>
                   <Hint>Must be lowercase and contain no spaces.</Hint>
                 </div>
@@ -578,7 +721,7 @@ export default function DesignSystemPage() {
             </Group>
             <Group label="Above select">
               <div className="flex flex-col gap-2 max-w-xs">
-                <div className="flex flex-col gap-1">
+                <div className="flex flex-col">
                   <Label>Runtime version</Label>
                   <Hint>LTS versions receive security patches for 2 years.</Hint>
                 </div>
@@ -662,27 +805,32 @@ export default function DesignSystemPage() {
 
         {/* ── ListItem ───────────────────────────────────────────────────── */}
 
-        <Section id="alerts" title="Alerts" description="Left-border accent with tinted background. Four severity levels.">
+        <Section id="alerts" title="Alerts" description="Full border with tinted background. Three severity levels plus a neutral default.">
           <div className="flex flex-col gap-3">
-            <Alert variant="info">
-              <Info className="h-4 w-4" />
+            <Alert>
+              <InfoFillIcon />
               <AlertTitle>Cluster is starting</AlertTitle>
               <AlertDescription>Your cluster is being provisioned. This may take a few minutes.</AlertDescription>
             </Alert>
-            <Alert variant="success">
-              <CheckCircle2 className="h-4 w-4" />
-              <AlertTitle>Pipeline succeeded</AlertTitle>
-              <AlertDescription>All 1,204 records processed without errors.</AlertDescription>
-            </Alert>
             <Alert variant="warning">
-              <AlertTriangle className="h-4 w-4" />
+              <WarningFillIcon />
               <AlertTitle>High memory usage</AlertTitle>
               <AlertDescription>Cluster memory is at 87%. Consider scaling up or optimizing queries.</AlertDescription>
             </Alert>
             <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
+              <DangerFillIcon />
               <AlertTitle>Job failed</AlertTitle>
               <AlertDescription>Task "transform_data" failed after 3 retries. Check the logs for details.</AlertDescription>
+            </Alert>
+            <Alert variant="destructive" action={<Button size="sm" variant="default">View logs</Button>}>
+              <DangerFillIcon />
+              <AlertTitle>Job failed</AlertTitle>
+              <AlertDescription>Action below description.</AlertDescription>
+            </Alert>
+            <Alert variant="destructive" rightAction={<Button size="sm" variant="default">View logs</Button>} onDismiss={() => {}}>
+              <DangerFillIcon />
+              <AlertTitle>Job failed</AlertTitle>
+              <AlertDescription>Action on the right, with dismiss.</AlertDescription>
             </Alert>
           </div>
         </Section>
@@ -725,7 +873,7 @@ export default function DesignSystemPage() {
                   <Spinner size="small" inheritColor />
                   Saving…
                 </Button>
-                <Button variant="outline" disabled>
+                <Button variant="default" disabled>
                   <Spinner size="small" inheritColor />
                   Loading
                 </Button>
@@ -1159,7 +1307,7 @@ export default function DesignSystemPage() {
             {/* Confirm dialog */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Confirm dialog</Button>
+                <Button variant="default">Confirm dialog</Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
@@ -1205,7 +1353,7 @@ export default function DesignSystemPage() {
             {/* Tabs inside dialog */}
             <Dialog>
               <DialogTrigger asChild>
-                <Button variant="outline">Tabbed dialog</Button>
+                <Button variant="default">Tabbed dialog</Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-2xl">
                 <DialogHeader>
@@ -1250,7 +1398,7 @@ export default function DesignSystemPage() {
               {(["top", "bottom", "left", "right"] as const).map((side) => (
                 <Tooltip key={side}>
                   <TooltipTrigger asChild>
-                    <Button variant="outline" size="xs">{side}</Button>
+                    <Button variant="default" size="xs">{side}</Button>
                   </TooltipTrigger>
                   <TooltipContent side={side}>
                     Tooltip on {side}
@@ -1317,7 +1465,7 @@ export default function DesignSystemPage() {
                   actions={
                     <>
                       <Button variant="ghost" size="icon-xs"><Settings className="h-4 w-4" /></Button>
-                      <Button variant="outline" size="sm">View logs</Button>
+                      <Button variant="default" size="sm">View logs</Button>
                       <Button size="sm">Start</Button>
                     </>
                   }

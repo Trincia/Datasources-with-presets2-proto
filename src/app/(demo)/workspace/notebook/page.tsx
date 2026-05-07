@@ -128,13 +128,13 @@ export default function NotebookPage() {
                 <RunIcon size={12} />
                 Run all
               </Button>
-              <Button variant="outline" size="xs" className="gap-1.5">
+              <Button variant="default" size="xs" className="gap-1.5">
                 <span className="h-2 w-2 rounded-full bg-[var(--success)] inline-block" />
                 Serverless
                 <ChevronDown className="h-3 w-3 text-muted-foreground" />
               </Button>
-              <Button variant="outline" size="xs">Schedule</Button>
-              <Button variant="outline" size="xs">Share</Button>
+              <Button variant="default" size="xs">Schedule</Button>
+              <Button variant="default" size="xs">Share</Button>
             </div>
           </div>
 

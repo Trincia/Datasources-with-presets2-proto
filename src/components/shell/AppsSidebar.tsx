@@ -91,7 +91,7 @@ export function AppsSidebar({ open = true, className }: AppsSidebarProps) {
 
       <div className="shrink-0 px-3 pb-3">
         <Button
-          variant="outline"
+          variant="default"
           size="sm"
           className="w-full justify-start gap-2 rounded-md font-semibold"
           asChild

@@ -5,8 +5,8 @@ import { Slot } from "radix-ui"
 import { cn } from "@/lib/utils"
 
 const badgeVariants = cva(
-  // DuBois: rectangular (rounded 4px), normal weight, 12px font
-  "inline-flex items-center justify-center rounded border border-transparent px-2 py-0.5 text-xs font-normal w-fit whitespace-nowrap shrink-0 gap-1 overflow-hidden [&>svg]:pointer-events-none [&>svg]:size-3 transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[2px]",
+  // DuBois: rectangular (rounded 4px), normal weight, 13px/20px (Du Bois/Paragraph), 4px h-padding, no v-padding
+  "inline-flex items-center justify-center rounded border border-transparent px-1 py-0 text-sm leading-5 font-normal w-fit whitespace-nowrap shrink-0 gap-1 overflow-hidden [&>svg]:pointer-events-none [&>svg]:size-3 transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring focus-visible:ring-[2px]",
   {
     variants: {
       variant: {

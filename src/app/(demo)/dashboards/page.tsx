@@ -74,7 +74,7 @@ export default function DashboardsPage() {
         <PageHeader
           title="Dashboards"
           actions={
-            <Button variant="outline" size="sm" className="gap-1.5">
+            <Button variant="default" size="sm" className="gap-1.5">
               <Plus className="h-3.5 w-3.5" />
               Create dashboard
             </Button>

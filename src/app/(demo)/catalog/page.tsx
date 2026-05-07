@@ -113,16 +113,16 @@ export default function CatalogPage() {
               onOverflow={() => {}}
               actions={
                 <>
-                  <Button variant="outline" size="sm">
+                  <Button variant="default" size="sm">
                     <ShieldIcon size={14} className="mr-1" />
                     Govern
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="default" size="sm">
                     <ConnectIcon size={14} className="mr-1" />
                     Connect
                     <ChevronDown className="ml-1 h-3 w-3" />
                   </Button>
-                  <Button variant="outline" size="sm">
+                  <Button variant="default" size="sm">
                     <ShareIcon size={14} className="mr-1" />
                     Share
                     <ChevronDown className="ml-1 h-3 w-3" />

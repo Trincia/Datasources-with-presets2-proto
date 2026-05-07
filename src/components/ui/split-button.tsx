@@ -17,16 +17,52 @@ function SplitButton({
   onClick,
   onMenuClick,
   disabled,
-  variant = "default",
+  variant = "primary",
   className,
 }: SplitButtonProps) {
-  // DuBois: divider on primary (default) button is white — sits on blue bg so white reads as subtle separator
-  const dividerColor =
-    variant === "default"     ? "border-l-white/40"  :
-    variant === "destructive" ? "border-l-white/40"  : "border-l-border"
+  if (variant === "default") {
+    // Overlap the two buttons by 1px so their shared edge is a single border.
+    // hover:z-10 brings the hovered section's full blue border on top of its neighbor.
+    return (
+      <div
+        className={cn(
+          "inline-flex rounded",
+          disabled && "opacity-40",
+          className
+        )}
+      >
+        <Button
+          variant="default"
+          size="sm"
+          onClick={onClick}
+          disabled={disabled}
+          className="relative -mr-px rounded-r-none hover:z-10"
+        >
+          {children}
+        </Button>
+        <Button
+          variant="default"
+          size="sm"
+          onClick={onMenuClick}
+          disabled={disabled}
+          className="relative rounded-l-none px-2 hover:z-10"
+          aria-label="More options"
+        >
+          <ChevronDownIcon size={14} />
+        </Button>
+      </div>
+    )
+  }
+
+  // Filled variants (primary, destructive) and ghost/link:
+  // use a thin div as divider — no border-l needed on the chevron button.
+  const dividerClass =
+    variant === "primary" || variant === "destructive"
+      ? "bg-white/40"
+      : "bg-border"
 
   return (
-    <div className={cn("inline-flex -space-x-px", className)}>
+    <div className={cn("inline-flex", className)}>
       <Button
         variant={variant}
         size="sm"
@@ -36,12 +72,13 @@ function SplitButton({
       >
         {children}
       </Button>
+      <div className={cn("w-px self-stretch", dividerClass)} />
       <Button
         variant={variant}
         size="sm"
         onClick={onMenuClick}
         disabled={disabled}
-        className={cn("rounded-l-none border-l px-2", dividerColor)}
+        className="rounded-l-none px-2"
         aria-label="More options"
       >
         <ChevronDownIcon size={14} />

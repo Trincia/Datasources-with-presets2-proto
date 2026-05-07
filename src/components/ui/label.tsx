@@ -14,7 +14,7 @@ function Label({
       data-slot="label"
       className={cn(
         // DuBois: fontWeight 600 (semibold), lineHeightBase 20px, textPrimary
-        "flex items-center gap-2 text-sm leading-5 font-semibold select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
+        "flex items-center gap-2 text-sm leading-5 font-semibold select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-40 peer-disabled:cursor-not-allowed peer-disabled:opacity-40",
         className
       )}
       {...props}

@@ -132,6 +132,7 @@
   --text-xs: 0.75rem;     /* 12px */
   --text-sm: 0.8125rem;   /* 13px — DuBois base */
   --text-base: 0.8125rem; /* 13px — DuBois base */
+  --text-md: 0.9375rem;   /* 15px — h4 / section headers */
   --text-lg: 1.125rem;    /* 18px */
   --text-xl: 1.375rem;    /* 22px */
   --text-2xl: 2rem;       /* 32px */
@@ -231,11 +232,11 @@
   --border-danger:  #fbd0d8;
   --border-warning: #f8d4a5;
   --border-success: #a3d9b6;
-  --border-info:    #bae1fc;
+  --border-banner:  #bae1fc;
   --background-danger:  #fff5f7;
   --background-warning: #fff9eb;
   --background-success: #f3fcf6;
-  --background-info:    #f0f8ff;
+  --background-banner:  #f0f8ff;
 
   /* Code background — DuBois codeBackground semantic token */
   --code-bg: rgba(82, 82, 82, 0.08);
@@ -340,11 +341,11 @@
   --border-danger:  #e65b77;
   --border-warning: #de7921;
   --border-success: #3ba65e;
-  --border-info:    #4299e0;
+  --border-banner:  #4299e0;
   --background-danger:  rgba(200, 45, 76, 0.1600);
   --background-warning: rgba(190, 80, 30, 0.1600);
   --background-success: rgba(39, 124, 67, 0.1600);
-  --background-info:    rgba(34, 114, 180, 0.1600);
+  --background-banner:  rgba(34, 114, 180, 0.1600);
 
   --chart-1: #4299e0;
   --chart-2: #3ba65e;
@@ -450,6 +451,7 @@
     font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
     font-size: 13px;
     line-height: 20px;
+    font-weight: 500;
     background: var(--code-bg);
     border-radius: 4px;
     padding: 2px 4px;

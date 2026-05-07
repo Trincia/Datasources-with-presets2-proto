@@ -54,7 +54,7 @@ function SegmentedItem({ value, children, className, disabled }: SegmentedItemPr
   return (
     <Button
       type="button"
-      variant="outline"
+      variant="default"
       size="sm"
       disabled={disabled}
       onClick={() => onValueChange(value)}

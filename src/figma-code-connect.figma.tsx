@@ -123,7 +123,7 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination"
-import { WorkspacesIcon } from "@/components/icons"
+import { WorkspacesIcon, SidebarOpenIcon, SidebarClosedIcon } from "@/components/icons"
 
 
 // ─── Alert ── node 28-2 ─────────────────────────────────────────────────────
@@ -1302,6 +1302,50 @@ figma.connect(
       <FilterPill active={active} onClick={() => {}}>
         Label
       </FilterPill>
+    ),
+  }
+)
+
+// ─── SidebarOpenIcon ── node 1790-653 ────────────────────────────────────────
+figma.connect(
+  SidebarOpenIcon,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1790-653",
+  {
+    props: {},
+    example: () => <SidebarOpenIcon className="h-4 w-4 text-muted-foreground" />,
+  }
+)
+
+// ─── SidebarClosedIcon ── node 1790-652 ──────────────────────────────────────
+figma.connect(
+  SidebarClosedIcon,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1790-652",
+  {
+    props: {},
+    example: () => <SidebarClosedIcon className="h-4 w-4 text-muted-foreground" />,
+  }
+)
+
+// ─── SidebarPanel ── node 1612-426 ───────────────────────────────────────────
+figma.connect(
+  SidePanel,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1612-426",
+  {
+    props: {},
+    example: () => (
+      <SidePanel
+        path={["...", "Home", "user@example"]}
+        nodes={[
+          {
+            id: "workspace",
+            label: "Workspace",
+            defaultExpanded: true,
+            children: [{ id: "projects", label: "Projects" }],
+          },
+        ]}
+        selectedId="projects"
+        onSelect={() => {}}
+      />
     ),
   }
 )

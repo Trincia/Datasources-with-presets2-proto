@@ -986,7 +986,7 @@ export default function DesignSystemPage() {
                 <Badge variant="default">Default</Badge>
                 <Badge variant="secondary">Secondary</Badge>
                 <Badge variant="destructive">Error</Badge>
-                <Badge variant="outline">Outline</Badge>
+                <Badge variant="default_tag">Default tag</Badge>
               </div>
             </Group>
             <Group label="DuBois Tag Palette (RGBA tokens)">

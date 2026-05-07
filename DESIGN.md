@@ -565,7 +565,7 @@ A `<Button>` must never be nested inside another `<button>` or interactive conta
 
 ### Badges
 
-Rectangular (4px radius), 13px/20px font (Du Bois Paragraph, same as body), normal weight (not semibold), 4px horizontal padding, 0 vertical padding. The full categorical range covers eleven hue families. Used for status labels, entity types, and feature-flag annotations. Never use filled primary badges for status — prefer semantic variant (`destructive`, `outline`) or a categorical hue.
+Rectangular (4px radius), 13px/20px font (Du Bois Paragraph, same as body), normal weight (not semibold), 4px horizontal padding, 0 vertical padding. The full categorical range covers eleven hue families. Used for status labels, entity types, and feature-flag annotations. Never use filled primary badges for status — prefer the `destructive` semantic variant or a categorical hue (`default_tag`, `charcoal`, `coral`, etc.).
 
 ### Alerts
 

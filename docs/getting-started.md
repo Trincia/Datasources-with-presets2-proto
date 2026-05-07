@@ -9,14 +9,14 @@ Click **"Use this template"** on GitHub (not "Fork"). This gives you a clean rep
 ```bash
 git clone https://github.com/YOUR_ORG/YOUR_REPO.git
 cd YOUR_REPO
-npm install
-npm run setup
+pnpm install
+pnpm setup
 ```
 `setup` asks which Databricks surface you're prototyping and your feature name, then writes a clean `src/app/page.tsx`. No demo cleanup needed.
 
 **3. Start building**
 ```bash
-npm run dev   # http://localhost:3000
+pnpm dev   # http://localhost:3000
 claude        # CLAUDE.md loads automatically — DuBois rules are already wired
 ```
 
@@ -25,7 +25,7 @@ claude        # CLAUDE.md loads automatically — DuBois rules are already wired
 ## Update an existing project
 
 ```bash
-npm run sync
+pnpm sync
 ```
 
 Pulls the latest DuBois tokens, components, and icons from the upstream kit. Shows a diff of what changed and asks before applying. Never touches `src/app/` (your pages).

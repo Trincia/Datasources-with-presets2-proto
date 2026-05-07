@@ -23,8 +23,8 @@ The goal: open the repo, run it, describe what you want to Claude Code, and get 
 ```bash
 git clone https://github.com/gioa/db-starter-kit.git
 cd db-starter-kit
-npm install
-npm run dev
+pnpm install
+pnpm dev
 ```
 
 | Route | What you'll see |
@@ -142,7 +142,7 @@ Then create `src/app/catalog/page.tsx` with `activeItem="catalog"` passed to `Ap
 
 | Rule | Value |
 |---|---|
-| Base font | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, ...` (SF Pro on macOS) · 13px · 20px line-height |
+| Base font | SF Pro (macOS/iOS) · system sans on other platforms · 13px · 20px line-height |
 | Bold weight | `font-semibold` (600) — never `font-bold` (700) |
 | Button/input radius | `rounded` (4px) |
 | Card/modal radius | `rounded-md` (8px) |

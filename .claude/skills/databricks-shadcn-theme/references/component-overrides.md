@@ -23,13 +23,15 @@ DuBois buttons have tighter sizing, 4px radius, and different variant names than
 | Icon small  | 24px   | `h-6 w-6` (`icon-xs`) | |
 
 ### Variants mapping
-| DuBois Variant | shadcn Variant | Changes needed |
-|----------------|----------------|----------------|
-| `primary` | `default` | bg-primary, white text — correct |
-| `default` (outline) | `outline` | grey100 border, transparent bg |
-| `tertiary` (ghost) | `ghost` | No border, transparent |
-| `danger` | `destructive` | red600 bg — correct |
-| `link` | `link` | blue600 text — correct |
+| DuBois Variant | Description | shadcn origin |
+|----------------|-------------|---------------|
+| `primary` | Filled blue — was `default` in shadcn | Renamed |
+| `default` | Bordered button — was `outline` in shadcn | Renamed |
+| `ghost` | No border, transparent | Unchanged |
+| `destructive` | Red background | Unchanged |
+| `link` | Blue underline text | Unchanged |
+
+> **Migration:** `variant="default"` → `variant="primary"` · `variant="outline"` → `variant="default"` · `variant="secondary"` → removed (use `variant="default"`)
 
 ### Key changes to `buttonVariants` in `button.tsx`
 
@@ -100,24 +102,25 @@ Add DuBois secondary color variants. Each uses light background + darker text.
 
 ```tsx
 const badgeVariants = cva(
-  "inline-flex items-center rounded-sm border px-2 py-0.5 text-xs font-semibold transition-colors",
+  "inline-flex items-center rounded border border-transparent px-1 py-0 text-sm leading-5 font-normal w-fit whitespace-nowrap shrink-0 gap-1",
   {
     variants: {
       variant: {
-        default:     "border-transparent bg-primary text-primary-foreground",
-        secondary:   "border-transparent bg-secondary text-secondary-foreground",
-        destructive: "border-transparent bg-destructive text-destructive-foreground",
-        outline:     "border-border text-foreground",
-        // DuBois secondary palette
-        coral:      "border-transparent bg-coral-100 text-coral-700",
-        brown:      "border-transparent bg-brown-100 text-brown-700",
-        indigo:     "border-transparent bg-indigo-100 text-indigo-700",
-        lemon:      "border-transparent bg-lemon-100 text-lemon-700",
-        lime:       "border-transparent bg-lime-100 text-lime-700",
-        pink:       "border-transparent bg-pink-100 text-pink-700",
-        purple:     "border-transparent bg-purple-100 text-purple-700",
-        teal:       "border-transparent bg-teal-100 text-teal-700",
-        turquoise:  "border-transparent bg-turquoise-100 text-turquoise-700",
+        default:     "bg-primary text-primary-foreground",
+        secondary:   "bg-secondary text-secondary-foreground",
+        destructive: "bg-destructive text-white",
+        // DuBois categorical tag palette — use CSS variables from globals.css
+        default_tag: "bg-[var(--tag-bg-default)] text-[var(--tag-text-default)]",
+        charcoal:    "bg-[var(--tag-bg-charcoal)] text-[var(--tag-text-charcoal)]",
+        coral:       "bg-[var(--tag-bg-coral)] text-[var(--tag-text-coral)]",
+        brown:       "bg-[var(--tag-bg-brown)] text-[var(--tag-text-brown)]",
+        indigo:      "bg-[var(--tag-bg-indigo)] text-[var(--tag-text-indigo)]",
+        lemon:       "bg-[var(--tag-bg-lemon)] text-[var(--tag-text-lemon)]",
+        lime:        "bg-[var(--tag-bg-lime)] text-[var(--tag-text-lime)]",
+        pink:        "bg-[var(--tag-bg-pink)] text-[var(--tag-text-pink)]",
+        purple:      "bg-[var(--tag-bg-purple)] text-[var(--tag-text-purple)]",
+        teal:        "bg-[var(--tag-bg-teal)] text-[var(--tag-text-teal)]",
+        turquoise:   "bg-[var(--tag-bg-turquoise)] text-[var(--tag-text-turquoise)]",
       },
     },
     defaultVariants: { variant: "default" },
@@ -125,7 +128,9 @@ const badgeVariants = cva(
 );
 ```
 
-**Note:** `rounded-sm` (4px) instead of shadcn's `rounded-full`. DuBois tags are rectangular.
+> **Breaking change:** `outline`, `ghost`, and `link` variants were removed. Use `default_tag` or a named color variant (`charcoal`, `coral`, etc.) instead.
+
+**Key diffs from shadcn default:** `rounded` (4px) not `rounded-full`. 13px (`text-sm`) not 12px (`text-xs`). Tag variants use `--tag-*` CSS variables for dark mode support.
 
 ---
 

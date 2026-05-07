@@ -42,12 +42,14 @@ return allComponents.map(n => ({ name: n.name, id: n.id, key: n.key, page: n.par
 | Size=lg, Type=icon | 404:25 | `08ebc8057d9569fcff6ecc4c9806c440b90a6614` |
 
 ### Badge — `26:2` (COMPONENT_SET, 13 variants)
+> **Note:** `Variant=outline` exists in Figma but is **not connected** in code — `outline` was removed from `badgeVariants`. Do not use it. Use `default_tag` or a named color variant instead.
+
 | Variant | Node ID | Key |
 |---|---|---|
 | Variant=default | 25:2 | `45bc59f26401460769c4e74a2eff3546bc5c4c1c` |
 | Variant=secondary | 25:4 | `fdc6f9605181ffc879ddd8895e9883fa183652ac` |
 | Variant=destructive | 25:6 | `92339e6ac02001e35d779a6da94b9880e8f0de97` |
-| Variant=outline | 25:8 | `6c606e67d4171ee2495ef9b05587232ad35b09db` |
+| ~~Variant=outline~~ | 25:8 | _(not used in code — removed)_ |
 | Variant=coral | 25:10 | `fbfaa74466d3ece318b3ef54c676394d881adb91` |
 | Variant=brown | 25:12 | `3626007ba335a9cfc4163dad2fb19b2e9bd67177` |
 | Variant=indigo | 25:14 | `176bd201a80cdf19c2f9240fc02369e2a4141ea8` |
@@ -61,32 +63,30 @@ return allComponents.map(n => ({ name: n.name, id: n.id, key: n.key, page: n.par
 ### Breadcrumb — `408:4` (COMPONENT)
 Key: `23dbced9ce8b6711e78670e7e8841e8f51bc0f5e`
 
-### Button — `22:2` (COMPONENT_SET, 24 variants)
+### Button — `22:2` (COMPONENT_SET, 20 variants)
+> **Note:** Figma variant names are `primary` (filled blue), `default` (bordered), `ghost`, `destructive`, `link`. Old names `outline` and `secondary` were removed. The node IDs below use the current DuBois names — re-run the discovery script to get exact keys after any Figma rename.
+
 | Variant | Node ID | Key |
 |---|---|---|
-| Variant=default, Size=sm | 21:2 | `b56a945f378b71524d2caf03e6689fe702fa3f5f` |
-| Variant=outline, Size=sm | 21:4 | `82a0b4ee3b38fd1ceb3422a39e52d2b4f30c0612` |
+| Variant=primary, Size=sm | 21:2 | `b56a945f378b71524d2caf03e6689fe702fa3f5f` |
+| Variant=default, Size=sm | 21:4 | `82a0b4ee3b38fd1ceb3422a39e52d2b4f30c0612` |
 | Variant=ghost, Size=sm | 21:6 | `17e45dbbe09e72396230761d490300d408c53aac` |
 | Variant=destructive, Size=sm | 21:8 | `e3eeebe9b8ac9d809345ea92d46acd00541a3316` |
-| Variant=secondary, Size=sm | 21:10 | `9059186949b2a19d4e9ed76a9463c97be053c1ca` |
 | Variant=link, Size=sm | 21:12 | `46bfb1784fb20703cdccc2e9635265443bd8ebf8` |
-| Variant=default, Size=xs | 21:14 | `3eae3fca5ba45e108f16cd872ca9d3f204b9d0de` |
-| Variant=outline, Size=xs | 21:16 | `a926d5d6e5ac42b363d1a4130780c76172db4d4c` |
+| Variant=primary, Size=xs | 21:14 | `3eae3fca5ba45e108f16cd872ca9d3f204b9d0de` |
+| Variant=default, Size=xs | 21:16 | `a926d5d6e5ac42b363d1a4130780c76172db4d4c` |
 | Variant=ghost, Size=xs | 21:18 | `f8ab83f0ed0b94b00f09a93aa87b4cb503d81676` |
 | Variant=destructive, Size=xs | 21:20 | `2d87865cb9d45320600769f4a6afa33d166dd0aa` |
-| Variant=secondary, Size=xs | 21:22 | `e54b3c824fe23725f29d30c4b0898168014fbc45` |
 | Variant=link, Size=xs | 21:24 | `341500bd2d0fae7f1371b26fc77a74a82ec3ad63` |
-| Variant=default, Size=icon-sm | 576:2 | `a03f7de52ef7324a46207de69cc52dae6c5677d9` |
-| Variant=outline, Size=icon-sm | 576:5 | `f4fafbfb564113d0f77dddc94978173dc09ec6c7` |
+| Variant=primary, Size=icon-sm | 576:2 | `a03f7de52ef7324a46207de69cc52dae6c5677d9` |
+| Variant=default, Size=icon-sm | 576:5 | `f4fafbfb564113d0f77dddc94978173dc09ec6c7` |
 | Variant=ghost, Size=icon-sm | 576:8 | `a5a1dd3b1a20014c772a4b5a8a390605dca03c90` |
 | Variant=destructive, Size=icon-sm | 576:11 | `f8f6733dde20b874549df6e4d3a7e60f56e5b871` |
-| Variant=secondary, Size=icon-sm | 576:14 | `84955b87a844cd86ad126bb690f8bba6ed2a9ea1` |
 | Variant=link, Size=icon-sm | 576:17 | `a67c687b1ad7f0b8d2f1878590ab0243f332bf34` |
-| Variant=default, Size=icon-xs | 1250:15 | `cedeb3d4a38f26e4e226c09da477798530073550` |
-| Variant=outline, Size=icon-xs | 1250:17 | `f35ef03ff29243fd3846e7b404649d4269d52fa9` |
+| Variant=primary, Size=icon-xs | 1250:15 | `cedeb3d4a38f26e4e226c09da477798530073550` |
+| Variant=default, Size=icon-xs | 1250:17 | `f35ef03ff29243fd3846e7b404649d4269d52fa9` |
 | Variant=ghost, Size=icon-xs | 1250:19 | `8492689149c0486621b388ed3ab35d06d6731ce0` |
 | Variant=destructive, Size=icon-xs | 1250:21 | `98037ae5393877568290cf14e5e0f5cc0477a4ca` |
-| Variant=secondary, Size=icon-xs | 1250:23 | `d0a16dcbe8803b337edb25f918e8e718c72cf243` |
 | Variant=link, Size=icon-xs | 1250:25 | `f553e70efa0f0806432a7b7cabd1c561b05329fa` |
 
 ### Card — `566:22` (COMPONENT_SET, 2 variants)

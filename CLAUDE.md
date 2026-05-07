@@ -87,10 +87,10 @@ Violation examples (never do these):
 
 ### Component Overrides Already Applied
 These shadcn components have DuBois overrides — use them as-is:
-- **`Button`** — 4px radius, sizes: `sm` 32px (default) · `xs` 24px · `icon-sm` 32px · `icon-xs` 24px, semibold, variants: `default` `outline` `ghost` `destructive` `link`
+- **`Button`** — 4px radius, sizes: `sm` 32px (default) · `xs` 24px · `icon-sm` 32px · `icon-xs` 24px, semibold, variants: `primary` `default` `ghost` `destructive` `link`
 - **`Input`** — 32px height (`h-8`), 4px radius, inset focus ring (no offset)
 - **`Select`** / **`SelectTrigger`** — 32px height (`h-8`), 4px radius, no size variants
-- **`Badge`** — rectangular (4px radius), variants: `default` `secondary` `destructive` `outline` `coral` `brown` `indigo` `lemon` `lime` `pink` `purple` `teal` `turquoise`
+- **`Badge`** — rectangular (4px radius), variants: `default` `secondary` `destructive` `default_tag` `charcoal` `coral` `brown` `indigo` `lemon` `lime` `pink` `purple` `teal` `turquoise`
 - **`Dialog`** / **`DialogHeader`** / **`DialogFooter`** / **`DialogBody`** — 40px padding, no dividers
 - **`Table`** / **`TableRow`** — DuBois hover/selected row colors
 - **`Alert`** — variants: `default` `info` `warning` `success` `destructive` — full border with light tinted bg, 4px radius. CSS tokens: `--border-danger` `--border-warning` `--border-success` `--background-danger` `--background-warning` `--background-success`
@@ -249,7 +249,7 @@ import { MoreVertical } from "lucide-react"
   actions={
     <>
       <Button variant="ghost" size="icon-xs"><MoreVertical className="h-4 w-4" /></Button>
-      <Button variant="outline" size="sm">Share</Button>
+      <Button variant="default" size="sm">Share</Button>
       <Button size="sm">Create table</Button>
     </>
   }

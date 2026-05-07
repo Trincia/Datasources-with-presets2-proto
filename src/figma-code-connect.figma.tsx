@@ -123,7 +123,8 @@ import {
   PaginationPrevious,
   PaginationNext,
 } from "@/components/ui/pagination"
-import { WorkspacesIcon, SidebarOpenIcon, SidebarClosedIcon } from "@/components/icons"
+import { WorkspacesIcon, SidebarOpenIcon, SidebarClosedIcon, GenieCodeIcon } from "@/components/icons"
+import { DbIcon } from "@/components/ui/db-icon"
 
 
 // ─── Alert ── node 28-2 ─────────────────────────────────────────────────────
@@ -1346,6 +1347,43 @@ figma.connect(
         selectedId="projects"
         onSelect={() => {}}
       />
+    ),
+  }
+)
+
+// ─── GenieCodeIcon ── node 1790-2657 ─────────────────────────────────────────
+figma.connect(
+  DbIcon,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1790-2657",
+  {
+    props: {},
+    example: () => <DbIcon icon={GenieCodeIcon} color="ai" size={16} />,
+  }
+)
+
+// ─── FormField/Radio ── node 1936-119 ────────────────────────────────────────
+figma.connect(
+  FormItem,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1936-119",
+  {
+    props: {},
+    example: () => (
+      <FormItem>
+        <FormLabel>Label</FormLabel>
+        <FormControl>
+          <RadioGroup defaultValue="option1">
+            <div className="flex items-center gap-2">
+              <RadioGroupItem value="option1" id="option1" />
+              <Label htmlFor="option1">Option 1</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <RadioGroupItem value="option2" id="option2" />
+              <Label htmlFor="option2">Option 2</Label>
+            </div>
+          </RadioGroup>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
     ),
   }
 )

@@ -80,11 +80,27 @@ import {
 // ─── Pattern Components ───────────────────────────────────────────────────────
 import { SegmentedControl, SegmentedItem } from "@/components/ui/segmented-control"
 import { ListItem } from "@/components/ui/list-item"
+import { SplitButton } from "@/components/ui/split-button"
+import { Textarea } from "@/components/ui/textarea"
+import { Slider } from "@/components/ui/slider"
+import { RadioTile, RadioTileGroup } from "@/components/ui/radio-tile"
+import { SuggestionPill } from "@/components/ui/suggestion-pill"
+import { FilterPill } from "@/components/ui/filter-pill"
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormDescription,
+  FormMessage,
+} from "@/components/ui/form"
 
 // ─── Shell Components ────────────────────────────────────────────────────────
 import { AppShell } from "@/components/shell/AppShell"
 import { AppSwitcher } from "@/components/shell/AppSwitcher"
 import { FilterBar } from "@/components/shell/FilterBar"
+import { GenieCodePanel } from "@/components/shell/GenieCodePanel"
 import { NewButton } from "@/components/shell/NewButton"
 import { PageHeader } from "@/components/shell/PageHeader"
 import { Sidebar } from "@/components/shell/Sidebar"
@@ -162,26 +178,35 @@ figma.connect(
   {
     props: {
       variant: figma.enum("Variant", {
-        default:      "default",
-        secondary:    "secondary",
-        destructive:  "destructive",
-        outline:      "outline",
-        default_tag:  "default_tag",
-        charcoal:     "charcoal",
-        coral:        "coral",
-        brown:        "brown",
-        indigo:       "indigo",
-        lemon:        "lemon",
-        lime:         "lime",
-        pink:         "pink",
-        purple:       "purple",
-        teal:         "teal",
-        turquoise:    "turquoise",
+        default:     "default",
+        secondary:   "secondary",
+        destructive: "destructive",
+        default_tag: "default_tag",
+        charcoal:    "charcoal",
+        coral:       "coral",
+        brown:       "brown",
+        indigo:      "indigo",
+        lemon:       "lemon",
+        lime:        "lime",
+        pink:        "pink",
+        purple:      "purple",
+        teal:        "teal",
+        turquoise:   "turquoise",
       }),
       children: figma.string("Label"),
+      leadingIcon: figma.boolean("Leading Icon", {
+        true:  figma.instance("Leading Icon"),
+        false: undefined,
+      }),
+      trailingIcon: figma.boolean("Trailing Icon", {
+        true:  figma.instance("Trailing Icon"),
+        false: undefined,
+      }),
     },
-    example: ({ variant, children }) => (
-      <Badge variant={variant}>{children}</Badge>
+    example: ({ variant, children, leadingIcon, trailingIcon }) => (
+      <Badge variant={variant} leadingIcon={leadingIcon} trailingIcon={trailingIcon}>
+        {children}
+      </Badge>
     ),
   }
 )
@@ -219,11 +244,10 @@ figma.connect(
   {
     props: {
       variant: figma.enum("Variant", {
+        primary:     "primary",
         default:     "default",
-        outline:     "outline",
         ghost:       "ghost",
         destructive: "destructive",
-        secondary:   "secondary",
         link:        "link",
       }),
       size: figma.enum("Size", {
@@ -1052,6 +1076,232 @@ figma.connect(
         onTabClick={() => {}}
         onTabClose={() => {}}
       />
+    ),
+  }
+)
+
+// ─── TableRow ── node 33-53 ──────────────────────────────────────────────────
+figma.connect(
+  TableRow,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=33-53",
+  {
+    props: {
+      selected: figma.enum("State", {
+        default:  false,
+        hover:    false,
+        selected: true,
+      }),
+    },
+    example: ({ selected }) => (
+      <TableRow data-selected={selected || undefined}>
+        <TableCell>Value</TableCell>
+      </TableRow>
+    ),
+  }
+)
+
+// ─── Textarea ── node 1888-23 ────────────────────────────────────────────────
+figma.connect(
+  Textarea,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1888-23",
+  {
+    props: {
+      disabled: figma.enum("State", {
+        default:  false,
+        focus:    false,
+        error:    false,
+        disabled: true,
+      }),
+      ariaInvalid: figma.enum("State", {
+        default:  undefined,
+        focus:    undefined,
+        error:    true,
+        disabled: undefined,
+      }),
+    },
+    example: ({ disabled, ariaInvalid }) => (
+      <Textarea
+        placeholder="Enter text..."
+        disabled={disabled}
+        aria-invalid={ariaInvalid}
+      />
+    ),
+  }
+)
+
+// ─── SplitButton ── node 1902-87 ─────────────────────────────────────────────
+figma.connect(
+  SplitButton,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1902-87",
+  {
+    props: {
+      variant: figma.enum("Variant", {
+        primary: "primary",
+        default: "default",
+      }),
+    },
+    example: ({ variant }) => (
+      <SplitButton variant={variant} onClick={() => {}} onMenuClick={() => {}}>
+        Action
+      </SplitButton>
+    ),
+  }
+)
+
+// ─── FormField/TextInput ── node 1921-113 ────────────────────────────────────
+figma.connect(
+  FormItem,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1921-113",
+  {
+    props: {},
+    example: () => (
+      <FormItem>
+        <FormLabel>Label</FormLabel>
+        <FormControl>
+          <Input placeholder="Placeholder" />
+        </FormControl>
+        <FormDescription>Helper text</FormDescription>
+        <FormMessage />
+      </FormItem>
+    ),
+  }
+)
+
+// ─── FormField/Select ── node 1929-127 ───────────────────────────────────────
+figma.connect(
+  FormItem,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1929-127",
+  {
+    props: {},
+    example: () => (
+      <FormItem>
+        <FormLabel>Label</FormLabel>
+        <FormControl>
+          <Select>
+            <SelectTrigger>
+              <SelectValue placeholder="Select an option" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="option1">Option 1</SelectItem>
+            </SelectContent>
+          </Select>
+        </FormControl>
+        <FormMessage />
+      </FormItem>
+    ),
+  }
+)
+
+// ─── FormField/Checkbox ── node 1946-134 ─────────────────────────────────────
+figma.connect(
+  FormItem,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1946-134",
+  {
+    props: {
+      defaultChecked: figma.enum("Checked", { true: true, false: false }),
+      disabled:       figma.enum("Disabled", { true: true, false: undefined }),
+    },
+    example: ({ defaultChecked, disabled }) => (
+      <FormItem className="flex items-center gap-2">
+        <FormControl>
+          <Checkbox defaultChecked={defaultChecked} disabled={disabled} />
+        </FormControl>
+        <FormLabel>Label</FormLabel>
+      </FormItem>
+    ),
+  }
+)
+
+// ─── FormField/Switch ── node 1946-155 ───────────────────────────────────────
+figma.connect(
+  FormItem,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1946-155",
+  {
+    props: {
+      defaultChecked: figma.enum("On",       { true: true, false: false }),
+      disabled:       figma.enum("Disabled", { true: true, false: undefined }),
+    },
+    example: ({ defaultChecked, disabled }) => (
+      <FormItem className="flex items-center justify-between">
+        <FormLabel>Label</FormLabel>
+        <FormControl>
+          <Switch defaultChecked={defaultChecked} disabled={disabled} />
+        </FormControl>
+      </FormItem>
+    ),
+  }
+)
+
+// ─── FormField/RadioTile ── node 1957-305 ────────────────────────────────────
+figma.connect(
+  RadioTileGroup,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1957-305",
+  {
+    props: {},
+    example: () => (
+      <RadioTileGroup value="option1" onValueChange={() => {}}>
+        <RadioTile value="option1" label="Option 1" description="Description text" />
+        <RadioTile value="option2" label="Option 2" description="Description text" />
+      </RadioTileGroup>
+    ),
+  }
+)
+
+// ─── FormField/Slider ── node 1957-248 ───────────────────────────────────────
+figma.connect(
+  Slider,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1957-248",
+  {
+    props: {},
+    example: () => (
+      <FormItem>
+        <FormLabel>Label</FormLabel>
+        <FormControl>
+          <Slider defaultValue={[50]} min={0} max={100} />
+        </FormControl>
+      </FormItem>
+    ),
+  }
+)
+
+// ─── SuggestionPill ── node 1684-14 ──────────────────────────────────────────
+figma.connect(
+  SuggestionPill,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1684-14",
+  {
+    props: {
+      children: figma.string("Label"),
+    },
+    example: ({ children }) => (
+      <SuggestionPill>{children}</SuggestionPill>
+    ),
+  }
+)
+
+// ─── GenieCodePanel ── node 1686-80 ──────────────────────────────────────────
+figma.connect(
+  GenieCodePanel,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1686-80",
+  {
+    props: {},
+    example: () => (
+      <GenieCodePanel open={true} onClose={() => {}} />
+    ),
+  }
+)
+
+// ─── FilterPill ── node 1643-468 ─────────────────────────────────────────────
+figma.connect(
+  FilterPill,
+  "https://www.figma.com/design/KHFOMM4oUyT9XgeeXpbzns/Untitled?node-id=1643-468",
+  {
+    props: {
+      active: figma.enum("Active", { true: true, false: false }),
+    },
+    example: ({ active }) => (
+      <FilterPill active={active} onClick={() => {}}>
+        Label
+      </FilterPill>
     ),
   }
 )

@@ -13,7 +13,7 @@ import { SegmentedControl, SegmentedItem } from "@/components/ui/segmented-contr
 import { DatabricksLogo } from "@/components/shell/DatabricksLogo"
 import { ThemeToggle } from "@/components/theme-toggle"
 
-const AGENT_PROMPT = "git clone https://github.com/gioa/db-starter-kit.git && cd db-starter-kit && npm install && npm run setup && npm run dev"
+const AGENT_PROMPT = "git clone https://github.com/gioa/db-starter-kit.git && cd db-starter-kit && pnpm install && pnpm setup && pnpm dev"
 const SYNC_CMD = "curl -fsSL https://raw.githubusercontent.com/gioa/db-starter-kit/main/scripts/sync.mjs -o scripts/sync.mjs && node scripts/sync.mjs"
 
 function CopyButton({ text }: { text: string }) {
@@ -34,8 +34,8 @@ function CopyButton({ text }: { text: string }) {
 
 const STEPS = [
   { n: "1", label: "Clone the repo", code: "git clone https://github.com/gioa/db-starter-kit.git && cd db-starter-kit" },
-  { n: "2", label: "Install and run setup", code: "npm install && npm run setup" },
-  { n: "3", label: "Start building", code: "npm run dev" },
+  { n: "2", label: "Install and run setup", code: "pnpm install && pnpm setup" },
+  { n: "3", label: "Start building", code: "pnpm dev" },
 ]
 
 export default function Home() {

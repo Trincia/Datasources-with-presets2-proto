@@ -265,3 +265,28 @@ Props: `breadcrumbs` `title` `avatar` `titleIcons` `badge` `description` `action
 - DuBois primitive colors are Tailwind utilities: `bg-blue-600`, `text-grey-800`, etc.
 - DuBois secondary badge colors: `bg-coral-100`, `text-teal-700`, etc.
 - Custom shadows: `shadow-[var(--shadow-db-sm)]`, `shadow-[var(--shadow-db-lg)]`
+
+---
+
+## Sync / Migration Notes
+
+When a user runs `sync.mjs` to pull component updates from this starter kit into an existing project, watch for these breaking changes and offer to apply the find-replace automatically.
+
+### Button variant rename (breaking)
+The DuBois Button diverges from shadcn defaults. If syncing `button.tsx` into a project that used the old shadcn names, every callsite must be updated:
+
+| Old (shadcn / pre-DuBois) | New (DuBois) | Visual result |
+|---|---|---|
+| `variant="default"` | `variant="primary"` | Filled blue button |
+| `variant="outline"` | `variant="default"` | Bordered button |
+| `variant="secondary"` | _(removed)_ | No DuBois equivalent — use `variant="default"` |
+
+**How to fix:** Run a project-wide search and replace in the consuming repo:
+1. `variant="default"` → `variant="primary"` (filled blue, primary action)
+2. `variant="outline"` → `variant="default"` (bordered, secondary action)
+3. `variant="secondary"` → `variant="default"` (closest equivalent)
+
+Also check `buttonVariants({ variant: "default" })` and `buttonVariants({ variant: "outline" })` calls in utility helpers.
+
+### Badge variant removals (breaking)
+`outline`, `ghost`, and `link` variants were removed from `Badge` — they are not part of the DuBois tag spec. Replace any usage with a valid tag variant (`default_tag`, `charcoal`, `coral`, etc.) or a semantic variant (`default`, `secondary`, `destructive`).

@@ -30,6 +30,122 @@ const presetCardClass =
 const lakeflowCardClass =
   "flex min-h-[133px] w-full max-w-[240px] flex-col items-center justify-center gap-2 rounded-[5px] border border-border bg-background p-2.5 text-center shadow-[0_1px_3px_rgba(0,0,0,0.1),0_1px_2px_rgba(0,0,0,0.06)]"
 
+const V2 = "/lakewatch/ingest-v2-logos"
+
+/** Figma 110:111312 / 114:113386 — magenta tile, logo centered without axis stretch */
+function ManagedCloudTrailLogo() {
+  return (
+    <div className="relative h-[42px] w-[60px] shrink-0 overflow-hidden rounded-[5px] bg-[#cc2264]">
+      <div className="absolute inset-0 flex items-center justify-center p-1">
+        <img
+          src={`${V2}/cloudtrail-managed.png`}
+          alt=""
+          className="max-h-full max-w-full object-contain"
+          draggable={false}
+        />
+      </div>
+    </div>
+  )
+}
+
+/** Figma 114:113423 — purple tile + sprite crop for Route 53 shield */
+function ManagedRoute53Logo() {
+  return (
+    <div className="relative h-[42px] w-[60px] shrink-0 overflow-hidden rounded-lg bg-[#693cc5]">
+      <div className="absolute left-[11px] top-[3px] h-[34.159px] w-[39.038px] overflow-hidden">
+        <img
+          src={`${V2}/route53-sprite.png`}
+          alt=""
+          className="pointer-events-none absolute max-w-none"
+          style={{
+            height: "254.47%",
+            width: "424.11%",
+            left: "-82.86%",
+            top: "-74.85%",
+          }}
+          draggable={false}
+        />
+      </div>
+    </div>
+  )
+}
+
+/** Figma 114:113427 — Cloudflare wordmark in fixed frame; object-contain preserves aspect */
+function ManagedCloudflareLogo() {
+  return (
+    <div className="flex h-[39px] w-[74px] shrink-0 items-center justify-center overflow-hidden">
+      <img
+        src={`${V2}/cloudflare-wordmark.png`}
+        alt=""
+        className="max-h-full max-w-full object-contain"
+        draggable={false}
+      />
+    </div>
+  )
+}
+
+/** Figma 114:113412 — 1Password mark (~40px), no circular crop in file */
+function ManagedOnePasswordLogo() {
+  return (
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center">
+      <img
+        src={`${V2}/1password-mark.svg`}
+        alt=""
+        className="max-h-full max-w-full object-contain"
+        draggable={false}
+      />
+    </div>
+  )
+}
+
+/** Figma 110:111380 — Okta wordmark from two aligned SVG exports */
+function LakeflowOktaLogo() {
+  return (
+    <div className="flex items-end justify-center gap-0.5">
+      <img
+        src={`${V2}/okta-mark-left.svg`}
+        alt=""
+        className="h-[30px] w-auto shrink-0"
+        draggable={false}
+      />
+      <img
+        src={`${V2}/okta-mark-right.svg`}
+        alt=""
+        className="h-[22px] w-auto shrink-0 pb-0.5"
+        draggable={false}
+      />
+    </div>
+  )
+}
+
+/** Figma 110:111390 — CrowdStrike wordmark */
+function LakeflowCrowdStrikeLogo() {
+  return (
+    <div className="flex h-[34px] w-[150px] max-w-full shrink-0 items-center justify-center">
+      <img
+        src={`${V2}/crowdstrike-wordmark.png`}
+        alt=""
+        className="max-h-full max-w-full object-contain"
+        draggable={false}
+      />
+    </div>
+  )
+}
+
+/** Figma 110:111393 — Workday wordmark */
+function LakeflowWorkdayLogo() {
+  return (
+    <div className="flex h-[39px] w-[69px] shrink-0 items-center justify-center">
+      <img
+        src={`${V2}/workday-wordmark.png`}
+        alt=""
+        className="max-h-full max-w-full object-contain"
+        draggable={false}
+      />
+    </div>
+  )
+}
+
 export function IngestVariant2() {
   const [warehouse, setWarehouse] = React.useState("dedemos-serverless")
 
@@ -118,43 +234,25 @@ export function IngestVariant2() {
           </div>
           <div className="flex flex-wrap gap-6">
             <div className={presetCardClass}>
-              <div className="relative h-[42px] w-[60px] shrink-0 overflow-hidden rounded-[5px] bg-rose-600">
-                <img
-                  src="/lakewatch/preset-logos/cloudtrail.png"
-                  alt=""
-                  className="h-full w-full object-cover"
-                  draggable={false}
-                />
-              </div>
+              <ManagedCloudTrailLogo />
               <span className="px-3 text-center text-sm font-semibold text-foreground">
                 Amazon CloudTrail IAM
               </span>
             </div>
             <div className={presetCardClass}>
-              <div className="relative h-[42px] w-[60px] shrink-0 overflow-hidden rounded-lg bg-violet-600">
-                <img
-                  src="/lakewatch/preset-logos/route53.png"
-                  alt=""
-                  className="pointer-events-none absolute h-[254.47%] left-[-82.86%] top-[-74.85%] w-[424.11%] max-w-none"
-                  draggable={false}
-                />
-              </div>
+              <ManagedRoute53Logo />
               <span className="px-3 text-center text-sm font-semibold text-foreground">
                 AWS Route 53
               </span>
             </div>
             <div className={presetCardClass}>
-              <div className="flex h-[42px] w-[60px] shrink-0 items-center justify-center rounded-[5px] bg-orange-500 text-xs font-semibold text-white">
-                CF
-              </div>
+              <ManagedCloudflareLogo />
               <span className="px-3 text-center text-sm font-semibold text-foreground">
                 Cloudflare
               </span>
             </div>
             <div className={presetCardClass}>
-              <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-neutral-900 text-sm font-semibold text-background">
-                1P
-              </div>
+              <ManagedOnePasswordLogo />
               <span className="px-3 text-center text-sm font-semibold text-foreground">
                 One Password
               </span>
@@ -183,9 +281,7 @@ export function IngestVariant2() {
               </p>
             </div>
             <div className={lakeflowCardClass}>
-              <div className="flex h-8 w-16 items-center justify-center rounded border border-border bg-blue-50 text-xs font-semibold text-blue-800">
-                Okta
-              </div>
+              <LakeflowOktaLogo />
               <p className="text-hint text-foreground">
                 Sync identity and access
                 <br />
@@ -193,17 +289,13 @@ export function IngestVariant2() {
               </p>
             </div>
             <div className={lakeflowCardClass}>
-              <div className="flex h-8 w-24 items-center justify-center rounded border border-border bg-red-50 text-xs font-semibold text-red-800">
-                CrowdStrike
-              </div>
+              <LakeflowCrowdStrikeLogo />
               <p className="text-hint text-foreground">
                 Real-time security event ingestion from Crowdstrike.
               </p>
             </div>
             <div className={lakeflowCardClass}>
-              <div className="flex h-8 w-20 items-center justify-center rounded border border-border bg-sky-50 text-xs font-semibold text-sky-900">
-                Workday
-              </div>
+              <LakeflowWorkdayLogo />
               <p className="text-hint text-foreground">
                 Import HR and workforce management data.
               </p>

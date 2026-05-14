@@ -50,3 +50,5 @@ next-env.d.ts
 *.png
 # Lakewatch preset modal assets (Figma exports)
 !public/lakewatch/preset-logos/*.png
+# Lakewatch ingest variant 2 marketing logos (Figma MCP exports)
+!public/lakewatch/ingest-v2-logos/*.png

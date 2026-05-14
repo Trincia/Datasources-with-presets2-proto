@@ -48,3 +48,5 @@ next-env.d.ts
 
 # local dev screenshots (not for repo)
 *.png
+# Lakewatch preset modal assets (Figma exports)
+!public/lakewatch/preset-logos/*.png

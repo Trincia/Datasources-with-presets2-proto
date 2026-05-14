@@ -98,22 +98,28 @@ function ManagedOnePasswordLogo() {
   )
 }
 
-/** Figma 110:111380 — Okta wordmark from two aligned SVG exports */
+/** Figma 110:111380 (g17005) — pixel-aligned Okta wordmark; two layers absolutely positioned */
 function LakeflowOktaLogo() {
   return (
-    <div className="flex items-end justify-center gap-0.5">
-      <img
-        src={`${V2}/okta-mark-left.svg`}
-        alt=""
-        className="h-[30px] w-auto shrink-0"
-        draggable={false}
-      />
-      <img
-        src={`${V2}/okta-mark-right.svg`}
-        alt=""
-        className="h-[22px] w-auto shrink-0 pb-0.5"
-        draggable={false}
-      />
+    <div className="flex h-[34px] w-[150px] max-w-full shrink-0 items-center justify-center">
+      <div className="relative h-[29.977px] w-[88.687px] shrink-0">
+        <div className="absolute left-0 top-0 h-[29.977px] w-[61.182px]">
+          <img
+            src={`${V2}/okta-mark-left.svg`}
+            alt=""
+            className="absolute inset-0 block size-full max-w-none"
+            draggable={false}
+          />
+        </div>
+        <div className="absolute left-[62.08px] top-[7.5px] h-[22.39px] w-[26.607px]">
+          <img
+            src={`${V2}/okta-mark-right.svg`}
+            alt=""
+            className="absolute inset-0 block size-full max-w-none"
+            draggable={false}
+          />
+        </div>
+      </div>
     </div>
   )
 }

@@ -466,6 +466,16 @@
   to   { transform: rotate(360deg) translate3d(0, 0, 0); }
 }
 
+/* Lakewatch Genie ingest — shimmer on “thinking” accordion labels */
+@keyframes lk-genie-shimmer {
+  0% {
+    background-position: 200% 50%;
+  }
+  100% {
+    background-position: -200% 50%;
+  }
+}
+
 /* ─── DuBois Utility Classes ──────────────────────────────────────────────── */
 @layer utilities {
   /* DuBois hint — 12px/16px. Explicit rule because Tailwind v4 may resolve
@@ -483,6 +493,10 @@
 
   .bg-ai-gradient-subtle {
     background: linear-gradient(135deg, rgba(66,153,224,0.15) 20.5%, rgba(202,66,224,0.15) 46.91%, rgba(255,95,70,0.15) 79.5%);
+  }
+
+  .animate-lk-genie-shimmer {
+    animation: lk-genie-shimmer 2.2s linear infinite;
   }
 
   .text-ai-gradient {

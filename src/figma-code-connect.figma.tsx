@@ -2,6 +2,9 @@
  * Figma Code Connect — single mapping file for all DuBois components.
  * Maps every Figma component set in KHFOMM4oUyT9XgeeXpbzns to its code counterpart.
  *
+ * Lakewatch (file DtRlnrhUzoBLM5nXPgYvlZ) mappings live in:
+ *   `src/components/lakewatch/lakewatch.figma.tsx`
+ *
  * Icons are in a separate file: src/components/icons/icons.figma.tsx (auto-generated, 445 icons).
  *
  * Publish changes:  npx figma connect publish
